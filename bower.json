@@ -1,12 +1,13 @@
 {
-  "name": "{theme_name}",
-  "homepage": "{repository_url}",
+  "name": "Dunn Building Theme",
+  "homepage": "https://github.com/Fiveleft/dunnbuilding-theme.git",
   "authors": [
-    "{author_name} <{author_email}>"
+    "Charles Krueger <ck@fiveleft.com>"
   ],
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "backbone": "~1.2.3",
     "jquery": "~1.9.0",
     "requirejs": "~2.1.5",
     "underscore": "~1.8.3",
