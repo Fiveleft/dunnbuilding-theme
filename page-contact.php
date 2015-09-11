@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Apartents
+Template Name: Contact
 */
 ?>
 
@@ -8,13 +8,13 @@ Template Name: Apartents
 
 <?php get_header(); ?>
 
-  <main class='neighborhood' role="main">
+  <main role="main">
     <!-- section -->
-    <section>
+    <article class='contact' >
 
-      <h1><?php _e( 'Latest Posts', 'html5blank' ); ?></h1>
+      <h1><?php the_title(); ?></h1>
 
-    </section>
+    </article>
     <!-- /section -->
   </main>
 
@@ -22,8 +22,9 @@ Template Name: Apartents
 
 <?php else : ?>
 
-  <section class='neighborhood'>
+  <section class='contact'>
 
+    <h1><?php the_title(); ?></h1>
     
 
   </section>

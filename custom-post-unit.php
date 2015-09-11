@@ -36,8 +36,8 @@ function create_unit_custom_post()
         ), // Go to Dashboard Custom HTML5 Blank post for supports
         'can_export' => true, // Allows export in Tools > Export
         'taxonomies' => array(
-            'post_tag',
-            'unit_floor',
+          'post_tag',
+          'unit_floor',
         ) // Add Category and Post Tags support
     ));
 }
@@ -112,7 +112,7 @@ function unit_floors_save_post_data( $post_id ) {
 }
 
 /* Do something with the data entered */
-add_action( 'save_post', 'unit_types_save_post_data' );
+// add_action( 'save_post', 'unit_types_save_post_data' );
 
 
 

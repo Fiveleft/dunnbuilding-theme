@@ -2,25 +2,28 @@
 
 <main role="main">
 	<!-- section -->
-	<section>
-		<h1><?php _e( 'Latest Posts', 'html5blank' ); ?></h1>
+	<section class='welcome'>
+		<h1><?php the_title(); ?></h1>
+
+
+
 	</section>
 	<!-- /section -->
 
   <!-- apartments -->
-  <?php get_template_part( 'content', 'apartments' ); ?>
+  <?php get_template_part( 'page', 'apartments' ); ?>
   <!-- /apartments -->
 
   <!-- amenities -->
-  <?php get_template_part( 'content', 'amenities' ); ?>
+  <?php get_template_part( 'page', 'amenities' ); ?>
   <!-- /amenities -->
 
   <!-- history -->
-  <?php get_template_part( 'content', 'history' ); ?>
+  <?php get_template_part( 'page', 'building-history' ); ?>
   <!-- /history -->
 
   <!-- neighborhood -->
-  <?php get_template_part( 'content', 'neighborhood' ); ?>
+  <?php get_template_part( 'page', 'neighborhood' ); ?>
   <!-- /neighborhood -->
 
 </main>

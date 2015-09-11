@@ -5,6 +5,13 @@
  *  Custom functions, support, custom post types and more.
  */
 
+
+function ep( $content ) {
+  error_log( print_r( $content, true ) );
+}
+
+
+
 /*------------------------------------*\
   External Modules/Files
 \*------------------------------------*/
@@ -66,6 +73,14 @@ if (function_exists('add_theme_support'))
 
     // Localisation Support
     load_theme_textdomain('html5blank', get_template_directory() . '/languages');
+}
+
+
+function create_apartment_type( $post ) 
+{
+  $apt = $post;
+  $apt->meta = get_post_meta( $post->ID );
+  return $apt;
 }
 
 /*------------------------------------*\
