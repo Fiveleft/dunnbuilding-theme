@@ -4,37 +4,52 @@ Template Name: Neighborhood
 */
 ?>
 
-<?php if(!is_home()) : ?>
+<?php 
+  $home_section = is_front_page();
+  // If loading as an independent page
+  if(!$home_section) { 
+    get_header();
+  }else{
+    $page = get_page_by_path( '/neighborhood' ); 
+  }
+  ?>
 
-<?php get_header(); ?>
-
+<?php if(!$home_section) : ?>
+  <!-- main -->
   <main role="main">
-    <!-- section -->
-    <article class='neighborhood' >
-
+    <!-- article.neighborhood --> 
+    <article class='neighborhood'>
       <h1><?php the_title(); ?></h1>
 
-    </article>
-    <!-- /section -->
-  </main>
-
-<?php get_footer(); ?>
 
 <?php else : ?>
+
+    <!-- section.neighborhood -->
+    <section class='neighborhood'>
+      <h1><?php echo $page->post_title; ?></h1>
+      <a href="/neighborhood">go to page</a>
+
+<?php endif; ?>
+
+
+
+
+<?php if(!$home_section) : ?>
+
+    </article>
+    <!-- /article.neighborhood -->
+  </main>
+  <!-- /main -->
+  <?php get_footer(); ?>
+
+<?php else : ?>
+
+    </section>
+    <!-- /section.neighborhood -->
+
   <?php 
-    // Load page content as a section of the index page
-    $post = get_page_by_path( '/neighborhood' ); 
-    if( $post ) :
+    wp_reset_postdata();
+    unset($post); 
     ?>
-
-  <section class='neighborhood'>
-
-    <h1><?php the_title(); ?></h1>
-    <a href="/neighborhood">go to page</a>
-
-  </section>
-
-  <?php unset($post); ?>
-  <?php endif; ?>
 
 <?php endif; ?>

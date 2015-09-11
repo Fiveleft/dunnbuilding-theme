@@ -1,9 +1,11 @@
 <?php 
-
-  $home_section = is_front_page();
-  //$is_singular();
-  //get_header(); 
+  $is_own_page = !is_page_template( 'page-apartments.php' ) && !is_front_page();
   ?>
+
+<?php if( $is_own_page ) : ?>
+<?php get_header(); ?>
+  <main role="main">
+<?php endif; ?>
 
   <?php 
     $apt = create_apartment_type( $post ); 
@@ -13,8 +15,6 @@
 
       ));
     ?>
-
-
 
   <article style="border-top:1px solid #333;" class='apartment unit-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
     <div class='article-inner'>
@@ -43,4 +43,10 @@
   </article>
   <!-- /article.<?php echo $apt->post_name; ?> -->
 
-<?php //get_footer(); ?>
+
+<?php if( $is_own_page ) : ?>
+
+  </main>
+  <?php get_footer(); ?>
+
+<?php endif; ?>
