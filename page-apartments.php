@@ -60,17 +60,9 @@ Template Name: Apartments
       <div class='unit-types'>
     <?php while ( $apartments->have_posts() ) : 
         $apartments->the_post(); 
-        $apt = create_apartment_type( $post );
+        get_template_part( 'single', 'unit_type' );
+        // $apt = create_apartment_type( $post );
       ?>
-        <article class='apartment unit-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
-          <div class='article-inner'>
-            <h1><?php echo $apt->post_title; ?></h1>
-            <div class='content-wrapper'>
-              <?php echo $apt->post_content; ?>
-            </div>
-          </div>
-        </article>
-        <!-- /article.<?php echo $apt->post_name; ?> -->
     <?php endwhile; ?>
       </div>
       <!-- /div.unit-types -->
