@@ -10,8 +10,11 @@ Template Name: Neighborhood
   if(!$home_section) { 
     get_header();
   }else{
-    $page = get_page_by_path( '/neighborhood' ); 
+    $page_section = get_page_by_path( '/neighborhood' ); 
   }
+  $page = create_dunnbuilding_page( isset( $page_section ) ? $page_section : $post );
+  ep( $page );
+  
   ?>
 
 <?php if(!$home_section) : ?>
@@ -31,7 +34,9 @@ Template Name: Neighborhood
 
 <?php endif; ?>
 
-
+      <div class='map-wrapper'>
+        <?php echo $page->acf->google_map->address; ?>
+      </div>
 
 
 <?php if(!$home_section) : ?>

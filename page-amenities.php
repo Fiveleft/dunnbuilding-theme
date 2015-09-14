@@ -31,7 +31,6 @@ Template Name: Amenities
 
   <?php 
     $page = get_page_by_path( '/amenities' );
-    ep($page);
     ?>
     <!-- section.amenities -->
     <section class='amenities'>
@@ -82,7 +81,7 @@ Template Name: Amenities
     <!-- /section.amenities -->
   <?php 
     wp_reset_postdata();
-    unset($page); 
+    unset($page, $post); 
     ?>
 
 <?php endif; ?>

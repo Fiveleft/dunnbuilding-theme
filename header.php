@@ -53,7 +53,7 @@
       <!-- nav -->
       <nav class="nav" role="navigation">
         <div class="nav-inner">
-          <?php //html5blank_nav(); ?>
+          <?php get_template_part( 'nav', 'main' ); ?>
         </div>
       </nav>
       <!-- /nav -->

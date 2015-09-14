@@ -20,6 +20,7 @@ function ep( $content ) {
 require_once( 'custom-post-unit.php' );
 require_once( 'custom-post-unit-type.php' );
 require_once( 'custom-post-amenities.php' );
+require_once( 'custom-post-attractions.php' );
 require_once( 'custom-taxonomies.php' );
 
 /*------------------------------------*\
@@ -81,6 +82,18 @@ function create_apartment_type( $post )
   $apt = $post;
   $apt->meta = get_post_meta( $post->ID );
   return $apt;
+}
+
+function create_dunnbuilding_page( $page ) 
+{
+  $db_page = $page;
+  $db_page->meta = get_post_meta( $page->ID );
+
+  $acf = (function_exists('get_fields')) ? get_fields($db_page->ID) : false;
+  $db_page->acf = $acf ? json_decode(json_encode($acf), FALSE) : false;
+
+
+  return $db_page;
 }
 
 /*------------------------------------*\
@@ -151,9 +164,9 @@ function html5blank_styles()
 function register_html5_menu()
 {
     register_nav_menus(array( // Using array to specify more menus if needed
-        'header-menu' => __('Header Menu', 'html5blank'), // Main Navigation
-        'sidebar-menu' => __('Sidebar Menu', 'html5blank'), // Sidebar Navigation
-        'extra-menu' => __('Extra Menu', 'html5blank') // Extra Navigation if needed (duplicate as many as you need!)
+        'header-menu' => __('Header Menu', 'dunnbuilding'), // Main Navigation
+        'apartment-type-menu' => __('Apartment Types', 'dunnbuilding'), // Sidebar Navigation
+        'footer-menu' => __('Footer Menu', 'dunnbuilding') // Fotter Navigation if needed (duplicate as many as you need!)
     ));
 }
 

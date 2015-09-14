@@ -5,14 +5,20 @@
 <?php if( $is_own_page ) : ?>
 <?php get_header(); ?>
   <main role="main">
+
+
+  <?php get_template_part( 'nav', 'apartment-types' ); ?>
+
+
+
 <?php endif; ?>
 
   <?php 
+    ep ( $post );
     $apt = create_apartment_type( $post ); 
     $units = new WP_Query( array(
         'post_type'   => 'unit',
         'post_status' => 'publish',
-
       ));
     ?>
 
