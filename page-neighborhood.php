@@ -13,7 +13,7 @@ Template Name: Neighborhood
     $page_section = get_page_by_path( '/neighborhood' ); 
   }
   $page = create_dunnbuilding_page( isset( $page_section ) ? $page_section : $post );
-  ep( $page );
+  //ep( $page );
   
   ?>
 
@@ -34,10 +34,15 @@ Template Name: Neighborhood
 
 <?php endif; ?>
 
+    
+
       <div class='map-wrapper'>
         <?php echo $page->acf->google_map->address; ?>
       </div>
-
+      <div class='content-wrapper'>
+        <?php echo $page->post_content; ?>
+      </div>
+      
 
 <?php if(!$home_section) : ?>
 

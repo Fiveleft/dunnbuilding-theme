@@ -15,7 +15,7 @@ Template Name: History
 
   $page = create_dunnbuilding_page( isset( $page_section ) ? $page_section : $post );
   
-  ep( $page );
+  //ep( $page );
 
   ?>
 
@@ -56,7 +56,7 @@ Template Name: History
     </section>
   <?php 
     wp_reset_postdata();
-    unset($page, $post); 
+    // unset($page); 
     ?>
 
 <?php endif; ?>

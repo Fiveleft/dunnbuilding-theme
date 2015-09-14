@@ -81,7 +81,7 @@ Template Name: Amenities
     <!-- /section.amenities -->
   <?php 
     wp_reset_postdata();
-    unset($page, $post); 
+    unset($page); 
     ?>
 
 <?php endif; ?>

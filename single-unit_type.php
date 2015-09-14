@@ -2,24 +2,23 @@
   $is_own_page = !is_page_template( 'page-apartments.php' ) && !is_front_page();
   ?>
 
+
 <?php if( $is_own_page ) : ?>
 <?php get_header(); ?>
+
+  <!-- Add Main for Single Unit page type -->
   <main role="main">
-
-
-  <?php get_template_part( 'nav', 'apartment-types' ); ?>
-
-
+    <!-- Add Nav for Single Unit page type -->
+  <?php get_template_part( 'nav-apartment-types' ); ?>
 
 <?php endif; ?>
 
   <?php 
-    ep ( $post );
     $apt = create_apartment_type( $post ); 
     $units = new WP_Query( array(
-        'post_type'   => 'unit',
-        'post_status' => 'publish',
-      ));
+      'post_type'   => 'unit',
+      'post_status' => 'publish',
+    ));
     ?>
 
   <article style="border-top:1px solid #333;" class='apartment unit-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
@@ -50,8 +49,14 @@
   <!-- /article.<?php echo $apt->post_name; ?> -->
 
 
-<?php if( $is_own_page ) : ?>
+  <?php 
+  // unset( $apt, $units );
+  // wp_reset_postdata();
+  error_log( " Unsetting apt and units " );
+  ?>
 
+<?php if( $is_own_page ) : ?>
+    <?php get_template_part( 'page-amenities' ); ?>
   </main>
   <?php get_footer(); ?>
 
