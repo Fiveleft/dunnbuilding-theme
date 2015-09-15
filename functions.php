@@ -22,6 +22,7 @@ require_once( 'custom-post-unit-type.php' );
 require_once( 'custom-post-amenities.php' );
 require_once( 'custom-post-attractions.php' );
 require_once( 'custom-taxonomies.php' );
+require_once( 'custom-gallery-shortcodes.php' );
 
 /*------------------------------------*\
   Theme Support
@@ -77,13 +78,42 @@ if (function_exists('add_theme_support'))
 }
 
 
+
+/**
+ * [create_apartment_type description]
+ * @param  WP_Post $post [description]
+ * @return [type]       [description]
+ */
 function create_apartment_type( $post ) 
 {
   $apt = $post;
   $apt->meta = get_post_meta( $post->ID );
+
+  $acf = (function_exists('get_fields')) ? get_fields($apt->ID) : false;
+  $apt->acf = $acf ? json_decode(json_encode($acf), FALSE) : false;
+
+  if( $acf['gallery_shortcode'] ) {
+
+    $gallery = preg_replace( '/gallery/', 'apartment_gallery', $acf['gallery_shortcode'] );
+    
+    // // Odd hack of adding incorrect quotes around attribute value?
+    $gallery = preg_replace( '/\&#8221;|\&#8243;/', '', $gallery );
+
+    // Create the apartment_gallery shortcode
+    $apt->gallery = apply_filters( 'the_content', $gallery );
+
+    // error_log( "\nApartment Gallery Shortcode: $gallery_sc - output:\n" . $apt->gallery . "\n***\n");
+  }
+ // ep( $apt );
   return $apt;
 }
 
+
+/**
+ * [create_dunnbuilding_page description]
+ * @param  WP_Page $page [description]
+ * @return [type]       [description]
+ */
 function create_dunnbuilding_page( $page ) 
 {
   $db_page = $page;
@@ -92,9 +122,51 @@ function create_dunnbuilding_page( $page )
   $acf = (function_exists('get_fields')) ? get_fields($db_page->ID) : false;
   $db_page->acf = $acf ? json_decode(json_encode($acf), FALSE) : false;
 
+  // Check for gallery shortcode
+  $sc_pattern = '\[(\[?)(gallery)(?![\w-])([^\]\/]*(?:\/(?!\])[^\]\/]*)*?)(?:(\/)\]|\](?:([^\[]*+(?:\[(?!\/\2\])[^\[]*+)*+)\[\/\2\])?)(\]?)';
+  preg_match_all( '/' . $sc_pattern . '/', $page->post_content, $matches );
 
+  if( $matches[0] ) {
+
+    $gallery = preg_replace( '/gallery/', 'page_gallery', $matches[0] );
+    $gallery = preg_replace( '/\&#8221;|\&#8243;/', '', $gallery[0] );
+
+    // Create the apartment_gallery shortcode
+    $page->gallery = apply_filters( 'the_content', $gallery );
+
+    // Remove the Gallery shortcode from the content
+    $page->post_content = preg_replace( '/' . $sc_pattern . '/', '', $page->post_content );
+  }   
   return $db_page;
 }
+
+
+
+
+// function gallery_shortcode_replace( $post_content ) 
+// {
+//   error_log( 'gallery_shortcode_replace\n' . $post_content );
+//   if( has_shortcode( $post_content, 'gallery' ) ) {
+//     $pattern = get_shortcode_regex();
+    
+//     // $gallery_sc = preg_match( '/$pattern/s' )
+//     // $post_content = preg_replace( '/$pattern/s', '', $post_content );
+
+//     // if( $post->post_type == "unit_type" ) {
+
+//     // }
+
+//     if ( preg_match_all( '/$pattern/s', $post_content, $matches )
+//         && array_key_exists( 2, $matches )
+//         && in_array( 'your-shortcode', $matches[2] ) ) {
+//       ep(  $matches );
+//         // shortcode is being used
+//     }
+//   }
+// }
+
+
+
 
 /*------------------------------------*\
   Functions
@@ -161,11 +233,11 @@ function html5blank_styles()
 }
 
 // Register HTML5 Blank Navigation
-function register_html5_menu()
+function register_menus()
 {
     register_nav_menus(array( // Using array to specify more menus if needed
         'header-menu' => __('Header Menu', 'dunnbuilding'), // Main Navigation
-        'apartment-type-menu' => __('Apartment Types', 'dunnbuilding'), // Sidebar Navigation
+        'social-menu' => __('Social Menu', 'dunnbuilding'), // Fotter Navigation if needed (duplicate as many as you need!)
         'footer-menu' => __('Footer Menu', 'dunnbuilding') // Fotter Navigation if needed (duplicate as many as you need!)
     ));
 }
@@ -382,7 +454,7 @@ add_action('init', 'html5blank_header_scripts'); // Add Custom Scripts to wp_hea
 add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditional Page Scripts
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
-add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu 
+add_action('init', 'register_menus'); // Add HTML5 Blank Menu 
 
 
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()

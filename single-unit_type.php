@@ -14,7 +14,7 @@
 <?php endif; ?>
 
   <?php 
-    $apt = create_apartment_type( $post ); 
+    $apt = create_apartment_type( $post );
     $units = new WP_Query( array(
       'post_type'   => 'unit',
       'post_status' => 'publish',
@@ -31,10 +31,13 @@
         </div>
       </section>
 
+    <?php if( $apt->gallery ) : ?>
       <section class="apartment-gallery">
         <div class='section-inner'>
-        (apartment gallery)
+          <?php echo $apt->gallery; ?>
+        </div>
       </section>
+    <?php endif; ?>
 
       <section class="available-units">
         <div class='section-inner'>
@@ -51,8 +54,7 @@
 
   <?php 
   // unset( $apt, $units );
-  // wp_reset_postdata();
-  error_log( " Unsetting apt and units " );
+  wp_reset_postdata();
   ?>
 
 <?php if( $is_own_page ) : ?>

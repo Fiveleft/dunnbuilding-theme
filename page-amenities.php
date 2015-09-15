@@ -5,10 +5,11 @@ Template Name: Amenities
 ?>
 
 <?php 
+  $is_own_page = is_page_template( 'page-amenities.php' ) && !is_front_page();
   $apartments_subsection = is_page_template( 'page-apartments.php' );
-  $home_section = is_front_page() || $apartments_subsection;
+  $home_section = is_front_page();
   // If loading as an independent page
-  if(!$home_section) { 
+  if(!$is_own_page) { 
     get_header();
   }
 
@@ -20,7 +21,7 @@ Template Name: Amenities
     ));
 ?>
 
-<?php if(!$home_section) : ?>
+<?php if($is_own_page) : ?>
   <!-- main.amenities -->
   <main class='amenities' role="main">
     <!-- article -->
@@ -34,13 +35,7 @@ Template Name: Amenities
     ?>
     <!-- section.amenities -->
     <section class='amenities'>
-      <h1>
-      <?php if ($apartments_subsection) {
-        echo "Building Amenities";
-      }else{
-        echo $page->post_title;
-      } ?>
-      </h1>
+      <h1>Building Amenities</h1>
       <a href="/amenities">go to page</a>
 
 <?php endif; ?>
@@ -53,7 +48,9 @@ Template Name: Amenities
     <div class='amenity-list-wrapper'>
       
       <ul class='amenity-list'>
+        
         <?php while ( $amenities->have_posts() ) : $amenities->the_post(); ?>
+        
         <li class='amenity-item'>
           <div class='amenity-item-inner'>
             <h3><?php the_title(); ?></h3>
@@ -62,12 +59,16 @@ Template Name: Amenities
             </div>
           </div>
         </li>
-        <?php endwhile; ?>
+        
+        <?php endwhile; 
+          wp_reset_postdata();
+          ?>
+
       </ul>
 
     </div>
 
-<?php if(!$home_section) : ?>
+<?php if($is_own_page) : ?>
 
     </article>
     <!-- /article -->
@@ -80,7 +81,6 @@ Template Name: Amenities
     </section>
     <!-- /section.amenities -->
   <?php 
-    wp_reset_postdata();
     unset($page); 
     ?>
 

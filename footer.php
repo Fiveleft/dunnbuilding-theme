@@ -5,10 +5,31 @@
 
           <!-- copyright -->
           <p class="copyright">
-            &copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>. <?php _e('Powered by', 'html5blank'); ?>
-            <a href="//wordpress.org" title="WordPress">WordPress</a> &amp; <a href="//html5blank.com" title="HTML5 Blank">HTML5 Blank</a>.
+            &copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>.
           </p>
           <!-- /copyright -->
+
+          <nav class='footer-nav'>
+            <div class="nav-inner">
+              <?php
+                wp_nav_menu(array(
+                  'theme_location'    => 'footer-menu',
+                  'container'         => false,
+                  'menu_id'           => null,
+                  'menu_class'        => 'footer-menu',
+                )); 
+                wp_nav_menu(array(
+                  'theme_location'    => 'social-menu',
+                  'container'         => false,
+                  'menu_id'           => null,
+                  'menu_class'        => 'social-menu',
+                )); 
+                ?>
+
+            </div>
+
+
+          </nav>
 
         </div>
 

@@ -7,12 +7,15 @@ Template Name: Apartments
 <?php 
   $home_section = is_front_page();
   // If loading as an independent page
-  error_log( "\n***\nLOADING APARTMENTS PAGE\n***\n");
   if(!$home_section) { 
     get_header();
+    $page = create_dunnbuilding_page( $post );
   }else{
-    $page = get_page_by_path( '/apartments' ); 
+    $page = create_dunnbuilding_page( get_page_by_path( '/apartments' ) ); 
   }
+
+  error_log( "\n***\nReading Page " . $page->post_name . "\n***" );
+  ep( $page );
  ?>
 
 <?php if(!$home_section) : ?>
@@ -32,9 +35,9 @@ Template Name: Apartments
 
 <?php endif; ?>
 
-      <div class='apartments-gallery'>
-        (main gallery)
-      </div>
+    <?php if( $page->gallery ) : ?>
+      <?php echo $page->gallery; ?>
+    <?php endif; ?>
 
     <?php get_template_part( 'nav', 'apartment-types' ); ?>
 
@@ -54,7 +57,6 @@ Template Name: Apartments
         // $post_tmp = $post;
         while ( $apartments->have_posts() ) : 
           $apartments->the_post();
-          ep( $post );
           include(locate_template('single-unit_type.php'));
         endwhile;
         $post = $post_tmp;
