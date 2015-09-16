@@ -45,10 +45,14 @@
           <button class="menu-toggle">
             <span class="label">Menu</span>
           </button> 
-
         </div>
       </header>
       <!-- /header -->
+
+      <!-- rent applicatoin module -->
+      <div class='rent-application-module-wrapper'>
+        <?php get_template_part( 'rent-application-module' ); ?>
+      </div>
 
       <!-- nav -->
       <nav class="main-nav" role="navigation" aria-hidden="true" hidden>

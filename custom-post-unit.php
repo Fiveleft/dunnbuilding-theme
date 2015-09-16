@@ -71,7 +71,7 @@ function unit_floor_meta_box($post) {
     // Use nonce for verification
     wp_nonce_field( plugin_basename( __FILE__ ), 'unit_floor_noncename' );
     $unit_floor_IDs = wp_get_object_terms( $post->ID, 'unit_floor', array('fields' => 'ids') );
-    wp_dropdown_categories('taxonomy=unit_floor&hide_empty=0&orderby=name&name=unit_floor&show_option_none=Select Unit Floor&selected='.$unit_floor_IDs[0]); ?>
+    wp_dropdown_categories('taxonomy=unit_floor&hide_empty=0&orderby=slug&name=unit_floor&show_option_none=Select Unit Floor&selected='.$unit_floor_IDs[0]); ?>
     <!-- <p class="howto">Select Unit Floor</p> -->
     </div>
 </div>
@@ -112,7 +112,7 @@ function unit_floors_save_post_data( $post_id ) {
 }
 
 /* Do something with the data entered */
-// add_action( 'save_post', 'unit_types_save_post_data' );
+add_action( 'save_post', 'unit_floors_save_post_data' );
 
 
 
@@ -254,28 +254,75 @@ add_action( 'save_post', 'availability_save' );
  * Adding a table sort column for editing availability
  */
 function unit_table_columns( $columns ) {
-  $date = $columns['date'];
-  unset( $columns['date'] );
-  //$columns['date'] = $date;
-  $columns['available'] = 'Availabile';
-  return $columns;
+  ep( $columns );
+  $new_columns = array( 
+      "cb" => $columns["cb"],
+      "available" => "Avail.",
+      "title" => $columns["title"],
+      "unit_type" => "Type",
+      "unit_number" => "Number",
+      "taxonomy-unit_floor" => $columns["taxonomy-unit_floor"],
+      "tags" => $columns["tags"],
+    );
+  return $new_columns;
 }
 add_filter('manage_edit-unit_columns', 'unit_table_columns');
 add_filter('manage_edit-unit_sortable_columns', 'unit_table_columns');
 //the above line is the only difference from the previous example
 
+
 function unit_table_column( $colname, $unit_pID ) {
-  if ( $colname == 'available'){ 
+  switch($colname) {
+    case ( 'available' ) :
     $available = get_post_meta( $unit_pID, 'availability_available', true );
     ?>
-      <input type='checkbox' name='availability_available' <?php if($available) echo "checked='true'"; ?> />
+      <span class='availability <?php if($available) echo "available"; ?>' ></span>
     <?php
+    break;
+    case ( 'unit_number' ) :
+    $unit_number = get_post_meta( $unit_pID, 'unit_number_unit_', true );
+    ?>
+    <span class='unit-type'><?php echo $unit_number; ?></span>
+    <?php
+    break;
+    case ( 'unit_type' ) :
+    $unit_type_id = get_post_meta( $unit_pID, 'apartment_type', true );
+    $unit_type_name = get_the_title( $unit_type_id );
+    ?>
+    <span class='unit-type'><?php echo $unit_type_name; ?></span>
+    <?php
+    break;
   }
 }
 add_action('manage_unit_posts_custom_column', 'unit_table_column', 10, 2);
 //the actual column data is output
 
-
+function my_admin_column_width() {
+    echo '<style type="text/css">
+      .wp-admin.post-type-unit .column-title { width:20%; }
+      .wp-admin.post-type-unit .column-unit_type { width:15%; }
+      .wp-admin.post-type-unit .column-unit_number { width:10%; }
+      .wp-admin.post-type-unit .column-taxonomy-unit_floor { width:10%; }
+      .wp-admin.post-type-unit .column-tags { width:20%; }
+      .wp-admin.post-type-unit .column-available { text-align: center; width:5%; }
+      .wp-admin.post-type-unit .column-available span.availability {  
+        display: inline-block;
+        vertical-align: middle;
+        width: 1em; height: 1em; margin: 0 auto;
+        border: 2px solid #EEE;
+        background: #F2F2F2;
+        color: #999;
+        text-align: center;
+        line-height: 1em;
+      }      
+      .wp-admin.post-type-unit .column-available .availability.available {  
+        border: 2px solid #00FF90;
+        background: #00FF90;
+        color: #FFF;
+      }
+    </style>';
+}
+add_action('admin_head', 'my_admin_column_width');
 
 
 

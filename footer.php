@@ -1,6 +1,9 @@
       <!-- footer -->
       <footer class="footer" role="contentinfo">
         
+        <div class="footer-fixed">
+        </div>
+
         <div class="footer-inner">
 
           <!-- copyright -->

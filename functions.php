@@ -101,10 +101,7 @@ function create_apartment_type( $post )
 
     // Create the apartment_gallery shortcode
     $apt->gallery = apply_filters( 'the_content', $gallery );
-
-    // error_log( "\nApartment Gallery Shortcode: $gallery_sc - output:\n" . $apt->gallery . "\n***\n");
   }
- // ep( $apt );
   return $apt;
 }
 

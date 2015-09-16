@@ -13,9 +13,6 @@ Template Name: Apartments
   }else{
     $page = create_dunnbuilding_page( get_page_by_path( '/apartments' ) ); 
   }
-
-  error_log( "\n***\nReading Page " . $page->post_name . "\n***" );
-  ep( $page );
  ?>
 
 <?php if(!$home_section) : ?>
@@ -50,6 +47,7 @@ Template Name: Apartments
       $apartments = new WP_Query( array( 
         'post_type'   => 'unit_type', 
         'post_status' => 'publish',
+        'posts_per_page' => '1',
         'orderby' => 'menu_order',
         'order' => 'ASC',
       ));
