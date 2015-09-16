@@ -1,4 +1,9 @@
 // main.scss
-@import 'compass';
-@import 'compass/reset';
+@import '../js/vendor/normalize-scss/normalize';
 @import 'core/variables';
+@import 'core/layout';
+
+body {
+  background: $color-brand-light;
+  color: $color-brand-dark;
+}

@@ -23,6 +23,7 @@ require_once( 'custom-post-amenities.php' );
 require_once( 'custom-post-attractions.php' );
 require_once( 'custom-taxonomies.php' );
 require_once( 'custom-gallery-shortcodes.php' );
+require_once( 'custom-settings-page.php' );
 
 /*------------------------------------*\
   Theme Support
@@ -50,25 +51,6 @@ if (function_exists('add_theme_support'))
     add_image_size('medium', 750, '', true); // Medium Thumbnail
     add_image_size('small', 375, '', true); // Small Thumbnail
     // add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
-
-    // Add Support for Custom Backgrounds - Uncomment below if you're going to use
-    /*add_theme_support('custom-background', array(
-  'default-color' => 'FFF',
-  'default-image' => get_template_directory_uri() . '/img/bg.jpg'
-    ));*/
-
-    // Add Support for Custom Header - Uncomment below if you're going to use
-    /*add_theme_support('custom-header', array(
-  'default-image'     => get_template_directory_uri() . '/img/headers/default.jpg',
-  'header-text'     => false,
-  'default-text-color'    => '000',
-  'width'       => 1000,
-  'height'      => 198,
-  'random-default'    => false,
-  'wp-head-callback'    => $wphead_cb,
-  'admin-head-callback'   => $adminhead_cb,
-  'admin-preview-callback'  => $adminpreview_cb
-    ));*/
 
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -140,78 +122,74 @@ function create_dunnbuilding_page( $page )
 
 
 
-// function gallery_shortcode_replace( $post_content ) 
-// {
-//   error_log( 'gallery_shortcode_replace\n' . $post_content );
-//   if( has_shortcode( $post_content, 'gallery' ) ) {
-//     $pattern = get_shortcode_regex();
-    
-//     // $gallery_sc = preg_match( '/$pattern/s' )
-//     // $post_content = preg_replace( '/$pattern/s', '', $post_content );
-
-//     // if( $post->post_type == "unit_type" ) {
-
-//     // }
-
-//     if ( preg_match_all( '/$pattern/s', $post_content, $matches )
-//         && array_key_exists( 2, $matches )
-//         && in_array( 'your-shortcode', $matches[2] ) ) {
-//       ep(  $matches );
-//         // shortcode is being used
-//     }
-//   }
-// }
-
-
 
 
 /*------------------------------------*\
   Functions
 \*------------------------------------*/
 
-// HTML5 Blank navigation
-function html5blank_nav()
-{
-  wp_nav_menu(
-  array(
-    'theme_location'  => 'header-menu',
-    'menu'            => '',
-    'container'       => 'div',
-    'container_class' => 'menu-{menu slug}-container',
-    'container_id'    => '',
-    'menu_class'      => 'menu',
-    'menu_id'         => '',
-    'echo'            => true,
-    'fallback_cb'     => 'wp_page_menu',
-    'before'          => '',
-    'after'           => '',
-    'link_before'     => '',
-    'link_after'      => '',
-    'items_wrap'      => '<ul>%3$s</ul>',
-    'depth'           => 0,
-    'walker'          => ''
-    )
-  );
-}
 
 // Load HTML5 Blank scripts (header.php)
-function html5blank_header_scripts()
+function enqueue_header_scripts()
 {
-    if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
+  // Check for local dev environment
+  $is_local_dev = defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV;
 
-      // wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
-      //   wp_enqueue_script('conditionizr'); // Enqueue it!
+  // Find our relative JS directory
+  $js_dir = get_stylesheet_directory_uri() . '/js';
 
-      //   wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
-      //   wp_enqueue_script('modernizr'); // Enqueue it!
+  /**
+   * @see https://github.com/jrburke/requirejs/wiki/Patterns-for-separating-config-from-the-main-module
+   */
+  wp_register_script('require-config', $js_dir . '/require-config.js', null, false, true);
+  wp_enqueue_script('require-config');
 
-      //   wp_register_script('html5blankscripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
-      //   wp_enqueue_script('html5blankscripts'); // Enqueue it!
-    }
+  wp_register_script('require', $js_dir . '/require.js', array('require-config'), false, true);
+  wp_enqueue_script('require');
+
+  wp_register_script('main', $js_dir . '/main.js', array('require'), false, true);
+  wp_enqueue_script('main');
+
+  wp_register_script('modernizr', $js_dir . '/modernizr.js');
+  wp_enqueue_script('modernizr');
+
+
+  /**
+   * Add a localized path to the js directory of the theme for require JS modules
+   * @see http://codegeekz.com/using-require-js-with-wordpress/
+   * @var array
+   */
+  $js_localized = array(
+    'homeUrl' => home_url(),
+    'baseUrl' => get_stylesheet_directory_uri() . '/js',
+    'url' => get_stylesheet_directory_uri(),
+   );
+  if( get_permalink() ) {
+    $js_localized['permalink'] = get_permalink();
+  }
+  wp_localize_script( 'require-config', 'localized', $js_localized );
+
+
+  /**
+   * Add Livereload if we're developing locally
+   * @see http://robandlauren.com/2014/02/05/live-reload-grunt-wordpress/
+   */
+  if ( $is_local_dev && !is_admin() ) {
+    wp_register_script('livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true);
+    wp_enqueue_script('livereload');
+  }
+
+
+
+  
+
+
 }
 
+
+
 // Load HTML5 Blank conditional scripts
-function html5blank_conditional_scripts()
+function enqueue_conditional_scripts()
 {
     if (is_page('pagenamehere')) {
         wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
@@ -220,13 +198,13 @@ function html5blank_conditional_scripts()
 }
 
 // Load HTML5 Blank styles
-function html5blank_styles()
+function enqueue_styles()
 {
     // wp_register_style('normalize', get_template_directory_uri() . '/normalize.css', array(), '1.0', 'all');
     // wp_enqueue_style('normalize'); // Enqueue it!
 
-    // wp_register_style('html5blank', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
-    // wp_enqueue_style('html5blank'); // Enqueue it!
+    wp_register_style('main_styles', get_template_directory_uri() . '/css/main.css', array(), '1.0', 'all');
+    wp_enqueue_style('main_styles'); // Enqueue it!
 }
 
 // Register HTML5 Blank Navigation
@@ -447,10 +425,10 @@ function html5blankcomments($comment, $args, $depth)
 \*------------------------------------*/
 
 // Add Actions
-add_action('init', 'html5blank_header_scripts'); // Add Custom Scripts to wp_head
-add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditional Page Scripts
+add_action('init', 'enqueue_header_scripts'); // Add Custom Scripts to wp_head
+add_action('wp_print_scripts', 'enqueue_conditional_scripts'); // Add Conditional Page Scripts
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
-add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
+add_action('wp_enqueue_scripts', 'enqueue_styles'); // Add Theme Stylesheet
 add_action('init', 'register_menus'); // Add HTML5 Blank Menu 
 
 

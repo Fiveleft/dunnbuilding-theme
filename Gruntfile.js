@@ -4,6 +4,8 @@ module.exports = function(grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
 
+
+
   grunt.initConfig({
 
     config : grunt.file.readJSON('./config.json'),
@@ -12,7 +14,7 @@ module.exports = function(grunt) {
     watch : {
       sass : {
         files : ['scss/**/*.scss'],
-        tasks : ['compass:dev']
+        tasks : ['sass'],
       },
       css : {
         files : ['css/**/*.css'],
@@ -58,24 +60,24 @@ module.exports = function(grunt) {
         undef: false
       }
     },
-
-    // Compass/Sass build
-    compass: {
-      dist: {                   // Target
-        options: {              // Target options
-          sassDir: 'scss',
-          cssDir: 'build/css',
-          environment: 'production',
-          outputStyle: 'compressed'
-        }
-      },
-      dev: {
+    
+    sass: {
+      global: {
         options: {
-          sassDir: 'scss',
-          cssDir: 'css'
-        }
+          sourceMap: true,
+          sourceComments: false,
+          outputStyle: 'expanded',
+          includePaths: require('node-bourbon').includePaths
+        },
+        files: [{
+          expand: true,
+          cwd: 'scss',
+          src: ['**/*.scss'],
+          dest: 'css',
+          ext: '.css'
+        }],
       }
-    },
+    }, 
 
     // Bower task sets up require config
     bower : {
@@ -92,6 +94,12 @@ module.exports = function(grunt) {
           src: ['*.js', '!global.js'],
           dest: 'build/js'
         }]
+      },
+      dev_js: {
+        files: {
+          "js/modernizr.js" : ['js/vendor/modernizr/modernizr.js'],
+          "js/require.js" : ['js/vendor/requirejs/require.js'],
+        }
       }
     },
 
@@ -163,7 +171,6 @@ module.exports = function(grunt) {
       }
     },
 
-
     // DEPLOY SCRIPTS
     // deploy via rsync
     rsync: {
@@ -211,6 +218,15 @@ module.exports = function(grunt) {
 
 
 
+  grunt.registerTask( "build:js", function() {
+    var arr = [
+      'uglify:dev_js',
+    ];
+    return grunt.task.run(arr);
+  });
+
+
+
   grunt.registerTask( "build:prep", function() {
     var arr = [
       'clean:build', 
@@ -225,7 +241,7 @@ module.exports = function(grunt) {
     var arr = [
       'build:prep',
       'jshint',
-      'compass:dist', 
+      'sass:dist', 
       'requirejs:dist', 
       'imagemin:production',
       'svgmin:production',
@@ -237,7 +253,11 @@ module.exports = function(grunt) {
   });
 
   // Default task
-  grunt.registerTask('default', ['compass:dev', 'watch']);
+  grunt.registerTask('default', [
+    'sass', 
+    'build:js',
+    'watch'
+  ]);
 
 
   // Run bower install

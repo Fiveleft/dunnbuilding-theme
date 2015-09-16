@@ -5,7 +5,9 @@
     underscore: "vendor/underscore/underscore",
     // utils: "fiveleft/core/Utils",
     // sharrre: "libs/jquery.sharrre",
-    // application: "app/Application",
+    application: "app/Application",
+    router: "app/Router",
+    events: "app/Events",
     // breakpoints: "app/Breakpoints",
     // imageload: "app/ImageLoad",
     // newscrawler: "app/modules/NewsCrawler",
@@ -20,7 +22,7 @@
     backbone: {
       deps: ['jquery', 'underscore'],
       exports: 'backbone'
-    }
+    },
     raf : {
       exports: 'raf'
     }
@@ -29,5 +31,5 @@
 require(
   ['jquery','application'], 
   function($, Application) {
-    new Application();
+    Application.start();
   });
