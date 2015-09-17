@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 
     // JsHint your javascript
     jshint : {
-      all : ['js/*.js', '!js/modernizr.js', '!js/*.min.js', '!js/vendor/**/*.js'],
+      all : ['js/*.js', '!js/modernizr.js', '!js/require.js', '!js/*.min.js', '!js/vendor/**/*.js'],
       options : {
         browser: true,
         curly: false,
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
         options: {
           sourceMap: true,
           sourceComments: false,
-          outputStyle: 'expanded',
+          outputStyle: 'compressed',
           includePaths: require('node-bourbon').includePaths
         },
         files: [{

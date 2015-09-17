@@ -13,72 +13,63 @@ define(
           var opt = _.extend( {trigger:true}, options );
           self.navigate( url, opt );
         });
-
       },
 
       routes: {
-        "" : "index",
-        "apartments" : "apartments",
-        "apartments/*path" : "apartmentType",
-        "connect" : "connect",
-        "neighborhood" : "neighborhood",
-        "building-history" : "buildingHistory",
+        "" : "index", //"index",
+        ":apartments" : "_loadRoute", //"apartments",
+        ":apartments/:path" : "apartmentType",
+        ":apartments/:path/:section" : "apartmentSection",
+        "connect" : "_loadRoute", //"connect",
+        "neighborhood" : "_loadRoute", //"neighborhood",
+        "building-history" : "_loadRoute", //"buildingHistory",
+        "*page" : "_loadRoute", //"defaultRoute",
       },
 
       index : function( q, p ) {
-        console.log( "Router.index()", this, q, p );
-        Events.trigger( Event.loadRoute, q );
+        this._loadRoute( "" );
       },
 
       apartments : function( q, p ) {
-        console.log( "Router.apartments()", this, q, p );
-        Events.trigger( Event.loadRoute, q );
+        this._loadRoute( q );
       }, 
 
       apartmentType : function( q, p ) {
         console.log( "Router.apartmentType()", this, q, p );
-        Events.trigger( Event.loadRoute, q );
+        this._loadRoute( q + "/" + p );
+      },
+
+      apartmentSection : function( a, b, c ) {
+        console.log( "Router.apartmentSection()", a, b, c );
       },
 
       buildingHistory : function( q, p ) {
-        console.log( "Router.buildingHistory()", this, q, p );
-        // Events.trigger( Event.loadRoute, q );
+        this._loadRoute( q );
+        //Events.trigger( Event.loadRoute, q );
       }, 
 
       connect : function( q, p ) {
-        console.log( "Router.connect()", this, q, p );
-        // Events.trigger( Event.loadRoute, q );
+        // console.log( "Router.connect()", this, q, p );
+        this._loadRoute( q );
+        //Events.trigger( Event.loadRoute, q );
       },
 
       neighborhood : function( q, p ) {
-        console.log( "Router.neighborhood()", this, q, p );
-        // Events.trigger( Event.loadRoute, q );
+        // console.log( "Router.neighborhood()", this, q, p );
+        this._loadRoute( q );
+        //Events.trigger( Event.loadRoute, q );
       },
 
-      // _scrollTo : function( element ) {
-      //   if( !element ) {
-      //     var target = window.location.pathname.split("/")[1];
-      //     element = $("[data-scrollto='" + target + "']");
-      //   }
-      //   Events.trigger( Events.scrollTo, element );
-      // },
+      defaultRoute : function( q, p ) {
+        // console.log( "Router.defaultRoute()", this, q, p );
+        this._loadRoute( q );
+        //Events.trigger( Event.loadRoute, q );
+      },
 
-      // _buildIndex : function() {
-      //   if( !siteindex ) {
-      //     siteindex = new SiteIndex();
-      //   }
-      // },
-
-      // index : function() {
-      //   this._buildIndex();
-      //   this._scrollTo();
-      // },
-
-      // project : function( slug ) {
-      //   this._buildIndex();
-      //   Events.trigger( "project:set", slug );
-      //   this._scrollTo();
-      // },
+      _loadRoute : function( route ) {
+        console.log( "Router._loadRoute()", route );
+        Events.trigger( Events.loadRoute, route );
+      },
 
     });
     return Router;

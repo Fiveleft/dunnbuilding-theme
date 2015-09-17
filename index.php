@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main role="main">
+<main role="main" <?php body_class() ?>>
 	<!-- section -->
 	<section class='welcome'>
 		<h1><?php the_title(); ?></h1>

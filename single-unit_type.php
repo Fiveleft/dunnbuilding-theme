@@ -7,7 +7,7 @@
 <?php get_header(); ?>
 
   <!-- Add Main for Single Unit page type -->
-  <main role="main">
+  <main role="main"   <?php body_class() ?>>
     <!-- Add Nav for Single Unit page type -->
   <?php get_template_part( 'nav-apartment-types' ); ?>
 

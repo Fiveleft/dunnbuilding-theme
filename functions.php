@@ -240,15 +240,22 @@ function remove_category_rel_from_category_list($thelist)
 function add_slug_to_body_class($classes)
 {
     global $post;
-    if (is_home()) {
+    switch( true ) {
+
+      case is_home() :
         $key = array_search('blog', $classes);
         if ($key > -1) {
             unset($classes[$key]);
         }
-    } elseif (is_page()) {
-        $classes[] = sanitize_html_class($post->post_name);
-    } elseif (is_singular()) {
-        $classes[] = sanitize_html_class($post->post_name);
+        break;
+
+      case is_page() : 
+        $classes[] = "name-" . sanitize_html_class($post->post_name);
+        break;
+
+      case is_singular() :
+        $classes[] = "name-" . sanitize_html_class($post->post_name);
+        break;
     }
 
     return $classes;

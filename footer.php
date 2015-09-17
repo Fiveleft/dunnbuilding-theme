@@ -39,6 +39,10 @@
       </footer>
       <!-- /footer -->
 
+      <div class='main-loader' aria-hidden='true' hidden>
+        <!-- load main content into this container -->
+      </div>
+
       <progress value="100" max="100">
         <span class="loading-message">Loading</span>
       </progress>

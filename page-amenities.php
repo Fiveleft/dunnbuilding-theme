@@ -23,7 +23,7 @@ Template Name: Amenities
 
 <?php if($is_own_page) : ?>
   <!-- main.amenities -->
-  <main class='amenities' role="main">
+  <main class='amenities' role="main" <?php body_class() ?>>
     <!-- article -->
     <article>
       <h1><?php the_title(); ?></h1>
@@ -36,7 +36,7 @@ Template Name: Amenities
     <!-- section.amenities -->
     <section class='amenities'>
       <h1>Building Amenities</h1>
-      <a href="/amenities">go to page</a>
+      <!-- <a href="/amenities">go to page</a> -->
 
 <?php endif; ?>
 

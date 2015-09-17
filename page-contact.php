@@ -8,7 +8,7 @@ Template Name: Contact
 
 <?php get_header(); ?>
 
-  <main role="main">
+  <main role="main" <?php body_class() ?>>
     <!-- section -->
     <article class='contact' >
 

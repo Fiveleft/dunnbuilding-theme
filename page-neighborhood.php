@@ -19,7 +19,7 @@ Template Name: Neighborhood
 
 <?php if(!$home_section) : ?>
   <!-- main -->
-  <main role="main">
+  <main role="main" <?php body_class() ?>>
     <!-- article.neighborhood --> 
     <article class='neighborhood'>
       <h1><?php the_title(); ?></h1>

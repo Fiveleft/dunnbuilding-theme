@@ -17,7 +17,7 @@ Template Name: Apartments
 
 <?php if(!$home_section) : ?>
   <!-- main.apartments -->
-  <main role="main">
+  <main role="main" <?php body_class() ?>>
     <!-- article -->
     <article>
       <section class='apartments'>

@@ -26,54 +26,56 @@
 
   <body <?php body_class(); ?>>
 
+    <!-- header -->
+    <header class="header" role="banner">
+      <div class="header-inner">
+        <!-- logo -->
+        <div class="logo">
+          <a href="<?php echo home_url(); ?>">
+            <?php get_template_part( "img/inline", "logo.svg" ); ?>
+            <!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
+            <!-- <img src="<?php //echo get_template_directory_uri(); ?>/img/logo.svg" alt="Logo" class="logo-img"> -->
+          </a>
+        </div>
+        <!-- /logo -->
+
+        <button class="chat-now" aria-hidden="true" hidden>
+          <span class="feedback"></span>
+          <span class="label">Chat Now</span>
+        </button>
+
+        <button class="rent-now">
+          <span class="feedback"></span>
+          <span class="label">Rent Now</span>
+        </button>
+
+        <button class="menu-toggle">
+          <span class="label">Menu</span>
+        </button> 
+      </div>
+    </header>
+    <!-- /header -->
+
+    <!-- rent application module -->
+    <div class='rent-application-module-wrapper'>
+      <?php get_template_part( 'module-rent-application' ); ?>
+    </div>
+
+    <!-- nav -->
+    <nav class="main-nav" role="navigation" aria-hidden="true" hidden>
+      <div class="nav-inner">
+        <?php
+          wp_nav_menu(array(
+            'theme_location'    => 'header-menu',
+            'container'         => false,
+            'menu_id'           => null,
+            'menu_class'        => 'header-nav-menu',
+            // 'items_wrap'        => '<ul class="%2$s" aria-hidden="true" hidden>%3$s</ul>'
+          )); ?>
+      </div>
+    </nav>
+    <!-- /nav -->
+
     <!-- wrapper -->
     <div class="wrapper">
 
-      <!-- header -->
-      <header class="header" role="banner">
-        <div class="header-inner">
-          <!-- logo -->
-          <div class="logo">
-            <a href="<?php echo home_url(); ?>">
-              <!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
-              <img src="<?php echo get_template_directory_uri(); ?>/img/logo.svg" alt="Logo" class="logo-img">
-            </a>
-          </div>
-          <!-- /logo -->
-
-          <button class="chat-now" aria-hidden="true" hidden>
-            <span class="feedback"></span>
-            <span class="label">Chat Now</span>
-          </button>
-
-          <button class="rent-now">
-            <span class="feedback"></span>
-            <span class="label">Rent Now</span>
-          </button>
-
-          <button class="menu-toggle">
-            <span class="label">Menu</span>
-          </button> 
-        </div>
-      </header>
-      <!-- /header -->
-
-      <!-- rent applicatoin module -->
-      <div class='rent-application-module-wrapper'>
-        <?php get_template_part( 'rent-application-module' ); ?>
-      </div>
-
-      <!-- nav -->
-      <nav class="main-nav" role="navigation" aria-hidden="true" hidden>
-        <div class="nav-inner">
-          <?php
-            wp_nav_menu(array(
-              'theme_location'    => 'header-menu',
-              'container'         => false,
-              'menu_id'           => null,
-              'menu_class'        => 'header-nav-menu',
-              // 'items_wrap'        => '<ul class="%2$s" aria-hidden="true" hidden>%3$s</ul>'
-            )); ?>
-        </div>
-      </nav>
-      <!-- /nav -->

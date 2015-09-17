@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-	<main role="main">
+	<main role="main"  <?php body_class() ?>>
 
 <?php if(is_front_page()) : ?>
 

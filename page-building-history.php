@@ -21,7 +21,7 @@ Template Name: History
 
 <?php if(!$home_section) : ?>
   <!-- main.building-history -->
-  <main role="main">
+  <main role="main" <?php body_class() ?>>
     <!-- article.building-history --> 
     <article class='building-history'>
       <h1><?php echo $page->acf->landing_page_title; ?></h1>
