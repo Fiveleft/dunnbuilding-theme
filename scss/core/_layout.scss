@@ -8,11 +8,8 @@ html, body {
 }
 
 
-body.transition-main { 
-  @include transition( background-color 1s $easeInOutCubic, color 1s $easeInOutCubic );
-}
-
 body {
+  @include transition( background-color 0.6s $easeInOutCubic, color 0.6s $easeInOutCubic );
   position: relative;
   padding-top: 200px;
 }
@@ -25,34 +22,46 @@ body > header {
   //@include transition( background-color 1s $easeInOutCubic );
 }
 header .logo path {
-  @include transition( fill 1s $easeInOutCubic );
+  @include transition( fill 0.6s $easeInOutCubic );
 }
 
 body > .wrapper {
   position: relative;
+  background-color: inherit;
 }
 body > .wrapper > main {
   position: relative;
-  top: 0; left: 0;
 }
 
 .wrapper > main {
+  @include transition( opacity 0.3s $easeOutCubic 0.6s );
   opacity: 1;
-}
-.wrapper > main.new {
-  opacity: 0;
+  background-color: inherit;
+  &.new {
+    opacity: 1;
+    z-index: 2;
+  }
+  &.old {
+    @include transition( opacity 0.2s $easeInCubic 0s );
+    opacity: 0;
+    z-index: 3;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+  }
 }
 
-body[class*="transition-"] {
-  .wrapper > main.new {
-    @include transition( opacity 0.5s $easeOutCubic 0.5s );
-    opacity: 1;
-  }
-  .wrapper > main.old {
-    @include transition( opacity 0.33s );
+body.transition-main {
+  .wrapper > main {
     opacity: 0;
   }
+  // .wrapper > main.new {
+  //   opacity: 1;
+  //   position: absolute;
+  //   top: 0; left: 0;
+  // }
 }
+
 
 body.name-home {
   background-color: $color-brand-light;

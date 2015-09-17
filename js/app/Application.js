@@ -11,6 +11,7 @@ define(
       urlRegex,
       oldPageName,
       mainTransitionTimeout,
+      mainTransitionDuration,
       scrollTopTimeout,
       targetPageView,
       targetPageName;
@@ -20,21 +21,23 @@ define(
 
       initialize : function() {
 
-        // Vars
-        urlRegex = new RegExp( localized.homeUrl );
-        targetPageName = _.find( document.body.className.split(" "), findPageNameFromClasses );
-        //targetPageView;
         
         // Elements
         $body = $( "body" );
         $wrapper = $( "body > .wrapper" );
         $main = $(".wrapper > main");
         $mainLoader = $(".wrapper > .main-loader");
-        $siteLink = $("[href^='" + localized.homeUrl + "'],[href^='/']");
+        
+        // Vars
+        urlRegex = new RegExp( localized.homeUrl );
+        targetPageName = _.find( document.body.className.split(" "), findPageNameFromClasses );
+        mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
-      
+        console.log( mainTransitionDuration )
+        //targetPageView;
+
         // Events
-        $siteLink.on( "click", function(e){
+        $body.on( "click", "[href^='" + localized.homeUrl + "'],[href^='/']", function(e){
           e.preventDefault();
           e.stopPropagation();
 
@@ -70,6 +73,8 @@ define(
         // Define Page Target
         oldPageName = _.find( document.body.className.split(" "), findPageNameFromClasses );
         targetPageName = _.find( loadedClasses, findPageNameFromClasses );
+
+        console.log( "Application._loadRouteComplete() transition " + oldPageName + " > " + targetPageName );
 
         // Do Page Transition
         startMainTransition();
@@ -119,9 +124,12 @@ define(
 
       $main = $(".wrapper > main:not(.old)");
       $main
+        .removeClass("new")
         .addClass("old")
         .after( $newMain );
-      $newMain.addClass( "new" );
+
+      $newMain
+        .addClass( "new" );
 
       $("body")
         .removeClass( oldPageName )
@@ -132,7 +140,7 @@ define(
       if( Modernizr.csstransitions ) {
         $body.addClass( transitionClasses );
         clearTimeout( mainTransitionTimeout );
-        mainTransitionTimeout = setTimeout( endMainTransition, 1000 );
+        mainTransitionTimeout = setTimeout( endMainTransition, mainTransitionDuration );
       }else{
         endMainTransition();
       }
@@ -148,12 +156,8 @@ define(
       // Clear existing Transition Classes
       removeTransitionClasses();
 
-      $mainOld = $(".wrapper > main.old" );
-      $mainNew = $(".wrapper > main.new" );
-
-      $mainOld.remove();
-      $mainNew.removeClass("new");
-
+      $(".wrapper > main.old" ).remove();
+      $(".wrapper > main.new" ).removeClass("new");
     }
 
 

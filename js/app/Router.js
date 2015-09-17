@@ -67,7 +67,7 @@ define(
       },
 
       _loadRoute : function( route ) {
-        console.log( "Router._loadRoute()", route );
+        // console.log( "Router._loadRoute()", route );
         Events.trigger( Events.loadRoute, route );
       },
 

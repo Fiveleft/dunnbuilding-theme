@@ -3,7 +3,7 @@
   ?>
 <div class='module-rent-application' role='widget' aria-describedby='rent-application-description' >
 
-  <button class='dismiss' role='button'>Close Application</button>
+  <button class='dismiss' role='button'>Close Form</button>
 
   <div class='rent-application ui-state' data-ui-state='apply'>
     <h1>Rent Now</h1>
