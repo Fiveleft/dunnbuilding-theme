@@ -16,12 +16,14 @@ add_shortcode('apartment_gallery', 'apartment_gallery_shortcode');
  */
 function apartment_gallery_shortcode($attr) 
 {
-  $slides_html = "<div class='gallery-slides'>\n";
+  $gids = explode( ",", $attr['ids'] );
+  $gallery_count = count( $gids );
+  $slides_html = "<div class='gallery-slides-wrapper'>\n";
+  $slides_html .= "  <div class='gallery-slides' data-count='$gallery_count' >\n";
   $grid_html = "<ul class='gallery-grid'>\n";
 
-  if( count($attr['ids']) ) :
+  if( $gallery_count ) :
 
-    $gids = explode( ",", $attr['ids'] );
     $gallery_index = 1;
 
     foreach( $gids as $imgID ) :
@@ -60,7 +62,7 @@ function apartment_gallery_shortcode($attr)
         $slides_html .= "</dl>\n";
 
         $grid_html .= "<li class='gallery-grid-item'>\n";
-        $grid_html .= "  <a href='#img-$gallery_index' data-index='$gallery_index'>\n";
+        $grid_html .= "  <a class='gallery-grid-link' href='#img-$gallery_index' data-index='$gallery_index'>\n";
         $grid_html .= "    <img src='" . $img_dir . $img_data['sizes']['thumbnail']['file'] . "' alt='$img_caption' />\n";
         $grid_html .= "  </a>";
         $grid_html .= "</li>";
@@ -71,7 +73,8 @@ function apartment_gallery_shortcode($attr)
     endforeach; 
   endif;
 
-  $slides_html .= "</div><!-- /.gallery-slides -->\n";
+  $slides_html .= "  </div><!-- /.gallery-slides -->\n";
+  $slides_html .= "</div><!-- /.gallery-slides-wrapper -->\n";
   $grid_html .= "</ul><!-- /.gallery-grid -->\n";
 
   $output = "<div class='gallery apartment-gallery'>\n";
@@ -89,11 +92,15 @@ function apartment_gallery_shortcode($attr)
  */
 function page_gallery_shortcode( $attr ) 
 {
+  $gids = explode( ",", $attr['ids'] );
+  $gallery_count = count( $gids );
+
   $output = "<div class='gallery page-gallery'>\n";
+  $output .= "  <div class='gallery-slides-wrapper'>\n";
+  $output .= "    <div class='gallery-slides'  data-count='$gallery_count'>\n";
 
-  if( count($attr['ids']) ) :
+  if( $gallery_count ) :
 
-    $gids = explode( ",", $attr['ids'] );
     $gallery_index = 1;
 
     foreach( $gids as $imgID ) :
@@ -134,6 +141,8 @@ function page_gallery_shortcode( $attr )
     endforeach; 
   endif;
 
+  $output .= "    </div>\n";
+  $output .= "  </div>\n";
   $output .= "</div>";
   return $output;
 }

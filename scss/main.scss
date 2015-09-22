@@ -4,10 +4,7 @@
 @import "core/variables";
 @import "core/layout";
 
+@import "module/gallery";
+@import "module/nav-apartment-types";
 
-
-body {
-  background: $color-brand-light;
-  color: $color-brand-dark;
-}
 

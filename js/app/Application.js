@@ -7,8 +7,8 @@ define(
       $wrapper,
       $main, 
       $mainLoader,
-      $siteLink,
       urlRegex,
+      siteLinkClick = false,
       oldPageName,
       mainTransitionTimeout,
       mainTransitionDuration,
@@ -19,9 +19,12 @@ define(
 
     var Application = {
 
+      /**
+       * [initialize description]
+       * @return {[type]} [description]
+       */
       initialize : function() {
 
-        
         // Elements
         $body = $( "body" );
         $wrapper = $( "body > .wrapper" );
@@ -33,30 +36,42 @@ define(
         targetPageName = _.find( document.body.className.split(" "), findPageNameFromClasses );
         mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
-        console.log( mainTransitionDuration )
+        // console.log( mainTransitionDuration );
         //targetPageView;
 
         // Events
         $body.on( "click", "[href^='" + localized.homeUrl + "'],[href^='/']", function(e){
           e.preventDefault();
           e.stopPropagation();
-
+          siteLinkClick = true;
           var href = $(e.currentTarget).attr("href"),
             url = href.replace( urlRegex, '');
 
-          Events.trigger( "router:navigate", url);
+          Events.trigger( "router:navigate", url );
         });
 
         Events.on( "router:loadRoute", this._loadRoute, this );
         // Backbone.history.on("route", this._loadRoute );
       },
 
+
+      /**
+       * [start description]
+       * @return {[type]} [description]
+       */
       start : function() {
         this.initialize();
         Backbone.history.start({pushState: true});
         new Router();
       },
 
+
+      /**
+       * [_loadRoute description]
+       * @param  {[type]} route      [description]
+       * @param  {[type]} targetView [description]
+       * @return {[type]}            [description]
+       */
       _loadRoute : function ( route, targetView ) {
         var self = this;
         targetPageView = targetView;
@@ -66,6 +81,11 @@ define(
         });
       },
 
+
+      /**
+       * [_loadRouteComplete description]
+       * @return {[type]} [description]
+       */
       _loadRouteComplete : function() {
         var $loadedMain = $mainLoader.children("main"),
           loadedClasses = $loadedMain[0].className.split(" ");
@@ -98,6 +118,11 @@ define(
       } 
     }
 
+
+    /**
+     * [removeTransitionClasses description]
+     * @return {[type]} [description]
+     */
     function removeTransitionClasses() {
       var removeClasses = "",
         current = document.body.className.split(" ");
@@ -112,8 +137,14 @@ define(
     }
 
 
+
+    /**
+     * [startMainTransition description]
+     * @return {[type]} [description]
+     */
     function startMainTransition() {
 
+      var scrollTopDelay = Modernizr.csstransitions ? mainTransitionDuration * 0.5 : 0;
       var $newMain = $mainLoader.children("main");
       var transitionClasses = 'transition-main';
       transitionClasses += ' transition-from-' + oldPageName.replace( /name-/ig, '' );
@@ -136,19 +167,27 @@ define(
         .addClass( targetPageName );
 
 
-
       if( Modernizr.csstransitions ) {
         $body.addClass( transitionClasses );
         clearTimeout( mainTransitionTimeout );
         mainTransitionTimeout = setTimeout( endMainTransition, mainTransitionDuration );
+
       }else{
         endMainTransition();
       }
 
-      //clearTimeout( scrollTopTimeout );
-      //scrollTopTimeout = setTimeout( function(){ $(window).scrollTop(0); }, 500 );
+      if( siteLinkClick ) {
+        siteLinkClick = false;
+        clearTimeout( scrollTopTimeout );
+        scrollTopTimeout = setTimeout( function(){ $(window).scrollTop(0); }, scrollTopDelay );
+      }
     }
 
+
+    /**
+     * [endMainTransition description]
+     * @return {[type]} [description]
+     */
     function endMainTransition() {
       //clearTimeout( scrollTopTimeout );
       clearTimeout( mainTransitionTimeout );
@@ -159,8 +198,6 @@ define(
       $(".wrapper > main.old" ).remove();
       $(".wrapper > main.new" ).removeClass("new");
     }
-
-
 
 
     return Application;

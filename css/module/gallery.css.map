@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "gallery.css",
+	"sources": [
+		"../../scss/module/gallery.scss"
+	],
+	"sourcesContent": [],
+	"mappings": "AAEA,QAAQ,AAAC,CAEP,UAAU,CAAE,IAAK,CAFT",
+	"names": []
+}

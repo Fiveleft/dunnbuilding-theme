@@ -26,48 +26,48 @@ define(
         "*page" : "_loadRoute", //"defaultRoute",
       },
 
-      index : function( q, p ) {
-        this._loadRoute( "" );
+      index : function( route, params ) {
+        this._loadRoute( "", params );
       },
 
-      apartments : function( q, p ) {
-        this._loadRoute( q );
+      apartments : function( route, params ) {
+        this._loadRoute( route, params );
       }, 
 
-      apartmentType : function( q, p ) {
-        console.log( "Router.apartmentType()", this, q, p );
-        this._loadRoute( q + "/" + p );
+      apartmentType : function( route, params ) {
+        console.log( "Router.apartmentType()", this, route, params );
+        this._loadRoute( route + '/' + params );
       },
 
       apartmentSection : function( a, b, c ) {
         console.log( "Router.apartmentSection()", a, b, c );
       },
 
-      buildingHistory : function( q, p ) {
-        this._loadRoute( q );
+      buildingHistory : function( route, params ) {
+        this._loadRoute( route, params );
         //Events.trigger( Event.loadRoute, q );
       }, 
 
-      connect : function( q, p ) {
-        // console.log( "Router.connect()", this, q, p );
-        this._loadRoute( q );
+      connect : function( route, params ) {
+        // console.log( "Router.connect()", this, route, params );
+        this._loadRoute( route, params );
         //Events.trigger( Event.loadRoute, q );
       },
 
-      neighborhood : function( q, p ) {
-        // console.log( "Router.neighborhood()", this, q, p );
-        this._loadRoute( q );
+      neighborhood : function( route, params ) {
+        // console.log( "Router.neighborhood()", this, route, params );
+        this._loadRoute( route, params );
         //Events.trigger( Event.loadRoute, q );
       },
 
-      defaultRoute : function( q, p ) {
-        // console.log( "Router.defaultRoute()", this, q, p );
-        this._loadRoute( q );
+      defaultRoute : function( route, params ) {
+        // console.log( "Router.defaultRoute()", this, route, params );
+        this._loadRoute( route, params );
         //Events.trigger( Event.loadRoute, q );
       },
 
-      _loadRoute : function( route ) {
-        // console.log( "Router._loadRoute()", route );
+      _loadRoute : function( route, params ) {
+        console.log( "Router._loadRoute()", route, params );
         Events.trigger( Events.loadRoute, route );
       },
 
