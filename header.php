@@ -27,7 +27,7 @@
   <body <?php body_class(); ?>>
 
     <!-- header -->
-    <header class="header" role="banner">
+    <header class="site-header" role="banner">
       <div class="header-inner">
         <!-- logo -->
         <div class="logo">

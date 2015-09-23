@@ -74,6 +74,7 @@ body.name-home {
   }
 }
 
+body.name-home section.apartments,
 body.name-apartments {
   background-color: $color-brand-dark;
   color: $color-brand-light;
@@ -82,6 +83,8 @@ body.name-apartments {
   }
 }
 
+body.name-home section.amenities,
+body.name-home section.building-history,
 body.name-building-history {
   background-color: $color-brand-brown;
   color: $color-brand-dark;
@@ -90,6 +93,7 @@ body.name-building-history {
   }
 }
 
+body.name-home section.neighborhood,
 body.name-neighborhood {
   background-color: $color-brand-light;
   color: $color-brand-dark; 

@@ -29,7 +29,7 @@ define(
         $body = $( "body" );
         $wrapper = $( "body > .wrapper" );
         $main = $(".wrapper > main");
-        $mainLoader = $(".wrapper > .main-loader");
+        $mainLoader = $("body > .main-loader");
         
         // Vars
         urlRegex = new RegExp( localized.homeUrl );
@@ -75,6 +75,8 @@ define(
       _loadRoute : function ( route, targetView ) {
         var self = this;
         targetPageView = targetView;
+
+        console.log( "Application._loadRoute()", route );
 
         $mainLoader.load('/' + route + ' .wrapper > main', function(){ 
           self._loadRouteComplete(); 

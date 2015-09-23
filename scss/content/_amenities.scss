@@ -1,0 +1,59 @@
+// _amenities.scss
+
+.amenities {
+
+  .amenity-list-wrapper {
+    display: block;
+  }
+
+  .amenity-list {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .amenity-item {
+    width: 100%;
+    padding: 0 0 20px;
+  }
+
+  .amenity-item-inner {
+    padding-top: 10px;
+    border-top: 2px solid $color-brand-medium;
+  }
+
+}
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  .amenities {
+
+    .amenity-list {
+      @include clearfix();
+      margin: 0 -10px;
+    }
+
+    .amenity-item {
+      width: 50%;
+      float: left;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+
+  }
+}
+
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  .amenities {
+
+    .amenity-item {
+      width: 1/3 * 100%;
+    }
+  }
+}
