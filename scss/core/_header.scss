@@ -4,7 +4,6 @@ header.site-header {
   position: fixed;
   top: 0; left: 0; width: 100%;
   z-index: 10000;
-  height: 70px;
 
   .header-inner {
     display: block;
@@ -64,15 +63,15 @@ header.site-header {
       @include hide-text();
     }
   }
-
-
 }
+
+
+
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
-  
+
   header.site-header {
-    height: 120px;
 
     .header-inner {
       @include clearfix();
@@ -129,7 +128,7 @@ header.site-header {
 @media only screen and (min-width: $width-lg-min) {
 
   header.site-header {
-    height: 180px;
+
     .logo {
       height: 160px;
     }

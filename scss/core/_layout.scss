@@ -5,6 +5,9 @@
   box-sizing: border-box;
 }
 
+body, html {
+  height: 100%;
+}
 
 body {
   @include transition( background-color 0.6s $easeInOutCubic, color 0.6s $easeInOutCubic );
@@ -97,12 +100,15 @@ body.name-neighborhood {
 // MAIN / ARTICLE
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+/** See /core/_header.scss for padding-top **/
+
 main > article {
-
-  padding-top: 72px;
-
+  min-height: 100%;
 }
 
+body.name-home article > section {
+  min-height: 90vh;
+}
 
 
 
@@ -111,16 +117,34 @@ main > article {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
+body > .wrapper > main {
+  padding-top: 70px;
+}
+
+header.site-header {
+  height: 70px;
+}
+
 .break-container {
   display: block;
   padding-left: 15px;
   padding-right: 15px;
-
 }
+
+
 
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
+
+
+  body > .wrapper > main {
+    padding-top: 120px;
+  }
+
+  header.site-header {
+    height: 120px;
+  }
 
   .break-container {
     width: $width-sm-min;
@@ -145,6 +169,15 @@ main > article {
 
 /* Large Desktop */
 @media only screen and (min-width: $width-lg-min) {
+
+
+  body > .wrapper > main {
+    padding-top: 180px;
+  }
+
+  header.site-header {
+    height: 180px;
+  }
 
   .break-container {
     width: $width-lg-min;
