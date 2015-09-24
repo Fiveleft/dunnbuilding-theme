@@ -21,8 +21,8 @@
     ));
     ?>
 
-  <article style="border-top:1px solid #333;" class='apartment unit-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
-    <div class='article-inner'>
+  <article class='apartment unit-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
+    <div class='article-inner <?php if( $is_own_page ) echo "break-container"; ?>'>
       <h1><?php echo $apt->post_title; ?></h1>
       
       <section class="apartment-info">

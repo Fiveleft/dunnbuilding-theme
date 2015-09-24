@@ -3,25 +3,29 @@
 	<main role="main"  <?php body_class() ?>>
 
 <?php if(is_front_page()) : ?>
-
-	<!-- welcome -->
-	<section class='welcome'>
-		<h1><?php the_title(); ?></h1>
-	</section>
-	<!-- /welcome -->
-  <!-- apartments -->
-  <?php get_template_part( 'page', 'apartments' ); ?>
-  <!-- /apartments -->
-  <!-- amenities -->
-  <?php get_template_part( 'page', 'amenities' ); ?>
-  <!-- /amenities -->
-  <!-- history -->
-  <?php get_template_part( 'page', 'building-history' ); ?>
-  <!-- /history -->
-  <!-- neighborhood -->
-  <?php get_template_part( 'page', 'neighborhood' ); ?>
-  <!-- /neighborhood -->
-
+    <article class='landing-page'>
+    	<!-- welcome -->
+    	<section class='welcome'>
+        <!-- section-inner.break-container -->
+        <div class='section-inner break-container'>
+          <h1><?php the_title(); ?></h1>
+        </div> 
+        <!-- /div.section-inner.break-container -->
+    	</section>
+    	<!-- /welcome -->
+      <!-- apartments -->
+      <?php get_template_part( 'page', 'apartments' ); ?>
+      <!-- /apartments -->
+      <!-- amenities -->
+      <?php get_template_part( 'page', 'amenities' ); ?>
+      <!-- /amenities -->
+      <!-- history -->
+      <?php get_template_part( 'page', 'building-history' ); ?>
+      <!-- /history -->
+      <!-- neighborhood -->
+      <?php get_template_part( 'page', 'neighborhood' ); ?>
+      <!-- /neighborhood -->
+    </article>
 
 <?php else : ?>
 

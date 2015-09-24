@@ -9,6 +9,17 @@ nav.unit-type-nav {
   border: 0 solid $color-brand-dark;
   border-width: 0 1px;
 
+  .unit-type-list, li {
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+ 
+  .unit-type-list li {
+    padding: 0 0 10px; 
+  }
+
   .unit-type-link {
     display: block;
     width: 100%;
@@ -22,7 +33,6 @@ nav.unit-type-nav {
     color: $color-brand-dark;
     border: 2px solid $color-brand-dark;
     border-width: 2px 1px;
-    font-size: 20px;
 
     &:first-child {
       margin-top: 0;
@@ -33,10 +43,14 @@ nav.unit-type-nav {
     display: block;
     width: 100%;
     height: 100%;
-    padding: 10px 20px;
+    padding: 12px 20px 5px;
     vertical-align: middle;
-    text-transform: uppercase;
+
+    @include button-font-style();
+    font-weight: 900;
+    line-height: 23px;
     background: transparent;
+
   }
 }
 
@@ -48,15 +62,23 @@ nav.unit-type-nav {
   nav.unit-type-nav {
 
     display: block;
-    height: 108px;
     width: 100%;
-    padding: 0 1px 0 0;
-    @include clearfix;
+    height: 108px;
+
+    .unit-type-list {
+      @include clearfix;
+      height: 100%;
+    }
+    .unit-type-list li {
+      float: left;
+      width: 20%;
+      height: 100%;
+    }
 
     .unit-type-link {
       display: table;
-      width: 20%;
-      height: 100%; margin: 0; padding: 0 0 0 1px;
+      width: 100%; height: 100%; 
+      margin: 0; padding: 0;
       float: left;
       vertical-align: top;
     }

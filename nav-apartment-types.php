@@ -1,5 +1,6 @@
 
-  <nav class='unit-type-nav'>  
+  <nav class='unit-type-nav'> 
+    <ul class='unit-type-list'>
     <?php 
       // Load Apartments
       $apartments = new WP_Query( array( 
@@ -12,12 +13,15 @@
         $apartments->the_post(); 
         $apt = create_apartment_type( $post );
       ?>
-        <a href="/apartments/<?php echo $apt->post_name; ?>" class='btn unit-type-link'>
-          <span class='label'><?php echo $apt->post_title; ?></span>
-        </a>
+        <li>
+          <a class='btn unit-type-link' href="/apartments/<?php echo $apt->post_name; ?>">
+            <span class='label'><?php echo $apt->post_title; ?></span>
+          </a>
+        </li>
     <?php 
       endwhile; 
       wp_reset_postdata();
       ?>
+    </ul>
   </nav>
 

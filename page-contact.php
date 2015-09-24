@@ -11,9 +11,11 @@ Template Name: Contact
   <main role="main" <?php body_class() ?>>
     <!-- section -->
     <article class='contact' >
-
-      <h1><?php the_title(); ?></h1>
-
+      <!-- section-inner.break-container -->
+      <div class='section-inner break-container'>
+        <h1><?php the_title(); ?></h1>
+      </div> 
+      <!-- /div.section-inner.break-container -->
     </article>
     <!-- /section -->
   </main>
@@ -23,10 +25,11 @@ Template Name: Contact
 <?php else : ?>
 
   <section class='contact'>
-
-    <h1><?php the_title(); ?></h1>
-    
-
+    <!-- section-inner.break-container -->
+    <div class='section-inner break-container'>
+      <h1><?php the_title(); ?></h1>
+    </div> 
+    <!-- /div.section-inner.break-container -->
   </section>
 
 <?php endif; ?>

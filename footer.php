@@ -8,7 +8,7 @@
       <div class="footer-fixed">
       </div>
 
-      <div class="footer-inner">
+      <div class="footer-inner break-container">
 
         <!-- copyright -->
         <p class="copyright">

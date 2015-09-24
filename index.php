@@ -3,11 +3,12 @@
 <main role="main" <?php body_class() ?>>
 	<!-- section -->
 	<section class='welcome'>
-		<h1><?php the_title(); ?></h1>
-
-
-
-	</section>
+    <!-- section-inner.break-container -->
+    <div class='section-inner break-container'>
+		  <h1><?php the_title(); ?></h1>
+    </div> 
+    <!-- /div.section-inner.break-container -->
+  </section>
 	<!-- /section -->
 
   <!-- apartments -->

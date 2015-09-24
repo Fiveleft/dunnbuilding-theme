@@ -1,43 +1,65 @@
 // _header.scss
 header.site-header {
 
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 10000;
+  height: 70px;
+
   .header-inner {
     display: block;
-    position: relative;
-    padding: 10px 50px 10px 10px;
-    @include clearfix();
+    text-align: center;
   }
 
   .logo {
-    display: block;
-    float: left;
+    display: inline-block;
+    width: auto; 
+    height: 60px;
+    margin: 5px 0;
+    a, svg {
+      display: block;
+      width: auto; 
+      height: 100%;
+    }
   }
 
   button.chat-now {
+    display: none;
+  }
 
+  button.rent-now, button.menu-toggle {
+    display: block;
+    position: absolute;
+    top: 0;
+    margin: 0;
+    background: transparent;
   }
 
   button.rent-now {
-    display: block;
-    float: right;
+    top: 15px;
+    left: 15px;
     border: 2px solid $color-brand-dark;
-    background: transparent;
-    line-height: 26px;
-    height: 30px;
-    padding: 0 30px;
+    font-size: 12px;
+    line-height: 15px;
+    width: 70px;
+    height: auto;
+    padding: 5px 5px 2px;
+    // padding: 0 20px;
+    // background: transparent;
+    // float: left;
   }
 
   button.menu-toggle {
-    position: absolute;
     top: 0;
     right: 0;
     border: none;
-    background: transparent;
-    width: 50px; height: 50px; padding: 10px; margin: 0;
+    padding: 15px 10px 15px;
+    width: 60px;
+    height: 60px;
 
     .label {
       display: block;
-      width: 30px; height: 30px; 
+      width: 40px; height: 40px; 
       border: 1px dotted $color-brand-dark;
       @include hide-text();
     }
@@ -48,15 +70,80 @@ header.site-header {
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
+  
   header.site-header {
+    height: 120px;
 
+    .header-inner {
+      @include clearfix();
+    }
+    .logo {
+      float: left;
+      display: block;
+      margin: 10px 0;
+      height: 100px;
+    }
+    .extras {
+      position: relative;
+      float: right;
+      width: 280px; 
+      height: 120px;
+      padding: 60px 60px 0 40px;
+      border-left: 2px solid $color-brand-dark;
+      text-align: left;
+    }
+
+    button.rent-now {
+      position: absolute;
+      top: 0;
+      left: auto;
+      width: 160px;
+      height: auto;
+      padding: 27px 20px 5px;
+      border-top: none;
+      font-size: inherit;
+    }
+    button.menu-toggle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      .label {
+        background: #333;
+      }
+    }
+    a.btn {
+      display: inline-block;
+      @include button-font-style;
+    }
   }
 }
 
 /* Tablet Landscape */
 @media only screen and (min-width: $width-md-min) {
   header.site-header {
-
   }
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  header.site-header {
+    height: 180px;
+    .logo {
+      height: 160px;
+    }
+    .extras {
+      height: 180px;
+      padding-top: 80px;
+    }
+    button.rent-now {
+      padding-top: 51px;
+    }
+    button.menu-toggle {
+      top: 23px;
+    }
+  }
+
 }
 

@@ -26,7 +26,9 @@ Template Name: Amenities
   <main class='amenities' role="main" <?php body_class() ?>>
     <!-- article -->
     <article>
-      <h1><?php the_title(); ?></h1>
+      <!-- section-inner.break-container -->
+      <div class='section-inner break-container'>
+        <h1><?php the_title(); ?></h1>
 
 <?php else : ?>
 
@@ -35,8 +37,9 @@ Template Name: Amenities
     ?>
     <!-- section.amenities -->
     <section class='amenities'>
-      <h1>Building Amenities</h1>
-      <!-- <a href="/amenities">go to page</a> -->
+      <!-- section-inner.break-container -->
+      <div class='section-inner break-container'>
+        <h1>Building Amenities</h1>
 
 <?php endif; ?>
 
@@ -70,6 +73,8 @@ Template Name: Amenities
 
 <?php if($is_own_page) : ?>
 
+      </div>
+      <!-- /section-inner.break-container -->
     </article>
     <!-- /article -->
   </main>
@@ -78,6 +83,8 @@ Template Name: Amenities
 
 <?php else : ?>
 
+      </div>
+      <!-- /section-inner.break-container -->
     </section>
     <!-- /section.amenities -->
   <?php 

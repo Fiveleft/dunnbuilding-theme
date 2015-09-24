@@ -21,14 +21,18 @@ Template Name: Apartments
     <!-- article -->
     <article>
       <section class='apartments'>
-        <h1><?php the_title(); ?></h1>
+        <!-- section-inner.break-container -->
+        <div class='section-inner break-container'>
+          <h1><?php the_title(); ?></h1>
 
 <?php else : ?>
 
     <!-- section.apartments -->
     <section class='apartments'>
-      <h1><?php echo $page->post_title; ?></h1>
-      <a href="/apartments">go to page</a>
+      <!-- section-inner.break-container -->
+      <div class='section-inner break-container'>
+        <h1><?php echo $page->post_title; ?></h1>
+        <a href="/apartments">go to page</a>
 
 <?php endif; ?>
 
@@ -72,9 +76,11 @@ Template Name: Apartments
 
 <?php if(!$home_section) : ?>
 
-      <?php 
-        get_template_part( 'page-amenities' ); 
-        ?>
+      </div>
+      <!-- /section-inner.break-container -->
+
+      <?php get_template_part( 'page-amenities' ); ?>
+      
     </article>
     <!-- /article -->
   </main>
@@ -83,6 +89,8 @@ Template Name: Apartments
 
 <?php else : ?>
 
+      </div>
+      <!-- /section-inner.break-container -->
     </section>
     <!-- /section.amenities -->
   <?php 

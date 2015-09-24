@@ -15,7 +15,7 @@
     <script>
       // Font Loading
       (function(d) {
-        var config = { kitId: 'qei2xts', scriptTimeout: 3000, async: true },
+        var config = { kitId: 'toh1osx', scriptTimeout: 3000, async: true },
         h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
       })(document);
     </script>
@@ -28,30 +28,25 @@
 
     <!-- header -->
     <header class="site-header" role="banner">
-      <div class="header-inner">
-        <!-- logo -->
+      <div class="header-inner break-container">
         <div class="logo">
           <a href="<?php echo home_url(); ?>">
-            <?php get_template_part( "img/inline", "logo.svg" ); ?>
             <!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
-            <!-- <img src="<?php //echo get_template_directory_uri(); ?>/img/logo.svg" alt="Logo" class="logo-img"> -->
+            <?php get_template_part( "img/inline", "logo.svg" ); ?>
           </a>
         </div>
-        <!-- /logo -->
-
-        <button class="chat-now" aria-hidden="true" hidden>
-          <span class="feedback"></span>
-          <span class="label">Chat Now</span>
-        </button>
-
-        <button class="rent-now">
-          <span class="feedback"></span>
-          <span class="label">Rent Now</span>
-        </button>
-
-        <button class="menu-toggle">
-          <span class="label">Menu</span>
-        </button> 
+        <div class='extras'>
+          <button class="rent-now">
+            <span class="feedback"></span>
+            <span class="label">Rent Now</span>
+          </button>
+          <a class='btn tel' href="tel:555-555-5555" aria-hidden="true" hidden>555-555-5555</a>
+          <br/>
+          <a class='btn live-chat-link' href="#live-chat" aria-hidden="true" hidden>Live Chat</a>
+          <button class="menu-toggle">
+            <span class="label">Menu</span>
+          </button> 
+        </div>
       </div>
     </header>
     <!-- /header -->

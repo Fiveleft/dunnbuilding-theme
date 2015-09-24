@@ -1,7 +1,5 @@
-// core.scss
-html, body {
+// _layout.scss
 
-}
 
 * {
   box-sizing: border-box;
@@ -11,21 +9,15 @@ html, body {
 body {
   @include transition( background-color 0.6s $easeInOutCubic, color 0.6s $easeInOutCubic );
   position: relative;
-  padding-top: 200px;
   background: $color-brand-light;
   color: $color-brand-dark;
 }
 
 body > header {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 200px;
   background-color: inherit;
-  z-index: 10000;
-
   .logo path {
     @include transition( fill 0.6s $easeInOutCubic );
   }
-  //@include transition( background-color 1s $easeInOutCubic );
 }
 
 body > .wrapper {
@@ -58,13 +50,7 @@ body.transition-main {
   .wrapper > main {
     opacity: 0;
   }
-  // .wrapper > main.new {
-  //   opacity: 1;
-  //   position: absolute;
-  //   top: 0; left: 0;
-  // }
 }
-
 
 body.name-home {
   background-color: $color-brand-light;
@@ -101,3 +87,71 @@ body.name-neighborhood {
     fill: $color-brand-dark;
   }
 }
+
+
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// MAIN / ARTICLE
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+main > article {
+
+  padding-top: 72px;
+
+}
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// BREAKPOINTS
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+.break-container {
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+
+}
+
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  .break-container {
+    width: $width-sm-min;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  .break-container {
+    width: $width-md-min;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  .break-container {
+    width: $width-lg-min;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+

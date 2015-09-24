@@ -22,30 +22,34 @@ Template Name: Neighborhood
   <main role="main" <?php body_class() ?>>
     <!-- article.neighborhood --> 
     <article class='neighborhood'>
-      <h1><?php the_title(); ?></h1>
+      <!-- section-inner.break-container -->
+      <div class='section-inner break-container'>
+        <h1><?php the_title(); ?></h1>
 
 
 <?php else : ?>
 
     <!-- section.neighborhood -->
     <section class='neighborhood'>
-      <h1><?php echo $page->post_title; ?></h1>
-      <a href="/neighborhood">go to page</a>
+      <!-- section-inner.break-container -->
+      <div class='section-inner break-container'>
+
+        <h1><?php echo $page->post_title; ?></h1>
+        <a href="/neighborhood">go to page</a>
 
 <?php endif; ?>
 
-    
-
-      <div class='map-wrapper'>
-        <?php echo $page->acf->google_map->address; ?>
-      </div>
-      <div class='content-wrapper'>
-        <?php echo $page->post_content; ?>
-      </div>
-      
+        <div class='map-wrapper'>
+          <?php echo $page->acf->google_map->address; ?>
+        </div>
+        <div class='content-wrapper'>
+          <?php echo $page->post_content; ?>
+        </div>
+        
 
 <?php if(!$home_section) : ?>
-
+      </div> 
+      <!-- /div.section-inner.break-container -->
     </article>
     <!-- /article.neighborhood -->
   </main>
@@ -53,7 +57,8 @@ Template Name: Neighborhood
   <?php get_footer(); ?>
 
 <?php else : ?>
-
+      </div> 
+      <!-- /div.section-inner.break-container -->
     </section>
     <!-- /section.neighborhood -->
 
