@@ -22,11 +22,12 @@ Template Name: History
 <?php if(!$home_section) : ?>
   
   <!-- main.building-history -->
-  <main role="main" <?php body_class() ?>>
+  <main role="main" class='name-<?php echo $page->post_name; ?> color-dark-on-brown'>
     <!-- article.building-history --> 
     <article class='building-history'>
 
 <?php else : ?>
+  
     <!-- section.building-history -->
     <section class='building-history'>
 

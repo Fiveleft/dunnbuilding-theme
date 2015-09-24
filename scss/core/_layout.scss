@@ -40,13 +40,15 @@ body > .wrapper > main {
     z-index: 2;
   }
   &.old {
-    @include transition( opacity 0.2s $easeInCubic 0s );
+    visibility: hidden;
+    @include transition( opacity 0s $easeInCubic 0s );
     opacity: 0;
     z-index: 3;
     position: absolute;
     top: 0; left: 0;
     width: 100%;
   }
+
 }
 
 body.transition-main {
@@ -64,6 +66,7 @@ body.name-home {
 }
 
 body.name-home section.apartments,
+body.name-unit-type,
 body.name-apartments {
   background-color: $color-brand-dark;
   color: $color-brand-light;
@@ -104,6 +107,7 @@ body.name-neighborhood {
 
 main > article {
   min-height: 100%;
+  padding-top: 70px;
 }
 
 body.name-home article > section {
@@ -131,6 +135,8 @@ header.site-header {
   padding-right: 15px;
 }
 
+.xs-hide { display: none; }
+.xs-show { display: block; }
 
 
 
@@ -153,6 +159,9 @@ header.site-header {
     margin-left: auto;
     margin-right: auto;
   }
+
+  .xs-hide { display: block; }
+  .xs-show { display: none; }
 
 }
 

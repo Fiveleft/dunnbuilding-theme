@@ -1,38 +1,38 @@
 
-
+nav.unit-type-sections,
 nav.unit-type-nav {
 
 
   display: block;
   width: 100%; 
   height: auto;
-  border: 0 solid $color-brand-dark;
-  border-width: 0 1px;
+  background: transparent;
+  margin-bottom: 30px;
 
-  .unit-type-list, li {
+  ul, .unit-type-list {
     display: block;
     padding: 0;
     margin: 0;
-    list-style: none;
   }
  
-  .unit-type-list li {
+  li, .unit-type-list li {
+    margin: 0;
     padding: 0 0 10px; 
+    list-style: none;
   }
 
-  .unit-type-link {
+  a, .unit-type-link {
     display: block;
     width: 100%;
     height: auto;
     margin: 10px 0 0;
-    padding: 0 0 2px 2px;
+    // padding: 0 0 2px 2px;
     //padding-bottom: 5px;
     text-decoration: none;
     text-align: center;
     background: $color-brand-brown;
     color: $color-brand-dark;
     border: 2px solid $color-brand-dark;
-    border-width: 2px 1px;
 
     &:first-child {
       margin-top: 0;
@@ -43,7 +43,7 @@ nav.unit-type-nav {
     display: block;
     width: 100%;
     height: 100%;
-    padding: 12px 20px 5px;
+    padding: 12px 20px 7px;
     vertical-align: middle;
 
     @include button-font-style();
@@ -55,40 +55,88 @@ nav.unit-type-nav {
 }
 
 
+.studio nav.unit-type-nav .unit-type-link[href$="studio"],
+.one-bedroom nav.unit-type-nav .unit-type-link[href$="one-bedroom"],
+.one-bedroom-den nav.unit-type-nav .unit-type-link[href$="one-bedroom-den"],
+.two-bedroom nav.unit-type-nav .unit-type-link[href$="two-bedroom"],
+.two-bedroom-office nav.unit-type-nav .unit-type-link[href$="two-bedroom-office"] {
+  color: $color-brand-brown;
+  .label {
+    background: $color-brand-dark;
+  }
+}
+
+
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
 
+  nav.unit-type-sections,
   nav.unit-type-nav {
 
     display: block;
     width: 100%;
-    height: 108px;
+    height: 90px;
 
-    .unit-type-list {
-      @include clearfix;
+    ul, .unit-type-list {
+      display: table;
       height: 100%;
+      background: $color-brand-dark;
     }
-    .unit-type-list li {
-      float: left;
+
+    li, .unit-type-list li {
+      display: table-cell;
+      vertical-align: middle;
+      height: 100%;
       width: 20%;
-      height: 100%;
+      padding: 0;
     }
 
-    .unit-type-link {
+    a, .unit-type-link {
       display: table;
       width: 100%; height: 100%; 
-      margin: 0; padding: 0;
+      margin: 0; 
+      padding: 0 0 0 2px;
       float: left;
       vertical-align: top;
+      background: $color-brand-dark;
+      border: none;
+    }
+
+    li:first-child a, 
+    .unit-type-list li:first-child .unit-type-link {
+      padding-left: 0;
     }
 
     .label {
+      line-height: 20px;
       display: table-cell;
+      padding: 0 20px;
+      background: $color-brand-brown;
     }
-
   }
 
+  nav.unit-type-sections {
 
+    margin: 60px 0;
+    height: 60px;
+
+  }
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  nav.unit-type-nav {
+
+    height: 108px;
+    margin-bottom: 60px;
+
+    .label {
+      font-size: 20px;
+      line-height: 22px;
+    }
+  }
 
 }
+

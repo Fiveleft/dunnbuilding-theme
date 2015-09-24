@@ -1,0 +1,108 @@
+
+article.apartment.unit-type {
+
+  min-height: 100vh;
+
+  section {
+    margin-bottom: 2em;
+  }
+
+  .section-info {
+
+    h1 + h3 {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    h3 {
+      margin-top: 50px;
+      padding-top: 12px;
+      border-top: 2px solid $color-brand-medium;
+    }
+
+    h3.amenities ~ ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 0;
+
+      li {
+        display: inline;
+        &:after {
+          content: ", ";
+        }
+        &:last-child:after {
+          content: "";
+        }
+      }
+    }
+
+    .site-link {
+      // @include button-font-style;
+      @extend h3;
+      display: block;
+
+      & ~ .site-link {
+        margin-top: 12px;
+      }
+    }
+  }
+
+  .section-gallery {
+
+  }
+
+
+}
+
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  article.apartment.unit-type {
+
+  }
+
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  article.apartment.unit-type {
+
+    .article-inner {
+      position: relative;
+      @include clearfix;
+    }
+
+    .section-info, .section-gallery {
+      width: 50%;
+    }
+
+    .section-info {
+      padding-right: 15px;
+      float: left;
+    }
+    .section-gallery {
+      padding-left: 15px;
+      float: right;
+    }
+    .section-available-units {
+      padding: 0;
+      float: left;
+      width: 100%;
+    }
+
+
+  }
+
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  article.apartment.unit-type {
+
+  }
+
+}

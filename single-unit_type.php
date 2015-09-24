@@ -7,9 +7,7 @@
 <?php get_header(); ?>
 
   <!-- Add Main for Single Unit page type -->
-  <main role="main"   <?php body_class() ?>>
-    <!-- Add Nav for Single Unit page type -->
-  <?php get_template_part( 'nav-apartment-types' ); ?>
+  <main role="main" class='name-unit-type color-light-on-dark' >
 
 <?php endif; ?>
 
@@ -22,24 +20,71 @@
     ?>
 
   <article class='apartment unit-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
+    
+<?php if( $is_own_page ) : ?>
+
+    <!-- Add Nav for Single Unit page type -->
+    <div class='nav-row break-container'>
+      <?php get_template_part( 'nav-apartment-types' ); ?>
+    </div>
+
+<?php endif; ?>
+
     <div class='article-inner <?php if( $is_own_page ) echo "break-container"; ?>'>
-      <h1><?php echo $apt->post_title; ?></h1>
       
-      <section class="apartment-info">
+      
+      <section class="section-gallery">
         <div class='section-inner'>
-          <?php echo $apt->post_content; ?>
+          <?php if( $apt->gallery ) echo $apt->gallery; ?>
+
+      <?php if(!$is_own_page) : ?>
+
+          <nav class='unit-type-sections'>
+            <ul>
+              <li>
+                <a href="/apartments/<?php echo $apt->post_name; ?>" class='unit-type-sections-link'>
+                  <span class='label'>Details</span>
+                </a>
+              </li>
+              <li>
+                <a href="/apartments/<?php echo $apt->post_name; ?>/floor-plans" class='unit-type-sections-link'>
+                  <span class='label'>Floor Plans</span>
+                </a>
+              </li>
+              <li>
+                <a href="#rent-now" class='unit-type-sections-link'>
+                  <span class='label'>Rent Now</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+      <?php endif; ?>
+
         </div>
       </section>
 
-    <?php if( $apt->gallery ) : ?>
-      <section class="apartment-gallery">
+      <section class="section-info">
         <div class='section-inner'>
-          <?php echo $apt->gallery; ?>
+          <h1 class='xs-show'><?php echo $apt->post_title; ?></h1>
+          <?php echo apply_filters( 'the_content', $apt->post_content ); ?>
+
+      <?php if($is_own_page) : ?>
+      
+          <a class='site-link' href="/apartments/<?php echo $apt->post_name; ?>/building-amenities">
+            <span class='label'>Building Amenities</span>
+          </a>
+          <a class='site-link' href="/neighborhood">
+            <span class='label'>Neighborhood Attractions</span>
+          </a>
+
+      <?php endif; ?>
+      
         </div>
       </section>
-    <?php endif; ?>
 
-      <section class="available-units">
+
+      <section class="section-available-units">
         <div class='section-inner'>
           <ul class='available-units-list'>
 

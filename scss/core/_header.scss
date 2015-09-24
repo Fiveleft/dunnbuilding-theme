@@ -1,3 +1,16 @@
+
+// 
+.logo {
+  display: inline-block;
+  width: auto; 
+  a, svg {
+    display: block;
+    width: auto; 
+    height: 100%;
+  }
+}
+
+
 // _header.scss
 header.site-header {
 
@@ -11,15 +24,15 @@ header.site-header {
   }
 
   .logo {
-    display: inline-block;
-    width: auto; 
     height: 60px;
     margin: 5px 0;
-    a, svg {
-      display: block;
-      width: auto; 
-      height: 100%;
-    }
+    z-index: 10;
+  }
+
+  .extras {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 70px; 
+    z-index: 9;
   }
 
   button.chat-now {

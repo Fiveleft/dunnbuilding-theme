@@ -1,6 +1,7 @@
 // _building-history.scss
 
-.building-history {
+article.building-history,
+section.building-history {
 
   position: relative;
   padding-top: 100%;
@@ -73,7 +74,8 @@
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
 
-  .building-history {
+  article.building-history,
+  section.building-history {
 
     .hero-headline {
       .break-container {

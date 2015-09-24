@@ -2,7 +2,128 @@
 
 nav.main-nav {
 
-  // display: block;
+  $font-size-primary: 20px;
+  $font-size-secondary: 16px;
+  $btn-padding: 3px;
+  $rule-spacing: 8px;
+
+  display: block;
+  position: fixed;
+  top: 0; right: 0;
+  width: 250px;
+  height: 100vh;
+  z-index: 10001;
+  color: $color-brand-dark;
+
+  &:before {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba( $color-brand-dark, 0.8 );
+    content: " ";
+    z-index: 10001;
+    pointer-events: none;
+  }
+  .nav-inner {
+    display: block;
+    position: absolute;
+    top: 0; right: 0;
+    width: 100%; height: 100%;
+    background: $color-brand-light;
+    z-index: 10002;
+    padding: 10px 15px;
+  }
+  .logo {
+    height: 50px;
+    margin: 0 0 20px;
+  }
+  .header-nav-menu {
+    margin: 0; 
+    padding: 0;
+    list-style: none;
+  }
+  button.close {
+    display: block;
+    position: fixed;
+    top: 0; right: 0;
+    width: 60px; height: 60px; padding: 15px;
+    margin: 0;
+    border: none;
+    background: none;
+
+    span {
+      display: block;
+      width: 100%; height: 100%;
+      background: $color-brand-dark;
+      @include hide-text;
+    }
+  }
+  li a {
+    display: inline-block;
+    @include button-font-style;
+    padding: $btn-padding + 2px 0 $btn-padding - 2px;
+    font-size: $font-size-secondary;
+    letter-spacing: 100/1000 * $font-size-secondary;
+  }
+  li.rent-now {
+    padding: 0 0 15px;
+    a {
+      width: auto;
+      text-align: center;
+      line-height: 20px;
+      padding: 8px 18px 4px;
+      color: $color-brand-light;
+      background: $color-brand-dark;
+    }
+  }
+  li.chat-now,
+  li.apartments,
+  li.building-history,
+  li.neighborhood,
+  li.contact {
+    & > a {
+      font-size: $font-size-primary;
+      line-height: $font-size-primary + $rule-spacing;
+    }
+  }
+  li.chat-now, 
+  li.apartments, 
+  li.apartments + li, 
+  li.contact + li {
+    margin-top: $rule-spacing;
+    padding-top: $rule-spacing;
+    border-top: 1px solid $color-brand-dark;
+  }
+  li.apartments > a {
+    padding-bottom: $btn-padding * 2; 
+  }
+  li.chat-now {
+    margin-top: 0;
+  }
+  li ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li ul a {
+    font-size: $font-size-secondary;
+    padding-left: 16px;
+    line-height: 24px;
+  }
+  li ul li {
+    position: relative;
+  }
+  li ul li:before {
+    position: absolute;
+    top: 0; left: 0;
+    display: block;
+    content: " ";
+    background: no-repeat url('../img/list-image.svg') 0 50%;
+    vertical-align: middle;
+    width: 16px;
+    height: 30px;
+  }
   
 }
 
@@ -11,7 +132,79 @@ nav.main-nav {
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
 
+  $font-size-primary: 31px;
+  $font-size-secondary: 20px;
+  $btn-padding: 6px;
+  $rule-spacing: 14px;
+
   nav.main-nav {
+
+    width: 350px;
+
+    .nav-inner {
+      padding: 20px 50px 20px 30px;
+    }
+    li a {
+      padding: $btn-padding + 2px 0 $btn-padding - 2px;
+      font-size: $font-size-secondary;
+      line-height: 24px;
+      letter-spacing: 100/1000 * $font-size-secondary;
+    }
+    li.rent-now {
+      a {
+        padding: 12px 18px 8px;
+      }
+    }
+    li.chat-now,
+    li.apartments,
+    li.building-history,
+    li.neighborhood,
+    li.contact {
+      & > a {
+        font-size: $font-size-primary;
+        line-height: $font-size-primary;
+      }
+    }
+    li.chat-now, 
+    li.apartments, 
+    li.apartments + li, 
+    li.contact + li {
+      margin-top: $rule-spacing;
+      padding-top: $rule-spacing;
+    }
+    li.apartments > a {
+      padding-bottom: $btn-padding * 2; 
+    }
+    li ul a {
+      font-size: $font-size-secondary;
+      line-height: 24px;
+      letter-spacing: 70/1000 * $font-size-secondary;
+    }
+    li ul li:before {
+      height: 36px;
+    }
+
+  }
+
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  nav.main-nav {
+
+    width: 410px;
+
+  }
+
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  nav.main-nav {
+
+
 
   }
 

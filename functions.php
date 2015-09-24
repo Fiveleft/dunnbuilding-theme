@@ -132,53 +132,59 @@ function create_dunnbuilding_page( $page )
 // Load HTML5 Blank scripts (header.php)
 function enqueue_header_scripts()
 {
-  // Check for local dev environment
-  $is_local_dev = defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV;
-
-  // Find our relative JS directory
-  $js_dir = get_stylesheet_directory_uri() . '/js';
-
-  /**
-   * @see https://github.com/jrburke/requirejs/wiki/Patterns-for-separating-config-from-the-main-module
-   */
-  wp_register_script('require-config', $js_dir . '/require-config.js', null, false, true);
-  wp_enqueue_script('require-config');
-
-  wp_register_script('require', $js_dir . '/require.js', array('require-config'), false, true);
-  wp_enqueue_script('require');
-
-  wp_register_script('main', $js_dir . '/main.js', array('require'), false, true);
-  wp_enqueue_script('main');
-
-  wp_register_script('modernizr', $js_dir . '/modernizr.js');
-  wp_enqueue_script('modernizr');
+  if( is_admin() ) :
 
 
-  /**
-   * Add a localized path to the js directory of the theme for require JS modules
-   * @see http://codegeekz.com/using-require-js-with-wordpress/
-   * @var array
-   */
-  $js_localized = array(
-    'homeUrl' => home_url(),
-    'baseUrl' => get_stylesheet_directory_uri() . '/js',
-    'url' => get_stylesheet_directory_uri(),
-   );
-  if( get_permalink() ) {
-    $js_localized['permalink'] = get_permalink();
-  }
-  wp_localize_script( 'require-config', 'localized', $js_localized );
+  else : 
+
+    // Check for local dev environment
+    $is_local_dev = defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV;
+
+    // Find our relative JS directory
+    $js_dir = get_stylesheet_directory_uri() . '/js';
+
+    /**
+     * @see https://github.com/jrburke/requirejs/wiki/Patterns-for-separating-config-from-the-main-module
+     */
+    wp_register_script('require-config', $js_dir . '/require-config.js', null, false, true);
+    wp_enqueue_script('require-config');
+
+    wp_register_script('require', $js_dir . '/require.js', array('require-config'), false, true);
+    wp_enqueue_script('require');
+
+    wp_register_script('main', $js_dir . '/main.js', array('require'), false, true);
+    wp_enqueue_script('main');
+
+    wp_register_script('modernizr', $js_dir . '/modernizr.js');
+    wp_enqueue_script('modernizr');
 
 
-  /**
-   * Add Livereload if we're developing locally
-   * @see http://robandlauren.com/2014/02/05/live-reload-grunt-wordpress/
-   */
-  if ( $is_local_dev && !is_admin() ) {
-    wp_register_script('livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true);
-    wp_enqueue_script('livereload');
-  }
+    /**
+     * Add a localized path to the js directory of the theme for require JS modules
+     * @see http://codegeekz.com/using-require-js-with-wordpress/
+     * @var array
+     */
+    $js_localized = array(
+      'homeUrl' => home_url(),
+      'baseUrl' => get_stylesheet_directory_uri() . '/js',
+      'url' => get_stylesheet_directory_uri(),
+     );
+    if( get_permalink() ) {
+      $js_localized['permalink'] = get_permalink();
+    }
+    wp_localize_script( 'require-config', 'localized', $js_localized );
 
+
+    /**
+     * Add Livereload if we're developing locally
+     * @see http://robandlauren.com/2014/02/05/live-reload-grunt-wordpress/
+     */
+    if ( $is_local_dev ) {
+      wp_register_script('livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true);
+      wp_enqueue_script('livereload');
+    }
+
+  endif;
 
 
   
@@ -256,12 +262,22 @@ function add_slug_to_body_class($classes)
       case $post->post_type == "unit_type" :
         $classes[] = "name-unit-type";
         break;
-
       case is_singular() :
         $classes[] = "name-" . sanitize_html_class($post->post_name);
         break;
-
     }
+
+    switch( true ) {
+      case is_page_template( 'page-building-history.php' ) :
+      case is_page_template( 'page-amenities.php' ) :
+        $classes[] = "color-dark-on-brown";
+        break;
+      case is_page_template( 'page-apartments.php' ) :
+      case $post->post_type == "unit_type" :
+        $classes[] = "color-light-on-dark";
+        break;
+    }
+
 
     return $classes;
 }

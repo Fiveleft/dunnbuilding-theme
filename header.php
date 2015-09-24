@@ -59,14 +59,24 @@
     <!-- nav -->
     <nav class="main-nav" role="navigation" aria-hidden="true" hidden>
       <div class="nav-inner">
+        <div class="logo">
+          <a href="<?php echo home_url(); ?>">
+            <?php get_template_part( "img/inline", "logo.svg" ); ?>
+          </a>
+        </div>
         <?php
           wp_nav_menu(array(
             'theme_location'    => 'header-menu',
             'container'         => false,
             'menu_id'           => null,
             'menu_class'        => 'header-nav-menu',
+            'link_before'       => "<span class='label'>",
+            'link_after'        => "</span>",
             // 'items_wrap'        => '<ul class="%2$s" aria-hidden="true" hidden>%3$s</ul>'
           )); ?>
+        <button class='close'>
+          <span class='label'>Close Menu</span>
+        </button>
       </div>
     </nav>
     <!-- /nav -->

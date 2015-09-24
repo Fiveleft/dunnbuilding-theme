@@ -20,7 +20,7 @@ function apartment_gallery_shortcode($attr)
   $gallery_count = count( $gids );
   $slides_html = "<div class='gallery-slides-wrapper'>\n";
   $slides_html .= "  <div class='gallery-slides' data-count='$gallery_count' >\n";
-  $grid_html = "<ul class='gallery-grid'>\n";
+  $grid_html = "<ul class='gallery-grid' data-count='$gallery_count'>\n";
 
   if( $gallery_count ) :
 
@@ -63,7 +63,7 @@ function apartment_gallery_shortcode($attr)
 
         $grid_html .= "<li class='gallery-grid-item'>\n";
         $grid_html .= "  <a class='gallery-grid-link' href='#img-$gallery_index' data-index='$gallery_index'>\n";
-        $grid_html .= "    <img src='" . $img_dir . $img_data['sizes']['thumbnail']['file'] . "' alt='$img_caption' />\n";
+        $grid_html .= "    <span class='gallery-grid-img' style='padding-bottom:$aspect_perc; background-image: url(" . $img_dir . $img_data['sizes']['small']['file'] . ");'>$img_caption</span>\n";
         $grid_html .= "  </a>";
         $grid_html .= "</li>";
 
