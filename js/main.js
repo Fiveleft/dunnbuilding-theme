@@ -8,6 +8,8 @@
     application: "app/Application",
     router: "app/Router",
     events: "app/Events",
+    mainView: "app/views/MainView",
+    navView: "app/views/NavigationView",
     // breakpoints: "app/Breakpoints",
     // imageload: "app/ImageLoad",
     // newscrawler: "app/modules/NewsCrawler",

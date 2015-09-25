@@ -9,7 +9,8 @@ define(
         console.log( "Router.initialize()", this );
         var self = this;
         
-        Events.on("router:navigate", function(url, options){
+        Events.on("router:navigate", function( options ){
+          var url = options.url;
           var opt = _.extend( {trigger:true}, options );
           self.navigate( url, opt );
         });
@@ -17,13 +18,14 @@ define(
 
       routes: {
         "" : "index", //"index",
-        ":apartments" : "_loadRoute", //"apartments",
-        ":apartments/:path" : "apartmentType",
-        ":apartments/:path/:section" : "apartmentSection",
-        "connect" : "_loadRoute", //"connect",
-        "neighborhood" : "_loadRoute", //"neighborhood",
-        "building-history" : "_loadRoute", //"buildingHistory",
-        "*page" : "_loadRoute", //"defaultRoute",
+        "apartments/:path/:section" : "apartmentSection",
+        "apartments/:path" : "apartmentType",
+        "apartments" : "_loadRoute",
+
+        "connect" : "_loadRoute",
+        "neighborhood" : "_loadRoute",
+        "building-history" : "_loadRoute",
+        "*page" : "_loadRoute",
       },
 
       index : function( route, params ) {
@@ -36,34 +38,13 @@ define(
 
       apartmentType : function( route, params ) {
         console.log( "Router.apartmentType()", this, route, params );
-        this._loadRoute( route + '/' + params );
+        Events.trigger( Events.loadApartmentType, arguments );
+        // this._loadRoute( route + '/' + params );
       },
 
       apartmentSection : function( a, b, c ) {
-        console.log( "Router.apartmentSection()", a, b, c );
-      },
-
-      buildingHistory : function( route, params ) {
-        this._loadRoute( route, params );
-        //Events.trigger( Event.loadRoute, q );
-      }, 
-
-      connect : function( route, params ) {
-        // console.log( "Router.connect()", this, route, params );
-        this._loadRoute( route, params );
-        //Events.trigger( Event.loadRoute, q );
-      },
-
-      neighborhood : function( route, params ) {
-        // console.log( "Router.neighborhood()", this, route, params );
-        this._loadRoute( route, params );
-        //Events.trigger( Event.loadRoute, q );
-      },
-
-      defaultRoute : function( route, params ) {
-        // console.log( "Router.defaultRoute()", this, route, params );
-        this._loadRoute( route, params );
-        //Events.trigger( Event.loadRoute, q );
+        console.log( "Router.apartmentSection()", arguments );
+        Events.trigger( Events.loadApartmentSection, arguments );
       },
 
       _loadRoute : function( route, params ) {

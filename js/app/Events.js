@@ -23,7 +23,10 @@ define(
     var transitionEndEvent = whichTransitionEvent();
 
     var o = {
+      navigate : "router:navigate",
       loadRoute : "router:loadRoute",
+      clickChatNow : "click:chatNow",
+      clickRentNow : "click:rentNow",
       breakpoint : "breakpoint:change",
       changeHeight : "DOM:changeHeight",
       scrollTo : "window:scrollTo",

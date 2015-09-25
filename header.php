@@ -57,7 +57,7 @@
     </div>
 
     <!-- nav -->
-    <nav class="main-nav" role="navigation" aria-hidden="true" hidden>
+    <nav class="main-nav" role="navigation">
       <div class="nav-inner">
         <div class="logo">
           <a href="<?php echo home_url(); ?>">
