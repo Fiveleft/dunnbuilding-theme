@@ -1,32 +1,15 @@
 <?php get_header(); ?>
 
 <main role="main" <?php body_class() ?>>
-	<!-- section -->
-	<section class='welcome'>
-    <!-- section-inner.break-container -->
-    <div class='section-inner break-container'>
-		  <h1><?php the_title(); ?></h1>
-    </div> 
-    <!-- /div.section-inner.break-container -->
-  </section>
-	<!-- /section -->
-
-  <!-- apartments -->
-  <?php get_template_part( 'page', 'apartments' ); ?>
-  <!-- /apartments -->
-
-  <!-- amenities -->
-  <?php get_template_part( 'page', 'amenities' ); ?>
-  <!-- /amenities -->
-
-  <!-- history -->
-  <?php get_template_part( 'page', 'building-history' ); ?>
-  <!-- /history -->
-
-  <!-- neighborhood -->
-  <?php get_template_part( 'page', 'neighborhood' ); ?>
-  <!-- /neighborhood -->
-
+	
+  <!-- article -->
+  <article>
+    <div class='content-wrapper break-container'>
+      <h1><?php _e( 'Sorry, we couldn&rsquo;t find that page.', 'html5blank' ); ?></h1>
+    </div>
+  </article>
+  <!-- /article -->
+  
 </main>
 
 <?php get_footer(); ?>

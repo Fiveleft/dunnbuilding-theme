@@ -32,7 +32,6 @@ function create_unit_custom_post()
             'title',
             'editor',
             'excerpt',
-            'thumbnail'
         ), // Go to Dashboard Custom HTML5 Blank post for supports
         'can_export' => true, // Allows export in Tools > Export
         'taxonomies' => array(
@@ -77,6 +76,9 @@ function unit_floor_meta_box($post) {
 </div>
 <?php
 }
+
+
+
 
 /* When the post is saved, saves our custom taxonomy */
 function unit_floors_save_post_data( $post_id ) {

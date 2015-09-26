@@ -7,6 +7,7 @@
 
 body, html {
   height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -26,52 +27,21 @@ body > header {
 body > .wrapper {
   position: relative;
   background-color: inherit;
+  min-height: 95vh;
 }
 body > .wrapper > main {
   position: relative;
 }
 
-.wrapper > main {
-  @include transition( opacity 0.3s $easeOutCubic 0.6s );
-  opacity: 1;
-  background-color: inherit;
-  &.new {
-    opacity: 1;
-    z-index: 2;
-  }
-  &.old {
-    visibility: hidden;
-    @include transition( opacity 0s $easeInCubic 0s );
-    opacity: 0;
-    z-index: 3;
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-  }
 
-}
-
-body.transition-main {
-  .wrapper > main {
-    opacity: 0;
-  }
-}
-
-body.name-home {
+body.name-home,
+body.name-home section.apartments,
+body.name-unit-type,
+body.name-apartments {
   background-color: $color-brand-light;
   color: $color-brand-dark; 
   header .logo path {
     fill: $color-brand-dark;
-  }
-}
-
-body.name-home section.apartments,
-body.name-unit-type,
-body.name-apartments {
-  background-color: $color-brand-dark;
-  color: $color-brand-light;
-  header .logo path {
-    fill: $color-brand-light;
   }
 }
 
@@ -107,7 +77,7 @@ body.name-neighborhood {
 
 main > article {
   min-height: 100%;
-  padding-top: 70px;
+  padding-top: 60px;
 }
 
 body.name-home article > section {

@@ -14,7 +14,7 @@
         $apt = create_apartment_type( $post );
       ?>
         <li>
-          <a class='btn unit-type-link' href="/apartments/<?php echo $apt->post_name; ?>">
+          <a class='btn unit-type-link' href="/apartments/<?php echo $apt->post_name; ?>/">
             <span class='label'><?php echo $apt->post_title; ?></span>
           </a>
         </li>

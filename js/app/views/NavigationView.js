@@ -58,8 +58,11 @@ define(
         // console.log();
         // console.log( "NavigationView._clickNavLink ", e );
 
-        var href = $(e.currentTarget).attr("href"),
-          url = href.replace( urlRegex, '');
+        var href = $(e.currentTarget).attr("href");
+        var url = href.replace( urlRegex, '').replace( /^\//, "" );
+
+        // Clean up URL
+        console.log( "url: " + url);
 
         if( self.$body.hasClass('nav-open') ) {
           navClosedCallback = function(){
@@ -87,7 +90,8 @@ define(
         this.$nav
           .removeAttr( "aria-hidden" )
           .removeAttr( "hidden" )
-          .addClass( 'opened' )
+          .removeClass( 'opened' )
+          .addClass( 'opening' )
           .one( transitionEndEvents, function( e ){ self._toggleNavComplete( e ); } );
         
         this.tick = setTimeout( function(){
@@ -106,14 +110,14 @@ define(
 
         if( this.$body.hasClass('nav-open') ) {
           this.$nav
-            .addClass('opened')
+            .addClass('opened opening')
             .removeAttr( "aria-hidden" )
             .removeAttr( "hidden" ) 
             .focus();
         }else{
           this.$nav
             .css({'height' : '' })
-            .removeClass('opened')
+            .removeClass('opened opening')
             .attr( "aria-hidden", true )
             .attr( "hidden", true );
 
@@ -132,13 +136,13 @@ define(
        */
       _clickChatNow : function( e ) {
         e.preventDefault();
-        console.log("NavigationView._clickChatNow()", e );
-        var self = this;
-        if( self.$body.hasClass('nav-open') ) {
+        // console.log("NavigationView._clickChatNow()", e );
+        // var self = this;
+        if( this.$body.hasClass('nav-open') ) {
           navClosedCallback = function(){
             Events.trigger( Events.clickChatNow );
           };
-          self._toggleNav();
+          this._toggleNav();
         } else {
           navClosedCallback = null;
           Events.trigger( Events.clickChatNow );
@@ -153,13 +157,13 @@ define(
        */
       _clickRentNow : function( e ) {
         e.preventDefault();
-        console.log("NavigationView._clickRentNow()", e );
-        var self = this;
-        if( self.$body.hasClass('nav-open') ) {
+        // console.log("NavigationView._clickRentNow()", e );
+        // var self = this;
+        if( this.$body.hasClass('nav-open') ) {
           navClosedCallback = function(){
             Events.trigger( Events.clickRentNow );
           };
-          self._toggleNav();
+          this._toggleNav();
         } else {
           navClosedCallback = null;
           Events.trigger( Events.clickRentNow );

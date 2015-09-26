@@ -1,0 +1,45 @@
+// _apartments.scss
+body.name-home {
+
+  .landing-page > section {
+    border-top: 1px solid #FF0000;
+    border-bottom: 5px dotted #0000FF;
+    // padding-top: 70px;
+  }
+
+  section.apartments .unit-types {
+    display: none;
+  }
+
+}
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  body.name-home {
+
+    section.apartments .unit-types {
+      display: block;
+    }
+
+  }
+
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  body.name-home {
+
+  }
+
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  body.name-home {
+
+  }
+
+}

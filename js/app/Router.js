@@ -3,52 +3,58 @@ define(
   [ 'jquery','underscore','backbone','events' ],
   function( $, _, Backbone, Events ) {
 
+    var isApartment = false;
+
     var Router = Backbone.Router.extend({
 
       initialize: function() {
-        console.log( "Router.initialize()", this );
+        // console.log( "Router.initialize()", this );
         var self = this;
         
-        Events.on("router:navigate", function( options ){
+        Events.on( Events.navigate, function( options ){
           var url = options.url;
           var opt = _.extend( {trigger:true}, options );
+          isApartment = /apartment/.test( window.location.pathname );
           self.navigate( url, opt );
         });
       },
 
       routes: {
         "" : "index", //"index",
-        "apartments/:path/:section" : "apartmentSection",
-        "apartments/:path" : "apartmentType",
-        "apartments" : "_loadRoute",
-
+        "apartments/:type/floorplans" : "floorplans",
+        "apartments/:type(/)" : "apartmentType",
+        "apartments(/)" : "apartments",
         "connect" : "_loadRoute",
         "neighborhood" : "_loadRoute",
         "building-history" : "_loadRoute",
-        "*page" : "_loadRoute",
+        "*page" : "_loadDefault",
       },
 
       index : function( route, params ) {
         this._loadRoute( "", params );
       },
 
-      apartments : function( route, params ) {
-        this._loadRoute( route, params );
+      apartments : function() {
+        this._loadRoute( "apartments/" );
       }, 
 
-      apartmentType : function( route, params ) {
-        console.log( "Router.apartmentType()", this, route, params );
+      apartmentType : function( type ) {
+        console.log( "Router.apartmentType()", arguments );
         Events.trigger( Events.loadApartmentType, arguments );
-        // this._loadRoute( route + '/' + params );
       },
 
-      apartmentSection : function( a, b, c ) {
-        console.log( "Router.apartmentSection()", arguments );
+      floorplans : function() {
+        console.log( "Router.floorplans()", arguments );
         Events.trigger( Events.loadApartmentSection, arguments );
       },
 
-      _loadRoute : function( route, params ) {
-        console.log( "Router._loadRoute()", route, params );
+      _loadRoute : function( route ) {
+        console.log( "Router._loadRoute()", route );
+        Events.trigger( Events.loadRoute, route );
+      },
+
+      _loadDefault : function( route ) {
+        console.log( "Router._loadDefault()", route );
         Events.trigger( Events.loadRoute, route );
       },
 

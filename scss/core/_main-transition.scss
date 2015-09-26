@@ -1,0 +1,29 @@
+// _main-transition.scss
+
+
+
+.wrapper > main {
+  @include transition( opacity 0.4s $easeOutCubic 0.1s );
+  opacity: 1;
+  background-color: inherit;
+  &.new {
+    opacity: 1;
+    z-index: 2;
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+  }
+  &.old {
+    visibility: hidden;
+    @include transition( opacity 0s $easeInCubic 0s );
+    opacity: 0;
+    z-index: 3;
+    width: 100%;
+  }
+
+}
+
+body.transition-main {
+  .wrapper > main {
+    opacity: 0;
+  }
+}

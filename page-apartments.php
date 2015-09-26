@@ -32,7 +32,6 @@ Template Name: Apartments
       <!-- section-inner.break-container -->
       <div class='section-inner break-container'>
         <h1><?php echo $page->post_title; ?></h1>
-        <a href="/apartments">go to page</a>
 
 <?php endif; ?>
 

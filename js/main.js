@@ -10,6 +10,7 @@
     events: "app/Events",
     mainView: "app/views/MainView",
     navView: "app/views/NavigationView",
+    apartmentView: "app/views/ApartmentView",
     // breakpoints: "app/Breakpoints",
     // imageload: "app/ImageLoad",
     // newscrawler: "app/modules/NewsCrawler",

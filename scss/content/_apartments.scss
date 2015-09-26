@@ -1,0 +1,35 @@
+// _apartments.scss
+body.name-home section.apartments {
+
+  .unit-types {
+    display: none;
+  }
+
+}
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  body.name-home {
+    
+  }
+
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  body.name-home {
+    
+  }
+
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  body.name-home {
+    
+  }
+
+}

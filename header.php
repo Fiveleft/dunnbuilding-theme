@@ -51,19 +51,19 @@
     </header>
     <!-- /header -->
 
-    <!-- rent application module -->
-    <div class='rent-application-module-wrapper'>
-      <?php get_template_part( 'module-rent-application' ); ?>
-    </div>
-
     <!-- nav -->
     <nav class="main-nav" role="navigation">
       <div class="nav-inner">
+         <div class='main-nav-header'>
         <div class="logo">
           <a href="<?php echo home_url(); ?>">
             <?php get_template_part( "img/inline", "logo.svg" ); ?>
           </a>
         </div>
+        <button class='close'>
+          <span class='label'>Close Menu</span>
+        </button>
+      </div>
         <?php
           wp_nav_menu(array(
             'theme_location'    => 'header-menu',
@@ -74,9 +74,6 @@
             'link_after'        => "</span>",
             // 'items_wrap'        => '<ul class="%2$s" aria-hidden="true" hidden>%3$s</ul>'
           )); ?>
-        <button class='close'>
-          <span class='label'>Close Menu</span>
-        </button>
       </div>
     </nav>
     <!-- /nav -->

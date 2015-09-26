@@ -2,13 +2,15 @@
 
 	<main role="main"  <?php body_class() ?>>
 
-<?php if(is_front_page()) : ?>
+<?php if(is_front_page() && !is_404()) : ?>
     <article class='landing-page'>
     	<!-- welcome -->
     	<section class='welcome'>
         <!-- section-inner.break-container -->
         <div class='section-inner break-container'>
           <h1><?php the_title(); ?></h1>
+          <div class='gallery'></div>
+          <div class='cta-row'></div>
         </div> 
         <!-- /div.section-inner.break-container -->
     	</section>
@@ -27,33 +29,31 @@
       <!-- /neighborhood -->
     </article>
 
-<?php else : ?>
+<?php elseif (have_posts()): ?>
 
-		<!-- section -->
-		<section>
-			<h1><?php the_title(); ?></h1>
+  <?php while (have_posts()) : the_post(); ?>
+		<!-- article -->
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+      <div class='content-wrapper break-container'>
+        <h1><?php the_title(); ?></h1>
+			  <?php the_content(); ?>
+      </div>
+		</article>
+		<!-- /article -->
+	<?php endwhile; ?>
 
-		<?php if (have_posts()): while (have_posts()) : the_post(); ?>
-			<!-- article -->
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<?php the_content(); ?>
-				<?php // edit_post_link(); ?>
-			</article>
-			<!-- /article -->
-		<?php endwhile; ?>
+<?php else: ?>
 
-		<?php else: ?>
-			<!-- article -->
-			<article>
-				<h2><?php _e( 'Sorry, nothing to display.', 'html5blank' ); ?></h2>
-			</article>
-			<!-- /article -->
-		<?php endif; ?>
+		<!-- article -->
+		<article>
+      <div class='content-wrapper break-container'>
+        <h1><?php _e( 'Sorry, we couldn&rsquo;t find that page.', 'html5blank' ); ?></h1>
+      </div>
+		</article>
+		<!-- /article -->
 
-		</section>
-		<!-- /section -->
-
-	<?php endif; ?>
-	</main>
+<?php endif; ?>
+	
+  </main>
 
 <?php get_footer(); ?>

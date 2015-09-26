@@ -25,6 +25,8 @@ define(
     var o = {
       navigate : "router:navigate",
       loadRoute : "router:loadRoute",
+      loadApartmentType : "apartment:type",
+      loadApartmentSection : "apartment:section",
       clickChatNow : "click:chatNow",
       clickRentNow : "click:rentNow",
       breakpoint : "breakpoint:change",

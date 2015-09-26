@@ -61,6 +61,30 @@ article.apartment.unit-type {
 
   article.apartment.unit-type {
 
+    .article-inner {
+      position: relative;
+      @include clearfix;
+    }
+
+    .section-info, .section-gallery {
+      width: 50%;
+    }
+
+    .section-info {
+      padding-right: 15px;
+      float: left;
+    }
+    .section-gallery {
+      padding-left: 15px;
+      float: right;
+    }
+    .section-available-units {
+      padding: 0;
+      float: left;
+      width: 100%;
+    }
+
+
   }
 
 }

@@ -19,6 +19,7 @@ function ep( $content ) {
 // Load any external files you have here
 require_once( 'custom-post-unit.php' );
 require_once( 'custom-post-unit-type.php' );
+require_once( 'custom-post-floor-plans.php' );
 require_once( 'custom-post-amenities.php' );
 require_once( 'custom-post-attractions.php' );
 require_once( 'custom-taxonomies.php' );
@@ -118,6 +119,25 @@ function create_dunnbuilding_page( $page )
   }   
   return $db_page;
 }
+
+
+/**
+ * [feed_dir_rewrite description]
+ * @param  [type] $wp_rewrite [description]
+ * @return [type]             [description]
+ * @see   https://codex.wordpress.org/Class_Reference/WP_Rewrite#Examples
+ */
+function feed_dir_rewrite( $wp_rewrite ) {
+  $apartment_rules = array(
+    'apartments/([^/]+)/floorplans' => 'index.php?unit_type=$matches[1]&page=$matches[2]',
+  );
+  $wp_rewrite->rules = $apartment_rules + $wp_rewrite->rules;
+  // ep( $wp_rewrite->rules );
+  return $wp_rewrite->rules;
+}
+
+// Hook in.
+add_filter( 'generate_rewrite_rules', 'feed_dir_rewrite' );
 
 
 

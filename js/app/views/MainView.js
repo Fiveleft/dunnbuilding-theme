@@ -1,7 +1,7 @@
 // MainView.js
 define(
-  ['jquery','events','backbone'],
-  function( $, Events, Backbone ){
+  ['jquery','events','backbone','apartmentView'],
+  function( $, Events, Backbone, ApartmentView ){
 
     var transitionEndEvents = "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
       $body,
@@ -9,12 +9,15 @@ define(
       $main, 
       $mainLoader,
       siteLinkClick = false,
-      oldPageName,
+      apartmentView = false,
+      oldPageName = "",
       mainTransitionTimeout,
       mainTransitionDuration,
       scrollTopTimeout,
       targetPageView,
-      targetPageName;
+      targetPageName,
+
+      i;
 
 
     var MainView = Backbone.View.extend({
@@ -31,14 +34,17 @@ define(
         $main = $(".wrapper > main");
         $mainLoader = $("body > .main-loader");
 
-        
         targetPageName = _.find( document.body.className.split(" "), findPageNameFromClasses );
         mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
-        Events.on( Events.navigate, this._routerNavigate, this );
+        // Events.on( Events.navigate, this._routerNavigate, this );
         Events.on( Events.loadRoute, this._loadRoute, this );
         Events.on( Events.clickChatNow, this._openChat, this );
         Events.on( Events.clickRentNow, this._openRent, this );
+
+        if( /apartment/.test( window.location.pathname ) ) {
+          apartmentView = new ApartmentView({el:$main});
+        }
       },
 
 
@@ -47,8 +53,8 @@ define(
        * @param  {[type]} e [description]
        * @return {[type]}   [description]
        */
-      _openChat : function( e ) {
-        console.log( "MainView._openChat()", e );
+      _openChat : function() {
+        // console.log( "MainView._openChat()", e );
       },
 
 
@@ -57,8 +63,8 @@ define(
        * @param  {[type]} e [description]
        * @return {[type]}   [description]
        */
-      _openRent : function( e ) {
-        console.log( "MainView._openRent()", e );
+      _openRent : function() {
+        // console.log( "MainView._openRent()", e );
       },
 
 
@@ -67,8 +73,8 @@ define(
        * @param  {[type]} e [description]
        * @return {[type]}   [description]
        */
-      _routerNavigate : function( e ) {
-        console.log( "MainView._routerNavigate()", e );
+      _routerNavigate : function( data ) {
+        console.log( "MainView._routerNavigate()", data );
       },
 
 
@@ -84,8 +90,23 @@ define(
 
         console.log( "MainView._loadRoute()", route );
 
-        $mainLoader.load('/' + route + ' .wrapper > main', function(){ 
-          self._loadRouteComplete(); 
+        $mainLoader.load('/' + route + ' .wrapper > main', function( html, response, jqXHR ){ 
+          
+          // console.log( '$mainLoader.load()', response, jqXHR );
+          // If we've received a 404 page, no worries mon!
+          if( response == "error" || jqXHR.status == 404 ) {
+            var nodes = $.parseHTML( jqXHR.responseText );
+            var wrapper_html = _.findWhere( nodes, { nodeName: "DIV", className: "wrapper" } );
+            var $mainEl = $(wrapper_html).children( "main" );
+            if( $mainEl ) {
+              // console.log( " handle load error ", nodes, $mainEl );
+              $mainEl.addClass( "name-error" );
+              $mainLoader.append( $mainEl );
+              self._loadRouteComplete();
+            }
+          }else{
+            self._loadRouteComplete(); 
+          }
         });
       },
 
@@ -99,8 +120,12 @@ define(
           loadedClasses = $loadedMain[0].className.split(" ");
 
         // Define Page Target
-        oldPageName = _.find( document.body.className.split(" "), findPageNameFromClasses );
+        oldPageName = _.find( document.body.className.split(" "), findPageNameFromClasses ) || "";
         targetPageName = _.find( loadedClasses, findPageNameFromClasses );
+
+        if( !apartmentView && /apartment/.test( window.location.pathname ) ) {
+          apartmentView = new ApartmentView({el:$main});
+        }
 
         console.log( "MainView._loadRouteComplete() transition " + oldPageName + " > " + targetPageName );
 

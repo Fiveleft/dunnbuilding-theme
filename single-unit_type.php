@@ -37,17 +37,18 @@
         <div class='section-inner'>
           <?php if( $apt->gallery ) echo $apt->gallery; ?>
 
-      <?php if(!$is_own_page) : ?>
 
           <nav class='unit-type-sections'>
             <ul>
+      <?php if(!$is_own_page) : ?>
               <li>
                 <a href="/apartments/<?php echo $apt->post_name; ?>" class='unit-type-sections-link'>
                   <span class='label'>Details</span>
                 </a>
               </li>
+      <?php endif; ?>
               <li>
-                <a href="/apartments/<?php echo $apt->post_name; ?>/floor-plans" class='unit-type-sections-link'>
+                <a href="/apartments/<?php echo $apt->post_name; ?>/floorplans" class='unit-type-sections-link'>
                   <span class='label'>Floor Plans</span>
                 </a>
               </li>
@@ -59,7 +60,6 @@
             </ul>
           </nav>
 
-      <?php endif; ?>
 
         </div>
       </section>

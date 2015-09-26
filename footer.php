@@ -3,43 +3,35 @@
     <!-- /wrapper -->
 
     <!-- footer -->
-    <footer class="footer" role="contentinfo">
-      
+    <footer class="site-footer" role="contentinfo">
       <div class="footer-fixed">
       </div>
+      <nav class='footer-nav break-container'>
+        <div class="nav-inner">
+          <!-- copyright -->
+          <p class="copyright">
+            &copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>.
+          </p>
+          <!-- /copyright -->
 
-      <div class="footer-inner break-container">
+        
+          <?php
+            wp_nav_menu(array(
+              'theme_location'    => 'footer-menu',
+              'container'         => false,
+              'menu_id'           => null,
+              'menu_class'        => 'footer-menu',
+            )); 
+            wp_nav_menu(array(
+              'theme_location'    => 'social-menu',
+              'container'         => false,
+              'menu_id'           => null,
+              'menu_class'        => 'social-menu',
+            )); 
+            ?>
 
-        <!-- copyright -->
-        <p class="copyright">
-          &copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>.
-        </p>
-        <!-- /copyright -->
-
-        <nav class='footer-nav'>
-          <div class="nav-inner">
-            <?php
-              wp_nav_menu(array(
-                'theme_location'    => 'footer-menu',
-                'container'         => false,
-                'menu_id'           => null,
-                'menu_class'        => 'footer-menu',
-              )); 
-              wp_nav_menu(array(
-                'theme_location'    => 'social-menu',
-                'container'         => false,
-                'menu_id'           => null,
-                'menu_class'        => 'social-menu',
-              )); 
-              ?>
-
-          </div>
-
-
-        </nav>
-
-      </div>
-
+        </div>
+      </nav>
     </footer>
     <!-- /footer -->
 
@@ -47,10 +39,14 @@
       <!-- load main content into this container -->
     </div>
 
-    <progress value="100" max="100">
-      <span class="loading-message">Loading</span>
-    </progress>
-
+    <div class='overlay-container' aria-hidden='true' hidden>
+      <div class='rent-application module-wrapper'>
+        <?php get_template_part( 'module-rent-application' ); ?>
+      </div>
+      <progress value="100" max="100">
+        <span class="loading-message">Loading</span>
+      </progress>
+    </div>
 
     <?php wp_footer(); ?>
 

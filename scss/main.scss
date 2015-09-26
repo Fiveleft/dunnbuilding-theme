@@ -7,6 +7,8 @@
 @import "core/layout";
 @import "core/typography";
 @import "core/header";
+@import "core/footer";
+@import "core/main-transition";
 
 // Common Modules
 @import "module/gallery";
@@ -16,6 +18,8 @@
 
 // Content-Specific Styles
 @import "content/amenities";
+@import "content/apartments";
 @import "content/building-history";
+@import "content/landingpage";
 @import "content/single-unit-type";
 
