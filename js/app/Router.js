@@ -22,11 +22,11 @@ define(
       routes: {
         "" : "index", //"index",
         "apartments/:type/floorplans" : "floorplans",
-        "apartments/:type(/)" : "apartmentType",
-        "apartments(/)" : "apartments",
-        "connect" : "_loadRoute",
-        "neighborhood" : "_loadRoute",
-        "building-history" : "_loadRoute",
+        "apartments/:type/" : "apartmentType",
+        "apartments/" : "apartments",
+        "connect/" : "_loadRoute",
+        "neighborhood/" : "_loadRoute",
+        "building-history/" : "_loadRoute",
         "*page" : "_loadDefault",
       },
 
