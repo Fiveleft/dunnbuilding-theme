@@ -51,18 +51,15 @@ define(
        */
       _clickNavLink : function( e ) {
         
-        var self = this;
         e.preventDefault();
         e.stopImmediatePropagation();
         
-        // console.log();
-        // console.log( "NavigationView._clickNavLink ", e );
-
+        var self = this;        
         var href = $(e.currentTarget).attr("href");
         var url = href.replace( urlRegex, '').replace( /^\//, "" );
 
         // Clean up URL
-        console.log( "url: " + url);
+        // console.log( "url: " + url);
 
         if( self.$body.hasClass('nav-open') ) {
           navClosedCallback = function(){

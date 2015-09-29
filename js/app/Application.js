@@ -1,7 +1,7 @@
 // Application.js
 define(
-  ['jquery', 'backbone', 'underscore', 'router', 'events', 'mainView', 'navView'],
-  function( $, Backbone, _, Router, Events, MainView, NavView ) {
+  ['jquery', 'backbone', 'underscore', 'router', 'events', 'mainView', 'navView', 'apartmentView'],
+  function( $, Backbone, _, Router, Events, MainView, NavView, ApartmentView ) {
 
     var $body;
     var Application = {
@@ -18,6 +18,7 @@ define(
         // Views
         new NavView({el:$body});
         new MainView({el:$body});
+        new ApartmentView({el:$body});
       },
 
 

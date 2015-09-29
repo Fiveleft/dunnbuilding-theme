@@ -1,7 +1,7 @@
 // MainView.js
 define(
-  ['jquery','events','backbone','apartmentView'],
-  function( $, Events, Backbone, ApartmentView ){
+  ['jquery','events','backbone', 'stateModel'],
+  function( $, Events, Backbone, stateModel ){
 
     var transitionEndEvents = "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
       $body,
@@ -41,10 +41,6 @@ define(
         Events.on( Events.loadRoute, this._loadRoute, this );
         Events.on( Events.clickChatNow, this._openChat, this );
         Events.on( Events.clickRentNow, this._openRent, this );
-
-        if( /apartment/.test( window.location.pathname ) ) {
-          apartmentView = new ApartmentView({el:$main});
-        }
       },
 
 
@@ -84,13 +80,12 @@ define(
        * @param  {[type]} targetView [description]
        * @return {[type]}            [description]
        */
-      _loadRoute : function ( route, targetView ) {
+      _loadRoute : function ( route ) {
         var self = this;
-        targetPageView = targetView;
+        
+        // console.log( "MainView._loadRoute()", route );
 
-        console.log( "MainView._loadRoute()", route );
-
-        $mainLoader.load('/' + route + ' .wrapper > main', function( html, response, jqXHR ){ 
+        $mainLoader.load( localized.homeUrl + '/' + route + ' .wrapper > main', function( html, response, jqXHR ){ 
           
           // console.log( '$mainLoader.load()', response, jqXHR );
           // If we've received a 404 page, no worries mon!
@@ -123,11 +118,9 @@ define(
         oldPageName = _.find( document.body.className.split(" "), findPageNameFromClasses ) || "";
         targetPageName = _.find( loadedClasses, findPageNameFromClasses );
 
-        if( !apartmentView && /apartment/.test( window.location.pathname ) ) {
-          apartmentView = new ApartmentView({el:$main});
-        }
-
-        console.log( "MainView._loadRouteComplete() transition " + oldPageName + " > " + targetPageName );
+        // Set State URL
+        stateModel.set( "url", window.location.pathname );
+        // console.log( "MainView._loadRouteComplete() transition " + oldPageName + " > " + targetPageName );
 
         // Do Page Transition
         startMainTransition();

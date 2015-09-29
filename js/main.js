@@ -8,6 +8,7 @@
     application: "app/Application",
     router: "app/Router",
     events: "app/Events",
+    stateModel: "app/models/StateModel",
     mainView: "app/views/MainView",
     navView: "app/views/NavigationView",
     apartmentView: "app/views/ApartmentView",

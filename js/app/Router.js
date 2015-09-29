@@ -1,60 +1,56 @@
 // app/appRouter.js
 define( 
-  [ 'jquery','underscore','backbone','events' ],
-  function( $, _, Backbone, Events ) {
-
-    var isApartment = false;
+  [ 'jquery','underscore','backbone','events', 'stateModel' ],
+  function( $, _, Backbone, Events, stateModel ) {
 
     var Router = Backbone.Router.extend({
 
       initialize: function() {
-        // console.log( "Router.initialize()", this );
         var self = this;
+
+        stateModel.set( "url", window.location.pathname );
+        // console.log( "Router.initialize()", this, stateModel );
         
         Events.on( Events.navigate, function( options ){
           var url = options.url;
-          var opt = _.extend( {trigger:true}, options );
-          isApartment = /apartment/.test( window.location.pathname );
+          var opt = _.extend( {trigger:true}, options );          
           self.navigate( url, opt );
         });
       },
 
       routes: {
         "" : "index", //"index",
-        "apartments/:type/floorplans" : "floorplans",
+        "apartments/:type/:section" : "apartmentSection",
         "apartments/:type/" : "apartmentType",
-        "apartments/" : "apartments",
-        "connect/" : "_loadRoute",
-        "neighborhood/" : "_loadRoute",
-        "building-history/" : "_loadRoute",
-        "*page" : "_loadDefault",
+        // "apartments/" : "_loadRoute",
+        // "connect/" : "_loadRoute",
+        // "neighborhood/" : "_loadRoute",
+        // "building-history/" : "_loadRoute",
+        "*page" : "_loadRoute",
       },
 
-      index : function( route, params ) {
-        this._loadRoute( "", params );
+      index : function() {
+        this._loadRoute( "" );
       },
-
-      apartments : function() {
-        this._loadRoute( "apartments/" );
-      }, 
 
       apartmentType : function( type ) {
-        console.log( "Router.apartmentType()", arguments );
-        Events.trigger( Events.loadApartmentType, arguments );
+        if( stateModel.isApartment() ) {
+          Events.trigger( Events.loadApartmentType, { type:type } );
+        }else{
+          this._loadRoute( "/apartments/" + type );
+        }
       },
 
-      floorplans : function() {
-        console.log( "Router.floorplans()", arguments );
-        Events.trigger( Events.loadApartmentSection, arguments );
+      apartmentSection : function( type, section ) {
+        if( stateModel.isApartment() ) {
+          Events.trigger( Events.loadApartmentSection, { type:type, section:section } );
+        }else{
+          this._loadRoute( "/apartments/" + type + "/" + section );
+        }
       },
 
       _loadRoute : function( route ) {
         console.log( "Router._loadRoute()", route );
-        Events.trigger( Events.loadRoute, route );
-      },
-
-      _loadDefault : function( route ) {
-        console.log( "Router._loadDefault()", route );
         Events.trigger( Events.loadRoute, route );
       },
 

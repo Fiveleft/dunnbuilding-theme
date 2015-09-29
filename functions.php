@@ -85,6 +85,10 @@ function create_apartment_type( $post )
     // Create the apartment_gallery shortcode
     $apt->gallery = apply_filters( 'the_content', $gallery );
   }
+
+
+
+
   return $apt;
 }
 
@@ -96,6 +100,8 @@ function create_apartment_type( $post )
  */
 function create_dunnbuilding_page( $page ) 
 {
+  ep( $page );
+
   $db_page = $page;
   $db_page->meta = get_post_meta( $page->ID );
 
@@ -112,11 +118,13 @@ function create_dunnbuilding_page( $page )
     $gallery = preg_replace( '/\&#8221;|\&#8243;/', '', $gallery[0] );
 
     // Create the apartment_gallery shortcode
-    $page->gallery = apply_filters( 'the_content', $gallery );
+    $db_page->gallery = apply_filters( 'the_content', $gallery );
 
     // Remove the Gallery shortcode from the content
-    $page->post_content = preg_replace( '/' . $sc_pattern . '/', '', $page->post_content );
-  }   
+    $db_page->post_content = preg_replace( '/' . $sc_pattern . '/', '', $page->post_content );
+  } else {
+    $db_page->gallery = "<div class='gallery'>no gallery</div>";
+  }
   return $db_page;
 }
 
@@ -130,6 +138,7 @@ function create_dunnbuilding_page( $page )
 function feed_dir_rewrite( $wp_rewrite ) {
   $apartment_rules = array(
     'apartments/([^/]+)/floorplans' => 'index.php?unit_type=$matches[1]&page=$matches[2]',
+    'apartments/([^/]+)/building-amenities' => 'index.php?unit_type=$matches[1]&page=$matches[2]',
   );
   $wp_rewrite->rules = $apartment_rules + $wp_rewrite->rules;
   // ep( $wp_rewrite->rules );
@@ -279,26 +288,10 @@ function add_slug_to_body_class($classes)
         $classes[] = "name-" . sanitize_html_class($post->post_name);
         break;
 
-      case $post->post_type == "unit_type" :
-        $classes[] = "name-unit-type";
-        break;
       case is_singular() :
         $classes[] = "name-" . sanitize_html_class($post->post_name);
         break;
     }
-
-    switch( true ) {
-      case is_page_template( 'page-building-history.php' ) :
-      case is_page_template( 'page-amenities.php' ) :
-        $classes[] = "color-dark-on-brown";
-        break;
-      case is_page_template( 'page-apartments.php' ) :
-      case $post->post_type == "unit_type" :
-        $classes[] = "color-light-on-dark";
-        break;
-    }
-
-
     return $classes;
 }
 
