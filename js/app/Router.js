@@ -22,10 +22,6 @@ define(
         "" : "index", //"index",
         "apartments/:type/:section" : "apartmentSection",
         "apartments/:type/" : "apartmentType",
-        // "apartments/" : "_loadRoute",
-        // "connect/" : "_loadRoute",
-        // "neighborhood/" : "_loadRoute",
-        // "building-history/" : "_loadRoute",
         "*page" : "_loadRoute",
       },
 

@@ -95,7 +95,7 @@ Template Name: Apartments
               //unset( $apt );
             ?> 
                 <li>
-                  <a class='btn unit-type-link' href="/apartments/<?php echo $apt_link->post_name; ?>/">
+                  <a class='btn unit-type-link' href="/apartments/<?php echo $apt_link->post_name; ?>/" data-name="<?php echo $apt_link->post_name; ?>">
                     <span class='label'><?php echo $apt_link->post_title; ?></span>
                   </a>
                 </li>
@@ -121,7 +121,7 @@ Template Name: Apartments
 
             <?php if($settings->is_home_page) : ?>
                     <li>
-                      <a href="/apartments/<?php echo $apt->post_name; ?>" class='unit-type-sections-link'>
+                      <a href="/apartments/<?php echo $apt->post_name; ?>/" class='unit-type-sections-link'>
                         <span class='label'>Details</span>
                       </a>
                     </li>

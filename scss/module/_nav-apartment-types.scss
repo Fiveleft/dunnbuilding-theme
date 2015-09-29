@@ -37,6 +37,8 @@ nav.unit-type-nav {
     &:first-child {
       margin-top: 0;
     }
+
+    @include transition( color 0.3s $easeInOutCubic );
   }
 
   .label {
@@ -51,16 +53,16 @@ nav.unit-type-nav {
     line-height: 23px;
     background: transparent;
 
+    @include transition( background-color 0.3s $easeInOutCubic );
   }
 }
 
 
-nav.unit-type-nav .unit-type-link.active, 
-.studio nav.unit-type-nav .unit-type-link[href$="studio"],
-.one-bedroom nav.unit-type-nav .unit-type-link[href$="one-bedroom"],
-.one-bedroom-den nav.unit-type-nav .unit-type-link[href$="one-bedroom-den"],
-.two-bedroom nav.unit-type-nav .unit-type-link[href$="two-bedroom"],
-.two-bedroom-office nav.unit-type-nav .unit-type-link[href$="two-bedroom-office"] {
+body.name-studio nav.unit-type-nav .unit-type-link[data-name="studio"],
+body.name-one-bedroom nav.unit-type-nav .unit-type-link[data-name="one-bedroom"],
+body.name-one-bedroom-den nav.unit-type-nav .unit-type-link[data-name="one-bedroom-den"],
+body.name-two-bedroom nav.unit-type-nav .unit-type-link[data-name="two-bedroom"],
+body.name-two-bedroom-office nav.unit-type-nav .unit-type-link[data-name="two-bedroom-office"] {
   color: $color-brand-brown;
   .label {
     background: $color-brand-dark;

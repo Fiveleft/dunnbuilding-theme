@@ -1,18 +1,91 @@
 // _typography.scss
 
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // FONTS
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/2f48cd");
+
+/**
+ * @license
+ * MyFonts Webfont Build ID 3098829, 2015-09-28T14:00:56-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: JoannaMTStd-Regular by Monotype 
+ * URL: http://www.myfonts.com/fonts/mti/joanna/std-regular/
+ * Copyright: Joanna Regular
+ * 
+ * Webfont: JoannaMTStd-SemiBold by Monotype 
+ * URL: http://www.myfonts.com/fonts/mti/joanna/std-semi-bold/
+ * Copyright: Joanna Semibold
+ * 
+ * 
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3098829
+ * Licensed pageviews: 250,000
+ * 
+ * © 2015 MyFonts Inc
+ */
+@font-face {
+  font-family: "JoannaMTStd-Regular";
+  src:  url('#{$fonts-dir}2F48CD_0_0.eot');
+  src:  url('#{$fonts-dir}2F48CD_0_0.eot?#iefix') format('embedded-opentype'), url('#{$fonts-dir}2F48CD_0_0.woff2') format('woff2'), url('#{$fonts-dir}2F48CD_0_0.woff') format('woff'), url('#{$fonts-dir}2F48CD_0_0.ttf') format('truetype');
+}
+  
+@font-face {
+  font-family: "JoannaMTStd-SemiBold";
+  src:  url('#{$fonts-dir}2F48CD_1_0.eot');
+  src:  url('#{$fonts-dir}2F48CD_1_0.eot?#iefix') format('embedded-opentype'), url('#{$fonts-dir}2F48CD_1_0.woff2') format('woff2'), url('#{$fonts-dir}2F48CD_1_0.woff') format('woff'), url('#{$fonts-dir}2F48CD_1_0.ttf') format('truetype');
+}
+ 
 @font-face {
   font-family: 'CubanoRegular';
   src: url('#{$fonts-dir}cubano-regular-webfont.eot');
-  src: url('#{$fonts-dir}cubano-regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('#{$fonts-dir}cubano-regular-webfont.woff') format('woff'),
-       url('#{$fonts-dir}cubano-regular-webfont.ttf') format('truetype'),
-       url('#{$fonts-dir}cubano-regular-webfont.svg#CubanoRegular') format('svg');
+  src: url('#{$fonts-dir}cubano-regular-webfont.eot?#iefix') format('embedded-opentype'), url('#{$fonts-dir}cubano-regular-webfont.woff') format('woff'), url('#{$fonts-dir}cubano-regular-webfont.ttf') format('truetype'), url('#{$fonts-dir}cubano-regular-webfont.svg#CubanoRegular') format('svg');
   font-weight: normal;
   font-style: normal;
+}
+
+/**
+ * @license
+ * MyFonts Webfont Build ID 3098831, 2015-09-28T14:06:55-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: P22UndergroundDemiBold by P22
+ * URL: http://www.myfonts.com/fonts/p22/underground-basic/demi/
+ * 
+ * Webfont: P22UndergroundMedium by P22
+ * URL: http://www.myfonts.com/fonts/p22/underground-basic/medium/
+ * 
+ * 
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3098831
+ * Licensed pageviews: 10,000
+ * Webfonts copyright: Copyright (c) 2007-2103 by P22 type foundry. All rights reserved.
+ * 
+ * © 2015 MyFonts Inc
+ */
+@font-face {
+  font-family: "P22UndergroundDemiBold";
+  src:  url('#{$fonts-dir}2F48CF_0_0.eot');
+  src:  url('#{$fonts-dir}2F48CF_0_0.eot?#iefix') format('embedded-opentype'), url('#{$fonts-dir}2F48CF_0_0.woff2') format('woff2'), url('#{$fonts-dir}2F48CF_0_0.woff') format('woff'), url('#{$fonts-dir}2F48CF_0_0.ttf') format('truetype');
+}
+ 
+@font-face {
+  font-family: "P22UndergroundMedium";
+  src:  url('#{$fonts-dir}2F48CF_1_0.eot');
+  src:  url('#{$fonts-dir}2F48CF_1_0.eot?#iefix') format('embedded-opentype'), url('#{$fonts-dir}2F48CF_1_0.woff2') format('woff2'), url('#{$fonts-dir}2F48CF_1_0.woff') format('woff'), url('#{$fonts-dir}2F48CF_1_0.ttf') format('truetype');
 }
 
 @mixin font-cubano() {
@@ -20,8 +93,23 @@
   font-style: normal;
 }
 
+@mixin font-joanna() {
+  font-family: "JoannaMTStd-Regular", sans-serif;
+  font-style: normal;
+}
+
+@mixin font-joanna-semibold() {
+  font-family: "JoannaMTStd-SemiBold", sans-serif;
+  font-style: normal;
+}
+
+@mixin font-p22-underground-demibold() {
+  font-family: "P22UndergroundDemiBold", sans-serif;
+  font-style: normal;
+}
+
 @mixin font-p22-underground() {
-  font-family: "p22-underground-pc", sans-serif;
+  font-family: "P22UndergroundMedium", sans-serif;
   font-style: normal;
 }
 
@@ -33,7 +121,7 @@
 }
 
 @mixin paragraph-font-style() {
-  font-weight: 500;
+  @include font-p22-underground-demibold;
   line-height: 22px;
 }
 
@@ -163,6 +251,12 @@ button, .btn {
   }
 
 }
+
+
+
+
+
+
 
 
 
