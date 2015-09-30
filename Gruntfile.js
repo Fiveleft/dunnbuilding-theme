@@ -77,13 +77,28 @@ module.exports = function(grunt) {
           dest: 'css',
           ext: '.css'
         }],
+      },
+      dist: {
+        options: {
+          sourceMap: true,
+          sourceComments: false,
+          outputStyle: 'compact',
+          includePaths: require('node-bourbon').includePaths
+        },
+        files: [{
+          expand: true,
+          cwd: 'scss',
+          src: ['**/*.scss'],
+          dest: 'build/css',
+          ext: '.css'
+        }],
       }
     }, 
 
     // Bower task sets up require config
     bower : {
       all : {
-        rjsConfig : 'js/global.js'
+        rjsConfig : 'js/main.js'
       }
     },
 
@@ -92,7 +107,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'js',
-          src: ['*.js', '!global.js'],
+          src: ['*.js', '!main.js'],
           dest: 'build/js'
         }]
       },
@@ -107,9 +122,8 @@ module.exports = function(grunt) {
     // Require config
     requirejs : {
       options : {
-        name : 'global',
-        //baseUrl : '<%= config.env.dev.requirejs.baseUrl %>',
-        mainConfigFile : 'js/global.js',
+        name : 'main',
+        mainConfigFile : 'js/main.js',
         out : 'js/optimized.min.js'
       },
       dev : {
@@ -119,8 +133,10 @@ module.exports = function(grunt) {
       },
       dist : {
         options: {
-          baseUrl : '<%= config.env.dev.requirejs.baseUrl %>',
-          out : 'build/js/global.js'
+          name : 'main',
+          mainConfigFile : 'js/main.js',
+          baseUrl : '<%= config.env.production.requirejs.baseUrl %>',
+          out : 'build/js/main.js'
         }
       }
     },
@@ -154,7 +170,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'img',
-            src: '**/*.svg',
+            src: ['**/*.svg'],
             dest: 'build/img'
           }
         ]
@@ -173,9 +189,15 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: './', 
-            src: ['*.php', 'templates/*.php'],
+            src: ['*.php', 'templates/*.php', 'img/*.php'],
             dest: 'build'
-          }
+          },
+          {
+            expand: true,
+            cwd: './css/fonts',
+            src: ['*'],
+            dest: 'build/css/fonts'
+          },
         ]
       }
     },
@@ -249,6 +271,7 @@ module.exports = function(grunt) {
   grunt.registerTask( "build-theme", function() {
     var arr = [
       'build:prep',
+      // 'comments',
       'jshint',
       'sass:dist', 
       'requirejs:dist', 

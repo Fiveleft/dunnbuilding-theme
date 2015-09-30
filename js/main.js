@@ -1,4 +1,4 @@
- require.config({
+require.config({
   paths: {
     jquery: "vendor/jquery/jquery",
     backbone: "vendor/backbone/backbone",

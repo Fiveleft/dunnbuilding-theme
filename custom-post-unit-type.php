@@ -6,7 +6,7 @@ function create_unit_type_custom_post()
   register_post_type('unit_type', // Register Custom Post Type
     array(
       'labels' => array(
-        'name' => __('Unit Type', 'unit_type'), // Rename these to suit
+        'name' => __('Unit Types', 'unit_type'), // Rename these to suit
         'singular_name' => __('Unit Type', 'unit_type'),
         'add_new' => __('Add New', 'unit_type'),
         'add_new_item' => __('Add New Unit Type', 'unit_type'),

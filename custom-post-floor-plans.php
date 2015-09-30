@@ -6,7 +6,7 @@ function create_floorplan_custom_post()
   register_post_type('floorplan', // Register Custom Post Type
     array(
       'labels' => array(
-        'name' => __('Floor Plan', 'floorplan'), // Rename these to suit
+        'name' => __('Floor Plans', 'floorplan'), // Rename these to suit
         'singular_name' => __('Floor Plan', 'floorplan'),
         'add_new' => __('Add New', 'floorplan'),
         'add_new_item' => __('Add New Floor Plan', 'floorplan'),
@@ -136,5 +136,5 @@ function mytheme_show_box() {
 }
 
 
-add_action('admin_menu', 'mytheme_add_box');
+// add_action('admin_menu', 'mytheme_add_box');
 

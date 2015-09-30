@@ -30,6 +30,7 @@
     "node-bourbon": "^4.2.3",
     "susy": "^2.2.6",
     "grunt-sass": "^1.0.0",
-    "grunt-modernizr": "^1.0.0"
+    "grunt-modernizr": "^1.0.0",
+    "grunt-stripcomments": "^0.3.1"
   }
 }

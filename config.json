@@ -5,8 +5,8 @@
     "company_name" : "",
     "company_email" : "",
     "repository_url" : "",
-    "theme_name" : "",
-    "theme_slug" : ""
+    "theme_name" : "Dunn Motors Apartments",
+    "theme_slug" : "dunnmotorsapartments"
   },
   "env" : {
     "options" : {

@@ -5,7 +5,7 @@
   <!-- article -->
   <article>
     <div class='content-wrapper break-container'>
-      <h1><?php _e( 'Sorry, we couldn&rsquo;t find that page.', 'html5blank' ); ?></h1>
+      <h1>Sorry, we couldn&rsquo;t find that page.</h1>
     </div>
   </article>
   <!-- /article -->

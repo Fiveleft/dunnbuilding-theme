@@ -181,7 +181,10 @@ function enqueue_header_scripts()
     wp_register_script('require', $js_dir . '/require.js', array('require-config'), false, true);
     wp_enqueue_script('require');
 
-    wp_register_script('main', $js_dir . '/main.js', array('require'), false, true);
+    
+    // wp_register_script('main', $js_dir . '/optimized.min.js', array('require'), false, true);
+    // If testing requirejs build - use 'optimized.min.js'
+    wp_register_script('main', $js_dir . '/main.js', array('require', 'require-config'), false, true);
     wp_enqueue_script('main');
 
     wp_register_script('modernizr', $js_dir . '/modernizr.js');
@@ -215,10 +218,6 @@ function enqueue_header_scripts()
 
   endif;
 
-
-  
-
-
 }
 
 
@@ -251,6 +250,31 @@ function register_menus()
         'footer-menu' => __('Footer Menu', 'dunnbuilding') // Fotter Navigation if needed (duplicate as many as you need!)
     ));
 }
+
+// Reove Emojis from <head>
+function disable_wp_emojicons() {
+
+  // all actions related to emojis
+  remove_action( 'admin_print_styles', 'print_emoji_styles' );
+  remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+  remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+  remove_action( 'wp_print_styles', 'print_emoji_styles' );
+  remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+  remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+  remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+
+  // filter to remove TinyMCE emojis
+  add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
+}
+function disable_emojicons_tinymce( $plugins ) {
+  if ( is_array( $plugins ) ) {
+    return array_diff( $plugins, array( 'wpemoji' ) );
+  } else {
+    return array();
+  }
+}
+add_action( 'init', 'disable_wp_emojicons' );
+
 
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
 function my_wp_nav_menu_args($args = '')

@@ -52,8 +52,8 @@ add_action( 'init', 'create_unit_custom_post' );
  */
 function create_unit_taxonomy_meta_boxes() {
   // Remove Unit Floor metabox
-  remove_meta_box( 'tagsdiv-unit_floor', 'unit', 'side' );
-  add_meta_box( 'tagsdiv-unit_floor', 'Unit Floor', 'unit_floor_meta_box', 'unit', 'side' );
+  remove_meta_box( 'tagsdiv-unit_floor', 'unit', 'low' );
+  add_meta_box( 'tagsdiv-unit_floor', 'Unit Floor', 'unit_floor_meta_box', 'unit', 'low' );
 }
 add_action('add_meta_boxes', 'create_unit_taxonomy_meta_boxes');
 
@@ -143,7 +143,7 @@ function unit_number_add_meta_box() {
     __( 'Unit Number', 'unit_number' ),
     'unit_number_html',
     'unit',
-    'side',
+    'low',
     'default'
   );
 }
@@ -263,7 +263,7 @@ function unit_table_columns( $columns ) {
       "title" => $columns["title"],
       "unit_type" => "Type",
       "unit_number" => "Number",
-      "taxonomy-unit_floor" => $columns["taxonomy-unit_floor"],
+      "floorplan" => "Floor Plan",
       "tags" => $columns["tags"],
     );
   return $new_columns;
@@ -280,6 +280,19 @@ function unit_table_column( $colname, $unit_pID ) {
     ?>
       <span class='availability <?php if($available) echo "available"; ?>' ></span>
     <?php
+    break;
+    case ( 'floorplan' ) :
+    $fp = get_post_meta( $unit_pID, 'floor_plan_type' );
+    if( count($fp) ) {
+      $fp_post = get_post( $fp[0][0] );
+      ?>
+      <span class='unit-type'><?php echo $fp_post->post_title; ?></span>
+      <?php 
+    }else{
+      ?>
+      <span class='unit-type'>Not Defined</span>
+      <?php 
+    }
     break;
     case ( 'unit_number' ) :
     $unit_number = get_post_meta( $unit_pID, 'unit_number_unit_', true );
@@ -304,7 +317,7 @@ function my_admin_column_width() {
       .wp-admin.post-type-unit .column-title { width:20%; }
       .wp-admin.post-type-unit .column-unit_type { width:15%; }
       .wp-admin.post-type-unit .column-unit_number { width:10%; }
-      .wp-admin.post-type-unit .column-taxonomy-unit_floor { width:10%; }
+      .wp-admin.post-type-unit .column-floorplan { width:10%; }
       .wp-admin.post-type-unit .column-tags { width:20%; }
       .wp-admin.post-type-unit .column-available { text-align: center; width:5%; }
       .wp-admin.post-type-unit .column-available span.availability {  
@@ -325,87 +338,5 @@ function my_admin_column_width() {
     </style>';
 }
 add_action('admin_head', 'my_admin_column_width');
-
-
-
-/*
-function unit_availability_add_admin_menu() { 
-
-  if ( !current_user_can( 'manage_options' ) )  {
-    wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-  }
-
-  //add_submenu_page( 'tools.php', 'Unit Availability', 'Unit Availability', 'manage_options', 'unit_availability', 'unit_availability_options_page' );
-  add_submenu_page( 
-    'edit.php?post_type=unit',
-    'Unit Availability', 
-    'Manage Availability', 
-    'manage_options', 
-    'unit_availability', 
-    'unit_availability_options_page' 
-  );
-}
-add_action( 'admin_menu', 'unit_availability_add_admin_menu' );
-
-
-function unit_availability_settings_init() { 
-
-  register_setting( 
-    'unit_availability', 
-    'unit_availability_settings' 
-  );
-
-  add_settings_section(
-    'unit_availability_unit_list_section', 
-    __( 'Your section description', 'dunnbuilding' ), 
-    'unit_availability_settings_section_callback', 
-    'unit_availability'
-  );
-
-  add_settings_field( 
-    'unit_availability_text_field_0', 
-    __( 'Settings field description', 'dunnbuilding' ), 
-    'unit_availability_text_field_0_render', 
-    'unit_availability', 
-    'unit_availability_unit_list_section' 
-  );
-}
-add_action( 'admin_init', 'unit_availability_settings_init' );
-
-
-
-function unit_availability_text_field_0_render() { 
-
-  $options = get_option( 'unit_availability_settings' );
-  ?>
-  <input type='text' name='unit_availability_settings[unit_availability_text_field_0]' value='<?php echo $options['unit_availability_text_field_0']; ?>'>
-  <?php
-}
-
-
-function unit_availability_settings_section_callback() { 
-
-  echo __( 'This section description', 'dunnbuilding' );
-}
-
-
-function unit_availability_options_page() { 
-
-  ?>
-  <form action='options.php' method='post'>
-    
-    <h2>Unit Availability</h2>
-    
-    <?php
-    settings_fields( 'pluginPage' );
-    do_settings_sections( 'pluginPage' );
-    submit_button();
-    ?>
-    
-  </form>
-  <?php
-
-}  
-*/
 
 
