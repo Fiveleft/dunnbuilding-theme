@@ -12,41 +12,62 @@
     padding: 0; margin: 0;
     @include clearfix();
 
-    &[data-count='2'] {
-      width: 2 * 100%;
+    &[data-count='2'] { width: 2 * 100%;
       .gallery-item { width: 1/2 * 100%; }
     }
-    &[data-count='3'] {
-      width: 3 * 100%;
+    &[data-count='3'] { width: 3 * 100%;
       .gallery-item { width: 1/3 * 100%; }
     }
-    &[data-count='4'] {
-      width: 4 * 100%;
+    &[data-count='4'] { width: 4 * 100%;
       .gallery-item { width: 1/4 * 100%; }
     }
-    &[data-count='5'] {
-      width: 5 * 100%;
+    &[data-count='5'] { width: 5 * 100%;
       .gallery-item { width: 1/5 * 100%; }
     }
-    &[data-count='6'] {
-      width: 6 * 100%;
+    &[data-count='6'] { width: 6 * 100%;
       .gallery-item { width: 1/6 * 100%; }
     }
-    &[data-count='7'] {
-      width: 7 * 100%;
+    &[data-count='7'] { width: 7 * 100%;
       .gallery-item { width: 1/7 * 100%; }
     }
-    &[data-count='8'] {
-      width: 8 * 100%;
+    &[data-count='8'] { width: 8 * 100%;
       .gallery-item { width: 1/8 * 100%; }
     }
-    &[data-count='9'] {
-      width: 9 * 100%;
+    &[data-count='9'] { width: 9 * 100%;
       .gallery-item { width: 1/9 * 100%; }
     }
-    &[data-count='10'] {
-      width: 10 * 100%;
+    &[data-count='10'] { width: 10 * 100%;
       .gallery-item { width: 1/10 * 100%; }
+    }
+    &[data-count='11'] { width: 11 * 100%;
+      .gallery-item { width: 1/11 * 100%; }
+    }
+    &[data-count='12'] { width: 12 * 100%;
+      .gallery-item { width: 1/12 * 100%; }
+    }
+    &[data-count='13'] { width: 13 * 100%;
+      .gallery-item { width: 1/13 * 100%; }
+    }
+    &[data-count='14'] { width: 14 * 100%;
+      .gallery-item { width: 1/14 * 100%; }
+    }
+    &[data-count='15'] { width: 15 * 100%;
+      .gallery-item { width: 1/15 * 100%; }
+    }
+    &[data-count='16'] { width: 16 * 100%;
+      .gallery-item { width: 1/16 * 100%; }
+    }
+    &[data-count='17'] { width: 17 * 100%;
+      .gallery-item { width: 1/17 * 100%; }
+    }
+    &[data-count='18'] { width: 18 * 100%;
+      .gallery-item { width: 1/18 * 100%; }
+    }
+    &[data-count='19'] { width: 19 * 100%;
+      .gallery-item { width: 1/19 * 100%; }
+    }
+    &[data-count='20'] { width: 20 * 100%;
+      .gallery-item { width: 1/20 * 100%; }
     }
   }
 

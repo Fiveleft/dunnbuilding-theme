@@ -61,6 +61,7 @@ module.exports = function(grunt) {
       }
     },
     
+    // Build Stylesheets from SCSS files
     sass: {
       global: {
         options: {
@@ -121,6 +122,14 @@ module.exports = function(grunt) {
           baseUrl : '<%= config.env.dev.requirejs.baseUrl %>',
           out : 'build/js/global.js'
         }
+      }
+    },
+
+    modernizr: {
+      dist: {
+        // Path to save out the built file 
+        "dest" : "dist/js/modernizr.js",
+        // More settings go here 
       }
     },
 
