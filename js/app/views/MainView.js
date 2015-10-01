@@ -1,22 +1,23 @@
 // MainView.js
 define(
-  ['jquery','events','backbone', 'stateModel'],
-  function( $, Events, Backbone, stateModel ){
+  ['jquery','events','backbone', 'stateModel', 'galleryView', 'mapView'],
+  function( $, Events, Backbone, stateModel, GalleryView, MapView ){
 
-    var transitionEndEvents = "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+    var _instance = null, 
+      transitionEndEvents = "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
       $body,
       $wrapper,
       $main, 
       $mainLoader,
+      mapView,
+      galleryView,
       siteLinkClick = false,
-      apartmentView = false,
       oldPageName = "",
       mainTransitionTimeout,
       mainTransitionDuration,
       scrollTopTimeout,
       targetPageView,
       targetPageName,
-
       i;
 
 
@@ -34,13 +35,16 @@ define(
         $main = $(".wrapper > main");
         $mainLoader = $("body > .main-loader");
 
-        targetPageName = _.find( document.body.className.split(" "), findPageNameFromClasses );
+        targetPageName = _.find( $body[0].className.split(" "), findPageNameFromClasses );
         mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
         // Events.on( Events.navigate, this._routerNavigate, this );
         Events.on( Events.loadRoute, this._loadRoute, this );
         Events.on( Events.clickChatNow, this._openChat, this );
         Events.on( Events.clickRentNow, this._openRent, this );
+
+        // Make sure loaded route has the views instantiated
+        this._handleLoadedRoute();
       },
 
 
@@ -115,15 +119,45 @@ define(
           loadedClasses = $loadedMain[0].className.split(" ");
 
         // Define Page Target
-        oldPageName = _.find( document.body.className.split(" "), findPageNameFromClasses ) || "";
+        oldPageName = _.find( $body[0].className.split(" "), findPageNameFromClasses ) || "";
         targetPageName = _.find( loadedClasses, findPageNameFromClasses );
 
         // Set State URL
         stateModel.set( "url", window.location.pathname );
-        // console.log( "MainView._loadRouteComplete() transition " + oldPageName + " > " + targetPageName );
 
         // Do Page Transition
         startMainTransition();
+      },
+
+
+      /**
+       * [_handleLoadedRoute description]
+       * @return {[type]} [description]
+       */
+      _handleLoadedRoute : function() {
+
+        var newPageView = null;
+        switch( true ) 
+        {
+        case targetPageName === "name-home" : 
+          newPageView = 'map, apartments, gallery';
+          MapView.reset();
+          break;
+        case targetPageName === "name-neighborhood" :
+          newPageView = 'map';
+          MapView.reset();
+          break;
+        case targetPageName === "name-building-history" :
+          newPageView = '[none]';
+          break;
+        case targetPageName === "name-apartments" :
+        case $body.hasClass("single-unit_type") : 
+          newPageView = 'apartments, gallery';
+          break;
+        }
+
+        console.log( "MainView.handleLoadedRoute() newPageView = ", newPageView );
+
       }
 
     });
@@ -139,21 +173,11 @@ define(
      * @return {String}   [description]
      */
     function findPageNameFromClasses( c ) {
-      if( /name-\w+/gi.test( c ) ) {
-        return c;
-      } 
-    }
+      var matches = /name\-([^\s]+)/i.exec(c);
 
-
-    /**
-     * [findPageColorFromClasses description]
-     * @param  {String} c [description]
-     * @return {String}   [description]
-     */
-    function findPageColorFromClasses( c ) {
-      if( /color-\w+/gi.test( c ) ) {
-        return c;
-      } 
+      if( matches !== null ) {
+        return matches[1];
+      }
     }
 
 
@@ -181,14 +205,15 @@ define(
      */
     function startMainTransition() {
 
-      var scrollTopDelay = Modernizr.csstransitions ? mainTransitionDuration * 0.5 : 0;
-      var $newMain = $mainLoader.children("main");
-      var transitionClasses = 'transition-main';
-      transitionClasses += ' transition-from-' + oldPageName.replace( /name-/ig, '' );
-      transitionClasses += ' transition-to-' + targetPageName.replace( /name-/ig, '' );
+      var scrollTopDelay = Modernizr.csstransitions ? mainTransitionDuration * 0.5 : 0,
+        $newMain = $mainLoader.children("main");
 
       // Clear existing Transition Classes
       removeTransitionClasses();
+
+      $body
+        .removeClass( oldPageName )
+        .addClass( 'transition-main ' + targetPageName );
 
       $main = $(".wrapper > main:not(.old)");
       $main
@@ -199,13 +224,11 @@ define(
       $newMain
         .addClass( "new" );
 
-      $("body")
-        .removeClass( oldPageName )
-        .addClass( targetPageName );
+
+      _instance._handleLoadedRoute();
 
 
       if( Modernizr.csstransitions ) {
-        $body.addClass( transitionClasses );
         clearTimeout( mainTransitionTimeout );
         mainTransitionTimeout = setTimeout( endMainTransition, mainTransitionDuration );
 
@@ -236,7 +259,9 @@ define(
       $(".wrapper > main.new" ).removeClass("new");
     }
 
+    if( !_instance ) {
+      _instance = new MainView();
+    }
 
-
-    return MainView;
+    return _instance;
   });

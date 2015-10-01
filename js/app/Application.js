@@ -16,8 +16,9 @@ define(
         $body = $( "body" );
 
         // Views
+        MainView;
+        // new MainView({el:$body});
         new NavView({el:$body});
-        new MainView({el:$body});
         new ApartmentView({el:$body});
       },
 

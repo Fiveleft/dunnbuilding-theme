@@ -67,7 +67,7 @@ Template Name: Apartments
 <?php if(!$settings->is_home_page) : ?>
   <!-- main.apartments -->
   <main role="main" <?php body_class( $body_classes ) ?>>
-    <!-- article -->
+    <!-- article.apartments -->
     <article class='apartments'>
 
 <?php endif; ?>

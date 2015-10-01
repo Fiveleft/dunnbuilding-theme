@@ -2,6 +2,8 @@
 
 .amenities {
 
+  padding-top: $header-height-xs + $top-padding-xs;
+
   .amenity-list-wrapper {
     display: block;
   }
@@ -31,6 +33,8 @@
 
   .amenities {
 
+    padding-top: $header-height-sm + $top-padding-sm;
+
     .amenity-list {
       @include clearfix();
       margin: 0 -10px;
@@ -51,6 +55,8 @@
 
   .amenities {
 
+    padding-top: $header-height-md + $top-padding-md;
+    
     .amenity-list {
       margin: 0 -15px;
     }

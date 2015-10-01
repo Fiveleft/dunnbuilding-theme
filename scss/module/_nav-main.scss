@@ -88,8 +88,10 @@ nav.main-nav {
     span {
       display: block;
       width: 100%; height: 100%;
-      background: $color-brand-dark;
+      // background: $color-brand-dark;
       @include hide-text;
+      background: url(../img/close-icon.svg) no-repeat 50% 50%;
+      background-size: contain;
     }
   }
   li a {

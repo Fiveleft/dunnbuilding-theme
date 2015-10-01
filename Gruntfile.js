@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     watch : {
       sass : {
         files : ['scss/**/*.scss'],
-        tasks : ['sass'],
+        tasks : ['sass:global'],
       },
       css : {
         files : ['css/**/*.css'],
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
           ext: '.css'
         }],
       },
-      dist: {
+      production: {
         options: {
           sourceMap: true,
           sourceComments: false,
@@ -273,7 +273,7 @@ module.exports = function(grunt) {
       'build:prep',
       // 'comments',
       'jshint',
-      'sass:dist', 
+      'sass:production', 
       'requirejs:dist', 
       'imagemin:production',
       'svgmin:production',
@@ -286,7 +286,7 @@ module.exports = function(grunt) {
 
   // Default task
   grunt.registerTask('default', [
-    'sass', 
+    'sass:global', 
     'build:js',
     'watch'
   ]);

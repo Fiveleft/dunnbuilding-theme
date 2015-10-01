@@ -27,8 +27,8 @@ $width-xs-max: 767px;
 $width-sm-min: 768px;
 $width-sm-max: 1023px;
 $width-md-min: 1024px;
-$width-md-max: 1279px;
-$width-lg-min: 1280px;
+$width-md-max: 1199px;
+$width-lg-min: 1200px;
 
 // USAGE: 
 /* Tablet Portrait */
@@ -42,6 +42,25 @@ $width-lg-min: 1280px;
 
 /* Tablet Portrait up to Tablet Landscape */
 // @media only screen and (min-width: $width-sm-min) and (max-width: $width-sm-max) {}
+
+$header-height-xs : 70px;
+$header-height-sm : 120px;
+$header-height-md : 180px;
+$header-height-lg : 210px;
+
+$top-padding-xs : 40px;
+$top-padding-sm : 80px;
+$top-padding-md : 100px;
+$top-padding-lg : 120px;
+
+$margins-xs : 15px;
+$margins-sm : 20px;
+$margins-md : 20px;
+$margins-lg : 50px;
+
+$right-col-width-sm : 0;
+$right-col-width-md : 0;
+$right-col-width-lg : 440px;
 
 
 

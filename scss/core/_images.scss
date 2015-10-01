@@ -1,0 +1,34 @@
+// _images.scss
+
+img[data-src], span.img[data-src] {
+  display: block;
+  width: 100%;
+  height: 0;
+}
+img.lazy, span.img.lazy {
+  opacity: 0;
+}
+img, span.img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  @include transition( opacity 0.5s $easeOutCubic 0.1s );
+}
+span.img {
+  display: block;
+  height: 0;
+  padding: 0;
+  padding-bottom: 56.25%; // defaults to 16:9 aspect;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  line-height: 0;
+  @include hide-text;
+}
+
+span.img.image-error {
+  // background-color: $color-background-grey;
+  // border: 1px solid rgba($color-border, 0.33);
+  height: 0;
+}

@@ -50,6 +50,9 @@
 
     <?php wp_footer(); ?>
 
+    <!-- maps api --> 
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initMap" async defer></script>
+
     <!-- analytics -->
     <script>
     // (function(f,i,r,e,s,h,l){i['GoogleAnalyticsObject']=s;f[s]=f[s]||function(){

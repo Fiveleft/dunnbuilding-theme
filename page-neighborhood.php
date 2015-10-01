@@ -13,8 +13,6 @@ Template Name: Neighborhood
     $page_section = get_page_by_path( '/neighborhood' ); 
   }
   $page = create_dunnbuilding_page( isset( $page_section ) ? $page_section : $post );
-  //ep( $page );
-  
   ?>
 
 <?php if(!$home_section) : ?>
@@ -23,8 +21,8 @@ Template Name: Neighborhood
     <!-- article.neighborhood --> 
     <article class='neighborhood'>
       <!-- section-inner.break-container -->
-      <div class='section-inner break-container'>
-        <h1><?php the_title(); ?></h1>
+      <div class='section-inner'>
+        <h1 class='break-container'><?php the_title(); ?></h1>
 
 
 <?php else : ?>
@@ -32,18 +30,34 @@ Template Name: Neighborhood
     <!-- section.neighborhood -->
     <section class='neighborhood'>
       <!-- section-inner.break-container -->
-      <div class='section-inner break-container'>
-
-        <h1><?php echo $page->post_title; ?></h1>
-        <a href="/neighborhood">go to page</a>
+      <div class='section-inner'>
+        <h1 class='break-container'><?php echo $page->post_title; ?></h1>
 
 <?php endif; ?>
 
         <div class='map-wrapper'>
-          <?php echo $page->acf->google_map->address; ?>
+          <div class='google-map' data-lat='<?php echo $page->acf->google_map->lat; ?>' data-lng='<?php echo $page->acf->google_map->lng; ?>'></div>
         </div>
-        <div class='content-wrapper'>
-          <?php echo $page->post_content; ?>
+        <div class='break-container'>
+          <div class='content-wrapper'>
+
+          <?php if($home_section) : ?>
+        
+            <p class='cta'>Check out more of the neighborhood <a href='<?php echo site_url(); ?>/neighborhood/' class='link cta'>here.</a></p>
+
+            <div class='image-column xs-hide'>
+              <div class='image-wrapper'>
+                <?php echo create_image_html( $page->acf->landing_page_image, true, false ); ?>
+              </div>
+            </div>
+
+            <div class='content-column'>
+              <?php echo apply_filters( 'the_content', $page->post_content ); ?>
+            </div>
+
+        <?php endif; ?>
+      
+          </div>
         </div>
         
 

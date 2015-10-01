@@ -85,10 +85,6 @@ function create_apartment_type( $post )
     // Create the apartment_gallery shortcode
     $apt->gallery = apply_filters( 'the_content', $gallery );
   }
-
-
-
-
   return $apt;
 }
 
@@ -100,8 +96,6 @@ function create_apartment_type( $post )
  */
 function create_dunnbuilding_page( $page ) 
 {
-  ep( $page );
-
   $db_page = $page;
   $db_page->meta = get_post_meta( $page->ID );
 
@@ -127,6 +121,66 @@ function create_dunnbuilding_page( $page )
   }
   return $db_page;
 }
+
+
+function create_image_html( $image, $use_span=false, $lazy=true, $breakpoints=true) {
+
+  $html = "";
+
+  $styles = "";
+
+  $classes = "img";
+  $classes .= $lazy ? " lazy" : "";
+  $classes .= $breakpoints ? " breakpoints" : "";
+  $classes .= isset($image->alt) && count($image->alt) ? " has-alt" : "";
+
+  $aspect = ($image->height / $image->width) * 100;
+
+  $attrs = " data-src='" . $image->url . "'";
+  $attrs .= " data-width='{$image->width}'";
+  $attrs .= " data-height='{$image->height}'";
+  $attrs .= " data-aspect='{$aspect}'";
+
+  if( !is_null($image->sizes) ){
+    // If the image has additional sizes
+    ep( $image );
+    foreach( $image->sizes as $key => $val ) :
+      $attrs .= ' data-' . $key . '="' . $val . '"';
+    endforeach;
+  }
+
+  if( $use_span || $lazy ) {
+    $styles .= " padding-bottom:{$aspect}%;";
+  }
+
+  if( $use_span ) {
+    
+    if( !$lazy ) {
+      $styles .= " background-image: url(" . $image->url . ");";
+    }
+
+    $html .= "<span class='{$classes}' {$attrs} style='{$styles}'>";
+    $html .= isset($image->alt) && count($image->alt) ? $image->alt : "";
+    $html .= "</span>";
+
+  }else{
+
+    $html .= "<img src='{$image->url}' class='{$classes}' {$attrs} style='{$styles}'/>";
+
+  }
+
+  // $attrs = $use_span ? " data-src='{$image->url}'" : " src='{$image->url}'"; 
+
+  // $image_html = $use_span ? "<span " : "<img ";
+  // $image_html .= "$classes' $attrs";
+  // $image_html .= ($use_span ? ' data-alt=' : 'alt=') . $image->alt . "'";
+  // // $image_html .= 
+
+  // $image_html .= $use_span ? "</span>" : "/>";
+  return $html;
+}
+
+
 
 
 /**
@@ -181,9 +235,6 @@ function enqueue_header_scripts()
     wp_register_script('require', $js_dir . '/require.js', array('require-config'), false, true);
     wp_enqueue_script('require');
 
-    
-    // wp_register_script('main', $js_dir . '/optimized.min.js', array('require'), false, true);
-    // If testing requirejs build - use 'optimized.min.js'
     wp_register_script('main', $js_dir . '/main.js', array('require', 'require-config'), false, true);
     wp_enqueue_script('main');
 
@@ -200,6 +251,7 @@ function enqueue_header_scripts()
       'homeUrl' => home_url(),
       'baseUrl' => get_stylesheet_directory_uri() . '/js',
       'url' => get_stylesheet_directory_uri(),
+      'initMap' => ''
      );
     if( get_permalink() ) {
       $js_localized['permalink'] = get_permalink();
@@ -220,23 +272,9 @@ function enqueue_header_scripts()
 
 }
 
-
-
-// Load HTML5 Blank conditional scripts
-function enqueue_conditional_scripts()
-{
-    if (is_page('pagenamehere')) {
-        wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
-        wp_enqueue_script('scriptname'); // Enqueue it!
-    }
-}
-
 // Load HTML5 Blank styles
 function enqueue_styles()
 {
-    // wp_register_style('normalize', get_template_directory_uri() . '/normalize.css', array(), '1.0', 'all');
-    // wp_enqueue_style('normalize'); // Enqueue it!
-
     wp_register_style('main_styles', get_template_directory_uri() . '/css/main.css', array(), '1.0', 'all');
     wp_enqueue_style('main_styles'); // Enqueue it!
 }
@@ -276,24 +314,12 @@ function disable_emojicons_tinymce( $plugins ) {
 add_action( 'init', 'disable_wp_emojicons' );
 
 
-// Remove the <div> surrounding the dynamic navigation to cleanup markup
-function my_wp_nav_menu_args($args = '')
-{
-    $args['container'] = false;
-    return $args;
-}
-
 // Remove Injected classes, ID's and Page ID's from Navigation <li> items
 function my_css_attributes_filter($var)
 {
-    return is_array($var) ? array() : '';
+  return is_array($var) ? array() : '';
 }
 
-// Remove invalid rel attribute values in the categorylist
-function remove_category_rel_from_category_list($thelist)
-{
-    return str_replace('rel="category tag"', 'rel="tag"', $thelist);
-}
 
 // Add page slug to body class, love this - Credit: Starkers Wordpress Theme
 function add_slug_to_body_class($classes)
@@ -345,15 +371,6 @@ if (function_exists('register_sidebar'))
     ));
 }
 
-// Remove wp_head() injected Recent Comment styles
-function my_remove_recent_comments_style()
-{
-    global $wp_widget_factory;
-    remove_action('wp_head', array(
-        $wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
-        'recent_comments_style'
-    ));
-}
 
 // Pagination for paged posts, Page 1, Page 2, Page 3, with Next and Previous Links, No plugin
 function html5wp_pagination()
@@ -491,13 +508,12 @@ function html5blankcomments($comment, $args, $depth)
 
 // Add Actions
 add_action('init', 'enqueue_header_scripts'); // Add Custom Scripts to wp_head
-add_action('wp_print_scripts', 'enqueue_conditional_scripts'); // Add Conditional Page Scripts
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'enqueue_styles'); // Add Theme Stylesheet
 add_action('init', 'register_menus'); // Add HTML5 Blank Menu 
 
 
-add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
+// add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 // add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
 
 // Remove Actions
@@ -519,11 +535,11 @@ add_filter('avatar_defaults', 'html5blankgravatar'); // Custom Gravatar in Setti
 add_filter('body_class', 'add_slug_to_body_class'); // Add slug to body class (Starkers build)
 add_filter('widget_text', 'do_shortcode'); // Allow shortcodes in Dynamic Sidebar
 add_filter('widget_text', 'shortcode_unautop'); // Remove <p> tags in Dynamic Sidebars (better!)
-add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <div> from WP Navigation
+// add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <div> from WP Navigation
 // add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> injected classes (Commented out by default)
 // add_filter('nav_menu_item_id', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> injected ID (Commented out by default)
 // add_filter('page_css_class', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> Page ID's (Commented out by default)
-add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove invalid rel attribute
+// add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove invalid rel attribute
 add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
 // add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
 add_filter('excerpt_more', 'html5_blank_view_article'); // Add 'View Article' button instead of [...] for Excerpts

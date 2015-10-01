@@ -121,7 +121,7 @@
 }
 
 @mixin paragraph-font-style() {
-  @include font-p22-underground-demibold;
+  @include font-joanna;
   line-height: 22px;
 }
 
@@ -142,7 +142,7 @@ h1 {
   @include font-p22-underground;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 100/1000 * 69px;
+  letter-spacing: 50/1000 * 34px;
   font-size: 34px;
   line-height: (41/34);
 }
@@ -159,9 +159,14 @@ h2 {
 
 p {
   @include paragraph-font-style();
-  font-size: 12px;
-  line-height: (18/12);
+  font-size: 14px;
+  line-height: (18/14);
   margin: 0 0 1em;
+}
+p.cta {
+  font-size: 20px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 a {
@@ -186,6 +191,7 @@ button, .btn {
   h1 {
     font-size: 52px;
     line-height: (62/52);
+    letter-spacing: 50/1000 * 52px;
   }
   h2 {
     font-size: 26px;
@@ -196,6 +202,9 @@ button, .btn {
   p {
     font-size: 14px;
     line-height: (19/14);
+  }
+  p.cta {
+    font-size: 24px;
   }
   button {
     // font-size: XXpx;
@@ -208,6 +217,7 @@ button, .btn {
 
   h1 {
     font-size: 69px;
+    letter-spacing: 50/1000 * 69px;
   }
   h2 {
     font-size: 34px;
@@ -218,6 +228,9 @@ button, .btn {
   p {
     font-size: 18px;
     line-height: (22/18);
+  }
+  p.cta {
+    font-size: 36px;
   }
   button {
     // font-size: XXpx;
@@ -244,6 +257,9 @@ button, .btn {
   p {
     // font-size: XXpx;
     // line-height: (YYpx/XXpx);
+  }
+  p.cta {
+    //font-size: 36px;
   }
   button {
     // font-size: XXpx;

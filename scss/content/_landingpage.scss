@@ -1,11 +1,48 @@
-// _apartments.scss
+// _landingpage.scss
 body.name-home {
 
   .landing-page > section {
-    border-top: 1px solid #FF0000;
-    border-bottom: 5px dotted #0000FF;
-    // padding-top: 70px;
+    padding-top: $header-height-xs + $top-padding-xs;
+    padding-bottom: $top-padding-xs;
+    // border-top: 1px dotted #000;
   }
+
+  section.welcome {
+
+  }
+
+  nav.welcome-nav {
+
+    $btn-spacing: 10px;
+
+    ul, li {
+      display: block;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul {
+      @include clearfix;
+    }
+    li {
+      float: left;
+      width: 100%;
+      margin: $btn-spacing 0;
+    }
+    span.label {
+      font-size: 30px;
+      line-height: 1;
+      padding: 15px 0 5px;
+    }
+    span.sub-label {
+      @include font-p22-underground-demibold;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: 1px;
+      padding-bottom: 5px;
+    }
+  }
+
 
   section.apartments .unit-types {
     display: none;
@@ -18,18 +55,57 @@ body.name-home {
 
   body.name-home {
 
+
+    .landing-page > section {
+      padding-top: $header-height-sm + $top-padding-sm;
+      padding-bottom: $top-padding-sm;
+    }
+
+    nav.welcome-nav {
+      $btn-spacing: 8px;
+      ul {
+        margin-left: -$btn-spacing;
+        margin-right: -$btn-spacing;
+      }
+      li {
+        width: 1/3 * 100%;
+        padding: 0 $btn-spacing;
+      }
+      span.label {
+        font-size: 28px;
+        letter-spacing: 1px;
+      }
+      span.sub-label {
+        font-size: 18px;
+        letter-spacing: 0.5px;
+      }
+    }
+
     section.apartments .unit-types {
       display: block;
     }
-
   }
-
 }
+
 
 /* Tablet Landscape */
 @media only screen and (min-width: $width-md-min) {
 
   body.name-home {
+
+    .landing-page > section {
+      padding-top: $header-height-md + $top-padding-md;
+      padding-bottom: $top-padding-md;
+    }
+    nav.welcome-nav {
+      span.label {
+        font-size: 34px;
+        letter-spacing: 2px;
+      }
+      span.sub-label {
+        letter-spacing: 1px;
+      }
+    }
 
   }
 
@@ -39,6 +115,11 @@ body.name-home {
 @media only screen and (min-width: $width-lg-min) {
 
   body.name-home {
+
+    .landing-page > section {
+      padding-top: $header-height-lg + $top-padding-lg;
+      padding-bottom: $top-padding-lg;
+    }
 
   }
 

@@ -1,0 +1,102 @@
+// _neighborhood.scss
+article.neighborhood, section.neighborhood {
+
+  .map-wrapper { 
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding: 0 0 50%;
+    margin: 0 0 20px;
+  }
+  .google-map {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; 
+    height: 100%;
+  }
+  p.cta {
+    font-size: 20px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+  a.link.cta {
+    color: $color-brand-medium;
+  }
+  h3 {
+    margin-top: 0;
+    padding-top: 12px;
+    border-top: 2px solid $color-brand-medium;
+  }
+  h3 ~ h3 {
+    margin-top: 50px;
+  }
+}
+
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  article.neighborhood, section.neighborhood {
+
+    h3 {
+      border-top: 2px solid $color-brand-medium;
+    }
+  }
+
+  // Home page
+  section.neighborhood {
+    
+    .content-wrapper {
+      display: block;
+      margin: 0 -20px;
+      @include clearfix;
+      & > * {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+    p.cta {
+      display: block;
+      float: left;
+      width: 100%;
+      font-size: 24px;
+    }
+    .image-column, .content-column {
+      display: block;
+      float: left;
+      width: 50%;
+    }
+
+  }
+
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  article.neighborhood, section.neighborhood {
+
+
+
+  }
+
+  // Home page
+  section.neighborhood {
+
+    p.cta {
+      font-size: 36px;
+    }
+  }
+
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  article.neighborhood, section.neighborhood {
+
+
+
+  }
+
+}

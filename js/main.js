@@ -3,8 +3,6 @@ require.config({
     jquery: "vendor/jquery/jquery",
     backbone: "vendor/backbone/backbone",
     underscore: "vendor/underscore/underscore",
-    // utils: "fiveleft/core/Utils",
-    // sharrre: "libs/jquery.sharrre",
     application: "app/Application",
     router: "app/Router",
     events: "app/Events",
@@ -12,14 +10,8 @@ require.config({
     mainView: "app/views/MainView",
     navView: "app/views/NavigationView",
     apartmentView: "app/views/ApartmentView",
-    // breakpoints: "app/Breakpoints",
-    // imageload: "app/ImageLoad",
-    // newscrawler: "app/modules/NewsCrawler",
-    // archiveview: "app/views/ArchiveView",
-    // commentsview: "app/views/CommentsView",
-    // homeview: "app/views/HomeView",
-    // pageview: "app/views/PageView",
-    // postview: "app/views/PostView",
+    galleryView: "app/views/GalleryView",
+    mapView: "app/views/MapView",
     raf: "app/utils/RAF"
   },
   shim: {
@@ -37,3 +29,9 @@ require(
   function($, Application) {
     Application.start();
   });
+
+
+// Called by Google Maps API
+window.initMap = function() {
+  // console.log( " Google Maps API ready " );
+}

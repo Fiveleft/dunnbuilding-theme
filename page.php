@@ -2,15 +2,46 @@
 
 	<main role="main"  <?php body_class() ?>>
 
-<?php if(is_front_page() && !is_404()) : ?>
+<?php 
+  if(is_front_page() && !is_404()) : 
+
+    $page = create_dunnbuilding_page( $post );
+
+    ?>
     <article class='landing-page'>
     	<!-- welcome -->
     	<section class='welcome'>
         <!-- section-inner.break-container -->
         <div class='section-inner break-container'>
           <h1><?php the_title(); ?></h1>
-          <div class='gallery'></div>
-          <div class='cta-row'></div>
+          <div class='gallery-wrapper'>
+            <?php echo $page->gallery; ?>
+          </div>
+          <nav class='welcome-nav'> 
+            <ul class='unit-type-list'>
+              <li>
+                <a class='btn btn-shadow' href="/apartments/">
+                  <span class='shadow'></span>
+                  <span class='label'>Apartments</span>
+                  <span class='sub-label'>See Floor Plans</span>
+                </a>
+              </li>
+              <li>
+                <a class='btn btn-shadow' href="#amenities">
+                  <span class='shadow'></span>
+                  <span class='label'>Amenities</span>
+                  <span class='sub-label'>Roof Deck &amp; More</span>
+                </a>
+              </li>
+              <li>
+                <a class='btn btn-shadow' href="/neighborhood/">
+                  <span class='shadow'></span>
+                  <span class='label'>Location</span>
+                  <span class='sub-label'>About Capitol Hill</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div> 
         <!-- /div.section-inner.break-container -->
     	</section>
