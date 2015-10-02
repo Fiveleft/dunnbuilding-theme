@@ -58,9 +58,13 @@ $margins-sm : 20px;
 $margins-md : 20px;
 $margins-lg : 50px;
 
-$right-col-width-sm : 0;
-$right-col-width-md : 0;
-$right-col-width-lg : 440px;
+$left-col-width-sm : ($width-sm-min - (2*$margins-sm)) * (75/100);
+$left-col-width-md : ($width-md-min - (2*$margins-md)) * (70/100);
+$left-col-width-lg : ($width-lg-min - (2*$margins-lg)) * (66/100);
+
+$right-col-width-sm : 44%;
+$right-col-width-md : 44%;
+$right-col-width-lg : 44%;
 
 
 

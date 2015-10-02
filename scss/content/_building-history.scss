@@ -1,18 +1,22 @@
 // _building-history.scss
 body.name-building-history main {
+  // padding-top: 0 !important;
+  padding-top: $header-height-xs !important;
+}
+
+// Homepage Only
+section.building-history {
+  padding-bottom: 0 !important;
   padding-top: 0 !important;
 }
 
+
 article.building-history,
 section.building-history {
-
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-
+  
   .building-history-inner {
     position: relative;
     height: 100vh;
-    // padding-top: 100%;
   }
 
   .hero-wrapper {
@@ -20,7 +24,6 @@ section.building-history {
     top: 0;
     width: 100%;
     height: 100%;
-    // padding: 0 0 100%;
   }
 
   .hero-image {
@@ -82,12 +85,88 @@ section.building-history {
         }
       }
     }
+
+    .headline-wrapper {
+      display: block;
+      width: 100%;
+    }
+
+    .headline-block {
+      display: block;
+      width: 100%;
+      background: $color-brand-dark;
+      color: $color-brand-brown;
+      padding: 20px;
+
+      h1 {
+        line-height: 1;
+        margin-bottom: 0;
+      }
+    }
   }
 
+  .section-inner {
+    // @include clearfix;
+    h2 {
+      margin: 2em 0 0.5em;
+    }
+    p {
+      max-width: 40em;
+    }
+    .wp-caption {
+      @include clearfix;
+      display: inline-block;
+      float: right;
+      margin: 10px;
+      max-width: 50%;
+    }
+  }
 }
+
+
+/* Mobile Only */
+@media only screen and (max-width: $width-xs-max) {
+
+
+  // Unique Page
+  article.building-history {
+
+    .building-history-inner {
+      height: auto;
+    }
+    .hero-wrapper {
+      position: relative;
+      top: auto; left: auto;
+      width: 100%;
+    }
+    .hero-wrapper-image {
+      width: 100%;
+      height: 0;
+      padding: 0 0 60%;
+    }
+    .hero-wrapper-headline {
+      height: auto;
+      .hero-headline {
+        position: relative;
+        bottom: auto;
+      }
+      .break-container {
+        width: 100%; margin: 0; padding: 0;
+      }
+    }
+
+  }
+}
+
+
+
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
+
+  body.name-building-history main {
+    padding-top: $header-height-sm !important;
+  }
 
   article.building-history,
   section.building-history {
@@ -111,11 +190,46 @@ section.building-history {
         right: 20px;
         width: 280px;
         padding: 30px;
-        // float: right;
         text-align: left;
         br {
           display: block;
         }
+      } 
+      .headline-block {
+        display: block;
+        width: 100%;
+        background: $color-brand-dark;
+        color: $color-brand-brown;
+        padding: 20px;
+        h1 {
+          line-height: 1;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  article.building-history {
+
+    .building-history-inner {
+      height: 85vh;
+    }
+
+    .hero-headline {
+      .headline-block {
+        width: $left-col-width-sm;
+      }
+    }
+
+    .section-inner {
+      @include clearfix;
+      p {
+        max-width: $left-col-width-sm;
+      }
+      .wp-caption {
+        display: inline-block;
+        float: right;
+        margin: 0 0 20px 20px;
       }
     }
   }
@@ -125,8 +239,57 @@ section.building-history {
 /* Tablet Landscape */
 @media only screen and (min-width: $width-md-min) {
 
-  .building-history {
-
+  body.name-building-history main {
+    padding-top: $header-height-md !important;
   }
 
+  article.building-history {
+
+    .hero-headline {
+      .headline-block {
+        width: $left-col-width-md;
+      }
+    }
+
+    .section-inner {
+      p {
+        max-width: $left-col-width-md;
+      }
+      .wp-caption {
+        // display: inline-block;
+        // float: right;
+        // margin: 0 0 20px 20px;
+      }
+    }
+  }
+}
+
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  body.name-building-history main {
+    padding-top: $header-height-lg !important;
+  }
+  
+  article.building-history {
+
+
+    .hero-headline {
+      .headline-block {
+        width: $left-col-width-lg;
+      }
+    }
+    
+    .section-inner {
+      p {
+        max-width: $left-col-width-lg;
+      }
+      .wp-caption {
+        // display: inline-block;
+        // float: right;
+        // margin: 0 0 20px 20px;
+      }
+    }
+  }
 }

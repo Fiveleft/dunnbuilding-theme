@@ -32,36 +32,38 @@ Template Name: History
       
       <div class='building-history-inner'>
       
-        <div class='hero-wrapper'>
+        <div class='hero-wrapper hero-wrapper-image'>
           <div class='hero-image'>
             <?php echo create_image_html( $page->acf->landing_page_image, true, false ); ?>
           </div>
         </div>
-        <div class='hero-wrapper'>
+        <div class='hero-wrapper hero-wrapper-headline'>
           <div class='hero-headline'>
             <div class='hero-headline-inner break-container'>
         
         <?php if(!$home_section) : ?>
-        
-              <div class='headline-wrapper'>
+          
+              <div class='headline-block'>
                 <h1><?php echo $page->post_title; ?></h1>
+                <?php echo $page->acf->history_page_excerpt; ?>
               </div>
-        
+    
         <?php else : ?>
-        
+            
               <div class='headline-wrapper'>
                 <h1 class='headline-landing-page'><?php echo $page->acf->landing_page_title; ?></h1>
               </div>
               <div class='headline-info'>
                 <p><?php echo apply_filters( 'the_content', $page->acf->landing_page_description ); ?></p>
                 <a href="/building-history"><?php echo $page->acf->landing_page_cta; ?></a>
-              </div>  
+              </div>
 
         <?php endif; ?>
 
-            </div>
-          </div>
-        </div>      
+            </div><!-- /div.hero-headline-inner -->
+          </div><!-- /div.hero-headline -->
+        </div><!-- /div.hero-wrapper -->
+      </div><!-- /div.building-history-inner -->      
 
 <?php if(!$home_section) : ?>
         <!-- section-inner.break-container -->

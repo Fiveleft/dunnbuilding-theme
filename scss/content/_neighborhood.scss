@@ -14,11 +14,6 @@ article.neighborhood, section.neighborhood {
     width: 100%; 
     height: 100%;
   }
-  p.cta {
-    font-size: 20px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-  }
   a.link.cta {
     color: $color-brand-medium;
   }
@@ -37,7 +32,6 @@ article.neighborhood, section.neighborhood {
 @media only screen and (min-width: $width-sm-min) {
 
   article.neighborhood, section.neighborhood {
-
     h3 {
       border-top: 2px solid $color-brand-medium;
     }
@@ -59,7 +53,6 @@ article.neighborhood, section.neighborhood {
       display: block;
       float: left;
       width: 100%;
-      font-size: 24px;
     }
     .image-column, .content-column {
       display: block;
@@ -84,7 +77,6 @@ article.neighborhood, section.neighborhood {
   section.neighborhood {
 
     p.cta {
-      font-size: 36px;
     }
   }
 
