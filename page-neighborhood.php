@@ -41,7 +41,7 @@ Template Name: Neighborhood
         <div class='break-container'>
           <div class='content-wrapper'>
 
-          <?php if($home_section) : ?>
+      <?php if($home_section) : ?>
         
             <p class='cta'>Check out more of the neighborhood <a href='<?php echo site_url(); ?>/neighborhood/' class='link cta'>here.</a></p>
 
@@ -55,8 +55,54 @@ Template Name: Neighborhood
               <?php echo apply_filters( 'the_content', $page->post_content ); ?>
             </div>
 
-        <?php endif; ?>
-      
+      <?php else: ?>
+
+          <?php 
+              // Load Amenities
+              $attractions = new WP_Query( array( 
+                  'post_type'   => 'attraction', 
+                  'orderby'     => 'menu_order',
+                  'post_status' => 'publish'
+                ));
+              wp_reset_postdata();
+            ?>
+            
+            <div class='attractions-list-wrapper'>
+
+              <div class='title-row'>
+                <h2>Neighborhood Attractions</h2>
+                <a href="<?php echo site_url(); ?>/apartments/" class='btn btn-block xs-hide'>View Apartments</a>
+              </div>
+
+              <ul class='attractions-list'>
+                
+          <?php 
+              while ( $attractions->have_posts() ) : $attractions->the_post(); 
+                $attraction = create_dunnbuilding_post_item( $post );
+                ep( $attraction );
+              ?>
+                
+                <li class='attractions-item'>
+                  <div class='attractions-item-inner'>
+                    <div class='image-wrapper'>
+                      <?php echo create_image_html( $attraction->image, false, false ); ?>
+                    </div>
+                    <h3><?php the_title(); ?></h3>
+                    <div class='attractions-content'>
+                      <?php the_content(); ?>
+                    </div>
+                  </div>
+                </li>
+                
+                <?php endwhile; ?>
+
+              </ul>
+
+            </div>
+
+
+      <?php endif; ?>
+
           </div>
         </div>
         

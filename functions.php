@@ -123,7 +123,66 @@ function create_dunnbuilding_page( $page )
 }
 
 
-function create_image_html( $image, $use_span=false, $lazy=true, $breakpoints=true) {
+/**
+ * [create_dunnbuilding_post_item description]
+ * @param  WP_Post $post [description]
+ * @return [type]       [description]
+ */
+function create_dunnbuilding_post_item( $post ) 
+{
+  $item = $post;
+  $item->featured_image_id = get_post_thumbnail_id( $post->ID );
+
+  /**
+   * Pulled from plugins/advanced-custom-fields/core/fields/image :: function format_value_for_api( $value, $post_id, $field );
+   */
+  $attachment = get_post( $item->featured_image_id );
+
+  // create array to hold value data
+  $src = wp_get_attachment_image_src( $attachment->ID, 'full' );
+  
+  $value = array(
+    'id' => $attachment->ID,
+    'alt' => get_post_meta($attachment->ID, '_wp_attachment_image_alt', true),
+    'title' => $attachment->post_title,
+    'caption' => $attachment->post_excerpt,
+    'description' => $attachment->post_content,
+    'mime_type' => $attachment->post_mime_type,
+    'url' => $src[0],
+    'width' => $src[1],
+    'height' => $src[2],
+    'sizes' => array(),
+  );
+  
+  // find all image sizes
+  $image_sizes = get_intermediate_image_sizes();
+  
+  if( $image_sizes )
+  {
+    foreach( $image_sizes as $image_size )
+    {
+      // find src
+      $src = wp_get_attachment_image_src( $attachment->ID, $image_size );
+      
+      // add src
+      $value[ 'sizes' ][ $image_size ] = $src[0];
+      $value[ 'sizes' ][ $image_size . '-width' ] = $src[1];
+      $value[ 'sizes' ][ $image_size . '-height' ] = $src[2];
+    }
+    // foreach( $image_sizes as $image_size )
+  }
+  /**
+   * END pulled code.
+   */
+
+  $item->image = json_decode(json_encode($value), FALSE);
+
+  return $item;
+}
+
+
+
+function create_image_html( $image, $use_span=false, $lazy=true, $srcset=true) {
 
   $html = "";
 
@@ -131,10 +190,11 @@ function create_image_html( $image, $use_span=false, $lazy=true, $breakpoints=tr
 
   $classes = "img";
   $classes .= $lazy ? " lazy" : "";
-  $classes .= $breakpoints ? " breakpoints" : "";
+  $classes .= $srcset ? " breakpoints" : "";
   $classes .= isset($image->alt) && count($image->alt) ? " has-alt" : "";
 
-  $aspect = ($image->height / $image->width) * 100;
+  $aspect = ( intval($image->height) / intval($image->width) ) * 100;
+
 
   $attrs = " data-src='" . $image->url . "'";
   $attrs .= " data-width='{$image->width}'";
@@ -144,7 +204,15 @@ function create_image_html( $image, $use_span=false, $lazy=true, $breakpoints=tr
   if( !is_null($image->sizes) ){
     // If the image has additional sizes
     ep( $image );
+    
+    $size_array = get_object_vars( $image->sizes );
+    $srcset = " " . $size_array["small"] . " " . $size_array["small-width"] . "w,";  
+    $srcset .= " " . $size_array["medium"] . " " . $size_array["medium-width"] . "w,";  
+    $srcset .= " " . $size_array["large"] . " " . $size_array["large-width"] . "w,";  
+    $srcset .= " " . $image->url . " " . round($image->width/2) . "w";  
+  
     foreach( $image->sizes as $key => $val ) :
+      // $srcset .= $
       $attrs .= ' data-' . $key . '="' . $val . '"';
     endforeach;
   }
@@ -165,7 +233,11 @@ function create_image_html( $image, $use_span=false, $lazy=true, $breakpoints=tr
 
   }else{
 
-    $html .= "<img src='{$image->url}' class='{$classes}' {$attrs} style='{$styles}'/>";
+    if( $srcset ) {
+      $html .= "<img src='{$image->sizes->small}' srcset='{$srcset}' class='{$classes}' style='{$styles}'/>";
+    }else{
+      $html .= "<img src='{$image->url}' srcset='{$srcset}' class='{$classes}' {$attrs} style='{$styles}'/>";
+    }
 
   }
 

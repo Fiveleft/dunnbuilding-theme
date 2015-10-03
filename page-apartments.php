@@ -42,7 +42,7 @@ Template Name: Apartments
     $apt = false;
   endif;
 
-  $apartment_type_name = ($apt) ? $apartments_page->post_name : "";
+  $apartment_type = ($apt) ? $apt->ID : "";
   wp_reset_postdata();
 
   $body_classes = "";
@@ -54,6 +54,44 @@ Template Name: Apartments
   }
   if( $settings->is_floorplans ) {
 
+    error_log( "\n\n***\nfinding units with apartment type [" . $apartment_type . "]" );
+
+    $units = new WP_Query( array( 
+      'post_type'   => 'unit', 
+      'post_status' => 'publish',
+      'posts_per_page' => 100,
+      'meta_query' => array(
+        array( 
+          'key' => 'apartment_type',
+          'value' => $apartment_type,
+          'compare' => '=',
+        ),
+        array( 
+          'key' => 'availability_available',
+          'value' => "true",
+          'compare' => '=',
+        ),
+      )
+    ));
+
+    $floorplan_uniques = array();
+    while( $units->have_posts() ) : $units->the_post();
+      $unit_floorplan = get_post_meta( $post->ID, 'floor_plan_type', true );
+      if( isset( $unit_floorplan[0] ) ){
+        $floorplan_uniques[ $unit_floorplan[0] ] = true;
+      }
+    endwhile;
+    $floorplan_ids = array_keys( $floorplan_uniques );
+
+    $floorplans = get_posts( array(
+        'post_type' => 'floorplan',
+        'post__in' => $floorplan_ids,
+      ));
+
+    foreach( $floorplans as $fp ) :
+      ep( $fp->post_name . " is an available floorplan for " . $apt->post_title );
+    endforeach;
+    wp_reset_postdata();
   }
   if( $settings->is_amenities ) {
     

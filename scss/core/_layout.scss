@@ -6,7 +6,6 @@
 }
 
 body, html {
-  height: 100%;
   min-height: 100%;
 }
 
@@ -161,7 +160,13 @@ header.site-header {
   padding-right: $margins-xs;
 }
 
-.xs-hide { display: none; }
+
+/* Mobile */
+@media only screen and (max-width: $width-xs-max) {
+
+  .xs-hide { display: none !important; }
+
+}
 .xs-show { display: block; }
 
 

@@ -13,7 +13,6 @@ Template Name: History
     $page_section = get_page_by_path( '/building-history' ); 
   }
   $page = create_dunnbuilding_page( isset( $page_section ) ? $page_section : $post );
-  ep( $page );
   ?>
 
 <?php if(!$home_section) : ?>
@@ -73,9 +72,6 @@ Template Name: History
         <!-- /div.section-inner.break-container -->
 <?php endif; ?>
 
-      </div>
-      <!-- /div.building-history-inner -->
-
 
 <?php if(!$home_section) : ?>
     </article>
@@ -87,10 +83,7 @@ Template Name: History
 <?php else : ?>
     </section>
     <!-- /section.building-history -->
-  <?php 
-    wp_reset_postdata();
-    // unset($page); 
-    ?>
+  <?php wp_reset_postdata(); ?>
 
 <?php endif; ?>
     

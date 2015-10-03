@@ -38,7 +38,7 @@ define(
         targetPageName = _.find( $body[0].className.split(" "), findPageNameFromClasses );
         mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
-        // Events.on( Events.navigate, this._routerNavigate, this );
+        Events.on( Events.navigate, this._routerNavigate, this );
         Events.on( Events.loadRoute, this._loadRoute, this );
         Events.on( Events.clickChatNow, this._openChat, this );
         Events.on( Events.clickRentNow, this._openRent, this );
@@ -74,7 +74,10 @@ define(
        * @return {[type]}   [description]
        */
       _routerNavigate : function( data ) {
-        console.log( "MainView._routerNavigate()", data );
+
+        siteLinkClick = data.newClick === true;
+        console.log( "MainView._routerNavigate() siteLinkClick: ", siteLinkClick );
+
       },
 
 
@@ -221,6 +224,13 @@ define(
         .addClass("old")
         .after( $newMain );
 
+
+      if( siteLinkClick ) {
+        siteLinkClick = false;
+        $(window).scrollTop(0);
+      }
+      
+
       $newMain
         .addClass( "new" );
 
@@ -231,15 +241,8 @@ define(
       if( Modernizr.csstransitions ) {
         clearTimeout( mainTransitionTimeout );
         mainTransitionTimeout = setTimeout( endMainTransition, mainTransitionDuration );
-
       }else{
         endMainTransition();
-      }
-
-      if( siteLinkClick ) {
-        siteLinkClick = false;
-        clearTimeout( scrollTopTimeout );
-        scrollTopTimeout = setTimeout( function(){ $(window).scrollTop(0); }, scrollTopDelay );
       }
     }
 

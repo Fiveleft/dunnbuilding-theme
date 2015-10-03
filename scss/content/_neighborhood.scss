@@ -14,6 +14,12 @@ article.neighborhood, section.neighborhood {
     width: 100%; 
     height: 100%;
   }
+}
+
+section.neighborhood {
+
+  padding-bottom: $top-padding-xs;
+
   a.link.cta {
     color: $color-brand-medium;
   }
@@ -27,19 +33,54 @@ article.neighborhood, section.neighborhood {
   }
 }
 
+article.neighborhood {
+
+  .title-row {
+    margin: 4em 0 3em;
+    h2 {
+      margin-bottom: 1em;
+    }
+  }
+
+  .attractions-list, .attractions-item {
+    list-style: none;
+  }
+
+  .attractions-list {
+    padding: 0;
+  }
+
+  .attractions-item {
+    width: 100%;
+    margin-bottom: 2.5em;
+    .image-wrapper {
+      line-height: 0;
+    }
+    h3 {
+      margin: 1em 0 0.5em;
+    }
+    p {
+      min-height: (54/14) * 1em;
+    }
+    a {
+      color: $color-brand-medium;
+      text-transform: underline;
+      display: inline-block;
+      &:before {
+        display: block;
+      }
+    }
+  }
+}
+
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
 
-  article.neighborhood, section.neighborhood {
-    h3 {
-      border-top: 2px solid $color-brand-medium;
-    }
-  }
-
-  // Home page
   section.neighborhood {
-    
+
+    padding-bottom: $top-padding-sm;
+
     .content-wrapper {
       display: block;
       margin: 0 -20px;
@@ -49,46 +90,84 @@ article.neighborhood, section.neighborhood {
         padding-right: 20px;
       }
     }
-    p.cta {
-      display: block;
-      float: left;
-      width: 100%;
-    }
     .image-column, .content-column {
       display: block;
       float: left;
       width: 50%;
     }
-
   }
 
+  article.neighborhood {
+
+    .title-row {
+      @include clearfix;
+      margin: 5em 0 4em;
+      h2 {
+        float: left;
+        margin: 0;
+        line-height: 36px;
+      }
+      a.btn-block {
+        float: right;
+        width: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+    .attractions-list {
+      @include clearfix();
+      margin: 0 -20px;
+    }
+    .attractions-item {
+      width: 50%;
+      float: left;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin-bottom: 1.5em;
+    }
+
+  }
 }
 
 /* Tablet Landscape */
 @media only screen and (min-width: $width-md-min) {
 
-  article.neighborhood, section.neighborhood {
-
-
-
-  }
-
-  // Home page
   section.neighborhood {
 
-    p.cta {
-    }
+    padding-bottom: $top-padding-md;
+  
   }
 
+  article.neighborhood {
+
+    .attractions-list {
+      margin: 0 -30px;
+    }
+    .attractions-item {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+  }
 }
 
 /* Large Desktop */
 @media only screen and (min-width: $width-lg-min) {
 
-  article.neighborhood, section.neighborhood {
+  section.neighborhood {
 
+    padding-bottom: $top-padding-lg;
+  
+  }
+  article.neighborhood {
 
+    .attractions-list {
+      margin: 0 -45px;
+    }
+    .attractions-item {
+      padding-left: 45px;
+      padding-right: 45px;
+    }
 
   }
-
 }

@@ -34,4 +34,4 @@ require(
 // Called by Google Maps API
 window.initMap = function() {
   // console.log( " Google Maps API ready " );
-}
+};

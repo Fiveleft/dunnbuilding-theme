@@ -153,8 +153,13 @@ h2, h3 {
 }
 
 h2 {
-  font-size: 17px;
+  font-size: 18px;
   line-height: (21/17);
+}
+
+h3 {
+  font-size: 16px;
+  line-height: (22/16);
 }
 
 p {
@@ -163,7 +168,7 @@ p {
   line-height: (18/14);
   margin: 0 0 1em;
 }
-p.cta {
+p.cta, p.caption {
   font-size: 20px;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
@@ -182,6 +187,17 @@ button, .btn {
   @include button-font-style();
   font-size: 17px;
   line-height: (21/17);
+}
+
+a.btn-block {  
+  display: block;
+  color: $color-brand-light;
+  background: $color-brand-dark;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 0 6px;
+  width: 100%;
 }
 
 
@@ -203,7 +219,7 @@ button, .btn {
     font-size: 14px;
     line-height: (19/14);
   }
-  p.cta {
+  p.cta, p.caption {
     font-size: 24px;
   }
   button {
@@ -229,7 +245,7 @@ button, .btn {
     font-size: 18px;
     line-height: (22/18);
   }
-  p.cta {
+  p.cta, p.caption {
     font-size: 36px;
   }
   button {
