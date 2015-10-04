@@ -190,6 +190,12 @@ define(
       clearTimeout( mainTransitionTimeout );
 
 
+      // Clear existing Transition Classes
+      removeTransitionClasses();
+      $("article.apartment-type", $main )
+        .removeClass("new");
+      
+
       var $targetScrollEl,
         elTop = 0,
         headerOffset = $header.outerHeight(),
@@ -199,6 +205,7 @@ define(
       {
       case null : 
         $targetScrollEl = $( "section.apartments-header");
+        
         break;
       case 'floorplans' :
         $targetScrollEl = $( "section.apartment-type-floorplans");
@@ -222,12 +229,6 @@ define(
 
       $(window).scrollTop( targetScrollY );
 
-
-      // Clear existing Transition Classes
-      removeTransitionClasses();
-      $("section.apartment-type-info", $main )
-        .removeClass("new");
-      
     }
 
 
