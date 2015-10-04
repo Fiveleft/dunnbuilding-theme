@@ -1,9 +1,10 @@
 // _landingpage.scss
 body.name-home {
 
-  .landing-page > section {
+  .landing-page > section, 
+  .landing-page > .home-apartments-wrapper {
     padding-top: $header-height-xs + $top-padding-xs;
-    padding-bottom: $top-padding-xs;
+    // padding-bottom: $top-padding-xs;
     // border-top: 1px dotted #000;
   }
 
@@ -56,9 +57,10 @@ body.name-home {
   body.name-home {
 
 
-    .landing-page > section {
+    .landing-page > section, 
+    .landing-page > .home-apartments-wrapper  {
       padding-top: $header-height-sm + $top-padding-sm;
-      padding-bottom: $top-padding-sm;
+      // padding-bottom: $top-padding-sm;
     }
 
     nav.welcome-nav {
@@ -93,9 +95,10 @@ body.name-home {
 
   body.name-home {
 
-    .landing-page > section {
+    .landing-page > section, 
+    .landing-page > .home-apartments-wrapper  {
       padding-top: $header-height-md + $top-padding-md;
-      padding-bottom: $top-padding-md;
+      // padding-bottom: $top-padding-md;
     }
     nav.welcome-nav {
       span.label {
@@ -116,9 +119,10 @@ body.name-home {
 
   body.name-home {
 
-    .landing-page > section {
+    .landing-page > section, 
+    .landing-page > .home-apartments-wrapper  {
       padding-top: $header-height-lg + $top-padding-lg;
-      padding-bottom: $top-padding-lg;
+      // padding-bottom: $top-padding-lg;
     }
 
   }

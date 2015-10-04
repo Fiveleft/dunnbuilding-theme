@@ -18,7 +18,6 @@
 
   <body <?php body_class(); ?>>
 
-    <!-- header -->
     <header class="site-header" role="banner">
       <div class="header-inner break-container">
         <div class="logo">
@@ -41,9 +40,7 @@
         </div>
       </div>
     </header>
-    <!-- /header -->
 
-    <!-- nav -->
     <nav class="main-nav" role="navigation">
       <div class="nav-inner">
          <div class='main-nav-header'>
@@ -68,8 +65,6 @@
           )); ?>
       </div>
     </nav>
-    <!-- /nav -->
-
-    <!-- wrapper -->
+    
     <div class="wrapper">
 

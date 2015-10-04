@@ -23,12 +23,7 @@ $base-font-color: $color-brand-dark;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // BREAKPOINTS
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-$width-xs-max: 767px;
-$width-sm-min: 768px;
-$width-sm-max: 1023px;
-$width-md-min: 1024px;
-$width-md-max: 1199px;
-$width-lg-min: 1200px;
+
 
 // USAGE: 
 /* Tablet Portrait */
@@ -42,6 +37,15 @@ $width-lg-min: 1200px;
 
 /* Tablet Portrait up to Tablet Landscape */
 // @media only screen and (min-width: $width-sm-min) and (max-width: $width-sm-max) {}
+
+
+$width-xs-max: 767px;
+$width-sm-min: 768px;
+$width-sm-max: 1023px;
+$width-md-min: 1024px;
+$width-md-max: 1099px;
+$width-lg-min: 1100px;
+
 
 $header-height-xs : 70px;
 $header-height-sm : 120px;

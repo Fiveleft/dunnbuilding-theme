@@ -31,8 +31,6 @@ Template Name: Apartments
     'order' => 'ASC',
   ));
 
-  // ep( $apartments_all->posts );
-
   // Apartment Type Page
   if( $settings->is_type_page ) :
     $apt = create_apartment_type( $post );
@@ -53,8 +51,6 @@ Template Name: Apartments
     // $body_classes .= "name-apartment-type";
   }
   if( $settings->is_floorplans ) {
-
-    error_log( "\n\n***\nfinding units with apartment type [" . $apartment_type . "]" );
 
     $units = new WP_Query( array( 
       'post_type'   => 'unit', 
@@ -87,12 +83,9 @@ Template Name: Apartments
         'post_type' => 'floorplan',
         'post__in' => $floorplan_ids,
       ));
-
-    foreach( $floorplans as $fp ) :
-      ep( $fp->post_name . " is an available floorplan for " . $apt->post_title );
-    endforeach;
     wp_reset_postdata();
   }
+
   if( $settings->is_amenities ) {
     
   }
@@ -108,8 +101,13 @@ Template Name: Apartments
     <!-- article.apartments -->
     <article class='apartments'>
 
+<?php else : ?>
+
+    <div class='home-apartments-wrapper'>
+
 <?php endif; ?>
 
+    
       <section class='apartments-header'>
 
         <div class='gallery-wrapper'>
@@ -146,23 +144,50 @@ Template Name: Apartments
         </div>
       </section><!-- /section.apartments.header-->
 
-      <section class='apartment-type-info type-<?php echo $apartment_type_name; ?>'>
+      <section class='apartment-types type-<?php echo $apt->post_name; ?>'>
 
-        <article class='apartment unit-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
-          <div class='article-inner break-container'> 
-            
-            <section class="section-gallery">
-              <div class='section-inner'>
+        <article class='apartment-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
+          
+          <section class='apartment-type-content break-container'> 
+
+            <div class='apartment-type-content-inner'>
+
+              <div class='apartment-type-title xs-show'>
+                <h1><?php echo $apt->post_title; ?></h1>
+              </div><!-- /div.apartment-type-title -->
+              
+              <div class="apartment-type-gallery">
                 <?php if( $apt->gallery ) echo $apt->gallery; ?>
+              </div><!-- /div.apartment-type-gallery -->
+
+              <div class='apartment-type-info'>
+                <?php echo apply_filters( 'the_content', $apt->post_content ); ?>
+
+              <?php if(!$settings->is_home_page) : ?>
+
+                  <a class='site-link' href="/apartments/<?php echo $apt->post_name; ?>/building-amenities">
+                    <span class='label'>Building Amenities</span>
+                  </a>
+                  <a class='site-link' href="/neighborhood">
+                    <span class='label'>Neighborhood Attractions</span>
+                  </a>
+
+              <?php endif; ?>
+
+              </div><!-- /div.apartment-type-info -->
+
+              <div class='apartment-type-cta'> 
                 <nav class='unit-type-sections'>
                   <ul>
 
-            <?php if($settings->is_home_page) : ?>
+            <?php if($settings->is_home_page) : // include details link on home page ?>
+
                     <li>
                       <a href="/apartments/<?php echo $apt->post_name; ?>/" class='unit-type-sections-link'>
                         <span class='label'>Details</span>
                       </a>
                     </li>
+
             <?php endif; ?>
 
                     <li>
@@ -177,46 +202,71 @@ Template Name: Apartments
                     </li>
                   </ul>
                 </nav>
-              </div>
-            </section>
+              </div><!-- /div.apartment-type-cta -->
 
-            <section class="section-info">
-              <div class='section-inner'>
-                <h1 class='xs-show'><?php echo $apt->post_title; ?></h1>
-                <?php echo apply_filters( 'the_content', $apt->post_content ); ?>
+            </div><!-- /div.apartment-type-content-inner -->
 
-            <?php if(!$settings->is_home_page) : ?>
-
-                <a class='site-link' href="/apartments/<?php echo $apt->post_name; ?>/building-amenities">
-                  <span class='label'>Building Amenities</span>
-                </a>
-                <a class='site-link' href="/neighborhood">
-                  <span class='label'>Neighborhood Attractions</span>
-                </a>
-
-            <?php endif; ?>
-
-              </div>
-            </section>
+          </section><!-- /section.apartment-type-content.break-container -->
 
 
-            <section class="section-available-units">
-              <div class='section-inner'>
-                <ul class='available-units-list'>
-                  <li>
-                    <div class='available-unit'>
+        <?php if($floorplans)  : ?>
 
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </section>
-          </div>
+          <section class="apartment-type-floorplans break-container">
+            <h1 class='xs-show'><?php echo $apt->post_title; ?> Floor Plans</h1>
+            <ul class='floorplans-list'>
+    
+        <?php foreach( $floorplans as $fp ) : $fp = create_dunnbuilding_floorplan( $fp ); ?>
+
+              <li class='floorplan-item <?php echo $fp->layout_class; ?>'>
+                <div class='floorplan-inner <?php echo $fp->post_name; ?>'>
+                  
+                  <div class='floorplan-title'>
+                    <h2>Floor Plan: <?php echo $fp->post_title; ?></h2>
+                  </div>
+                  
+                  <div class='floorplan-image'>
+                    <?php echo create_image_html( $fp->image, false, false ); ?>
+                  </div>
+                  
+                  <div class='floorplan-info'>
+                    <?php echo apply_filters( 'the_content', $fp->post_content ); ?>
+                  </div>
+                  
+                  <div class='floorplan-gallery'>
+                    <h3><?php echo $fp->post_title; ?> Gallery</h3>
+                    <?php echo $fp->gallery; ?> 
+                  </div>
+                  
+                  <div class='floorplan-cta'>
+                    <a href="<?php echo $fp->pdf->url; ?>" target="_blank" class='btn btn-shadow'>
+                      <span class='shadow'></span>
+                      <span class='label'>View PDF</span>
+                    </a>
+                    <a href="#rent-now" class='btn btn-shadow'>
+                      <span class='shadow'></span>
+                      <span class='label'>Rent Now</span>
+                    </a>
+                  </div>
+                </div>
+              </li>
+
+        <?php endforeach; // foreach( $floorplans as $fp ): ?>
+
+            </ul>
+          </section><!-- /section.apartment-type-floorplans -->
+
+        <?php endif; // if($floorplans): ?>
+
+          <!-- /article.apartment-type.<?php echo $apt->post_name; ?> -->
         </article>
 
-      </section><!-- /section.apartment-type-info -->
+      </section><!-- /section.apartment-types -->
 
-<?php if(!$settings->is_home_page) : ?>
+<?php if($settings->is_home_page) : ?>
+    
+    </div><!-- /div.landingpage-apartments-wrapper -->
+
+<?php else : ?>
 
       <?php get_template_part( 'page-amenities' ); ?>
       
@@ -226,9 +276,5 @@ Template Name: Apartments
   <!-- /main -->
 
   <?php get_footer(); ?>
-
-<?php else : ?>
-
-  <?php unset($page); ?>
 
 <?php endif; ?>

@@ -122,6 +122,26 @@ function create_dunnbuilding_page( $page )
   return $db_page;
 }
 
+/**
+ * [create_dunnbuilding_floorplan]
+ * @param  WP_Post $post [description]
+ * @return [type]       [description]
+ */
+function create_dunnbuilding_floorplan( $post ) 
+{
+  $fp = create_dunnbuilding_page( $post );
+  $fp->image = $fp->acf->floor_plan_image;
+  $fp->pdf = $fp->acf->floor_plan_pdf;
+
+  $fp->layout_class = "portrait";
+
+  if( $fp->image->width > $fp->image->height ) :
+    $fp->layout_class = "landscape";
+  endif;
+
+  return $fp;
+}
+
 
 /**
  * [create_dunnbuilding_post_item description]
@@ -133,49 +153,56 @@ function create_dunnbuilding_post_item( $post )
   $item = $post;
   $item->featured_image_id = get_post_thumbnail_id( $post->ID );
 
-  /**
-   * Pulled from plugins/advanced-custom-fields/core/fields/image :: function format_value_for_api( $value, $post_id, $field );
-   */
-  $attachment = get_post( $item->featured_image_id );
+  if( $item->featured_image_id ) {
 
-  // create array to hold value data
-  $src = wp_get_attachment_image_src( $attachment->ID, 'full' );
+    $attachment = get_post( $item->featured_image_id );
   
-  $value = array(
-    'id' => $attachment->ID,
-    'alt' => get_post_meta($attachment->ID, '_wp_attachment_image_alt', true),
-    'title' => $attachment->post_title,
-    'caption' => $attachment->post_excerpt,
-    'description' => $attachment->post_content,
-    'mime_type' => $attachment->post_mime_type,
-    'url' => $src[0],
-    'width' => $src[1],
-    'height' => $src[2],
-    'sizes' => array(),
-  );
-  
-  // find all image sizes
-  $image_sizes = get_intermediate_image_sizes();
-  
-  if( $image_sizes )
-  {
-    foreach( $image_sizes as $image_size )
+    ep( "create_dunnbuilding_post_item\n\nattachment:::{$item->featured_image_id}::\n\n" );
+    ep( $item->featured_image_id );
+
+    /**
+     * Pulled from plugins/advanced-custom-fields/core/fields/image :: function format_value_for_api( $value, $post_id, $field );
+     */
+    // create array to hold value data
+    $src = wp_get_attachment_image_src( $attachment->ID, 'full' );
+    
+    $value = array(
+      'id' => $attachment->ID,
+      'alt' => get_post_meta($attachment->ID, '_wp_attachment_image_alt', true),
+      'title' => $attachment->post_title,
+      'caption' => $attachment->post_excerpt,
+      'description' => $attachment->post_content,
+      'mime_type' => $attachment->post_mime_type,
+      'url' => $src[0],
+      'width' => $src[1],
+      'height' => $src[2],
+      'sizes' => array(),
+    );
+    
+    // find all image sizes
+    $image_sizes = get_intermediate_image_sizes();
+    
+    if( $image_sizes )
     {
-      // find src
-      $src = wp_get_attachment_image_src( $attachment->ID, $image_size );
-      
-      // add src
-      $value[ 'sizes' ][ $image_size ] = $src[0];
-      $value[ 'sizes' ][ $image_size . '-width' ] = $src[1];
-      $value[ 'sizes' ][ $image_size . '-height' ] = $src[2];
+      foreach( $image_sizes as $image_size )
+      {
+        // find src
+        $src = wp_get_attachment_image_src( $attachment->ID, $image_size );
+        
+        // add src
+        $value[ 'sizes' ][ $image_size ] = $src[0];
+        $value[ 'sizes' ][ $image_size . '-width' ] = $src[1];
+        $value[ 'sizes' ][ $image_size . '-height' ] = $src[2];
+      }
+      // foreach( $image_sizes as $image_size )
     }
-    // foreach( $image_sizes as $image_size )
-  }
-  /**
-   * END pulled code.
-   */
+    /**
+     * END pulled code.
+     */
 
-  $item->image = json_decode(json_encode($value), FALSE);
+    $item->image = json_decode(json_encode($value), FALSE);
+
+  } 
 
   return $item;
 }
@@ -183,6 +210,10 @@ function create_dunnbuilding_post_item( $post )
 
 
 function create_image_html( $image, $use_span=false, $lazy=true, $srcset=true) {
+
+  if( !$image || is_null($image) ) :
+    return "<span class='img no-img'></span>";
+  endif;
 
   $html = "";
 
@@ -240,15 +271,6 @@ function create_image_html( $image, $use_span=false, $lazy=true, $srcset=true) {
     }
 
   }
-
-  // $attrs = $use_span ? " data-src='{$image->url}'" : " src='{$image->url}'"; 
-
-  // $image_html = $use_span ? "<span " : "<img ";
-  // $image_html .= "$classes' $attrs";
-  // $image_html .= ($use_span ? ' data-alt=' : 'alt=') . $image->alt . "'";
-  // // $image_html .= 
-
-  // $image_html .= $use_span ? "</span>" : "/>";
   return $html;
 }
 

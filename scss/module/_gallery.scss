@@ -4,7 +4,6 @@
 
   .gallery-slides-wrapper {
     position: relative;
-    width: 100%;
     overflow: hidden;
   }
 
@@ -79,6 +78,12 @@
     margin: 0; padding: 0;
   }
 
+  .gallery-item:not([data-index="1"]) {
+    .gallery-image-caption {
+      display:none;
+    }
+  }
+
   .gallery-image-wrapper {
     position: relative;
     height: 0;
@@ -125,14 +130,42 @@
     background: no-repeat; 
     background-size: contain;
   }
-
 }
+
+
+.gallery.page-gallery {
+  .gallery-slides-wrapper {
+    padding-left: $margins-sm;
+    padding-right: $margins-sm;
+  }
+}
+
+.floorplan-gallery {
+  .gallery-slides-wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .gallery-image-caption p.caption {
+    font-size: 1em;
+  }
+}
+
 
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
 
+  .gallery.page-gallery {
+    .gallery-slides-wrapper {
+      max-width: $width-sm-min;
+      padding-left: $margins-sm;
+      padding-right: $margins-sm;
+      margin: 0 auto;
+    }
+  }
+
   .gallery {
+
 
     .gallery-grid {
       display: block;
@@ -166,6 +199,16 @@
 /* Tablet Landscape */
 @media only screen and (min-width: $width-md-min) {
 
+  .gallery.page-gallery {
+
+    .gallery-slides-wrapper {
+      max-width: $width-md-min;
+      padding-left: $margins-md;
+      padding-right: $margins-md;
+    }
+
+  }
+
   .gallery {
 
     .gallery-grid {
@@ -186,6 +229,16 @@
 
 /* Large Desktop */
 @media only screen and (min-width: $width-lg-min) {
+
+  .gallery.page-gallery {
+
+    .gallery-slides-wrapper {
+      max-width: $width-lg-min;
+      padding-left: $margins-lg;
+      padding-right: $margins-lg;
+    }
+
+  }
 
   .gallery {
 

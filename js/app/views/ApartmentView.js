@@ -10,9 +10,9 @@ define(
       $apartmentTypeContainer,
       apartmentViewActive = false,
       apartmentType,
+      apartmentSection = null,
       mainTransitionTimeout,
       mainTransitionDuration,
-
       i;
 
 
@@ -23,6 +23,7 @@ define(
         $body = $("body");
         $main = $("main");
         $mainLoader = $("body > .main-loader");
+        $header = $("header.site-header");
 
         $apartmentTypeNav = $( "nav.unit-type-nav", $main );
         $apartmentTypeContainer = $("section.apartment-type-info");
@@ -32,6 +33,15 @@ define(
 
         var paths = window.location.pathname.replace( /^\/|\/$/g, "" ).split("/");
         console.log( "ApartmentView.initialize()", paths, 'local url: ', localized.homeUrl );
+
+        apartmentType = paths.length > 1 ? paths[1] : null;
+        apartmentSection = paths.length > 2 ? paths[2] : null;
+
+        if( paths[0] === "apartments" ) {
+          endMainTransition();
+        }
+        
+
         
         Events.on( Events.loadApartmentType, this._loadApartmentType, this );
         Events.on( Events.loadApartmentSection, this._loadApartmentSection, this );
@@ -47,7 +57,7 @@ define(
       _loadApartmentPage : function( url ) {
 
         var self = this;
-        console.log( "ApartmentView._loadApartmentPage()", url );
+        // console.log( "ApartmentView._loadApartmentPage()", url );
 
         $mainLoader.load( url + ' .wrapper > main', function(html, response, jqXHR) {
           // If we've received a 404 page, no worries mon!
@@ -148,9 +158,9 @@ define(
       // Clear existing Transition Classes
       removeTransitionClasses();
 
-      $oldContent = $("section.apartment-type-info", $main );
+      $oldContent = $("article.apartment-type", $main );
 
-      $newContent = $( "section.apartment-type-info", $newMain );
+      $newContent = $( "article.apartment-type", $newMain );
       $newContent.addClass("new");
 
       $oldContent.after( $newContent );
@@ -179,12 +189,45 @@ define(
       //clearTimeout( scrollTopTimeout );
       clearTimeout( mainTransitionTimeout );
 
+
+      var $targetScrollEl,
+        elTop = 0,
+        headerOffset = $header.outerHeight(),
+        targetScrollY = headerOffset;
+
+      switch( apartmentSection ) 
+      {
+      case null : 
+        $targetScrollEl = $( "section.apartments-header");
+        break;
+      case 'floorplans' :
+        $targetScrollEl = $( "section.apartment-type-floorplans");
+        break;
+      case 'building-amenities' :
+        $targetScrollEl = $( "section.amenities");
+        break;
+      }
+
+      console.log( "ApartmentView.endMainTransition()" );
+      console.log( "\tapartmentSection = " + apartmentSection );
+      console.log( "\t$targetScrollEl = ", $targetScrollEl );
+
+      elTop = $targetScrollEl.offset().top;
+      targetScrollY = elTop - headerOffset;
+
+      console.log( "\telTop = " + elTop );
+      console.log( "\theaderOffset = " + headerOffset );
+      console.log( "\ttargetScrollY = " + targetScrollY );
+
+
+      $(window).scrollTop( targetScrollY );
+
+
       // Clear existing Transition Classes
       removeTransitionClasses();
-      $("section.apartment-type-info", $main ).removeClass("new");
+      $("section.apartment-type-info", $main )
+        .removeClass("new");
       
-      // $(".wrapper > main.old" ).remove();
-      // $(".wrapper > main.new" ).removeClass("new");
     }
 
 

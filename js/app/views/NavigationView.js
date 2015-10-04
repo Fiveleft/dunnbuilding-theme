@@ -51,13 +51,19 @@ define(
        */
       _clickNavLink : function( e ) {
         
-        e.preventDefault();
-        e.stopImmediatePropagation();
         
-        var self = this;        
+        var self = this;
+        var target = $(e.currentTarget);
         var href = $(e.currentTarget).attr("href");
         var url = href.replace( urlRegex, '').replace( /^\//, "" );
 
+        if( target.attr("target" ) ){
+
+          return true;
+        }
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
         // Clean up URL
         // console.log( "url: " + url);
 

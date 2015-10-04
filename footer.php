@@ -2,19 +2,14 @@
     </div>
     <!-- /wrapper -->
 
-    <!-- footer -->
     <footer class="site-footer" role="contentinfo">
       <div class="footer-fixed">
       </div>
       <nav class='footer-nav break-container'>
         <div class="nav-inner">
-          <!-- copyright -->
           <p class="copyright">
             &copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>.
           </p>
-          <!-- /copyright -->
-
-        
           <?php
             wp_nav_menu(array(
               'theme_location'    => 'footer-menu',
@@ -29,12 +24,10 @@
               'menu_class'        => 'social-menu',
             )); 
             ?>
-
         </div>
       </nav>
     </footer>
-    <!-- /footer -->
-
+    
     <div class='main-loader' aria-hidden='true' hidden>
       <!-- load main content into this container -->
     </div>
