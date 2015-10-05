@@ -175,6 +175,8 @@ define(
       $oldContent.remove();
       $mainLoader.empty();
 
+      Events.trigger( Events.handleLoadedRoute );
+
       if( Modernizr.csstransitions ) {
         clearTimeout( mainTransitionTimeout );
         mainTransitionTimeout = setTimeout( endMainTransition, mainTransitionDuration );
@@ -205,40 +207,40 @@ define(
         .removeClass("new");
       
 
-      var $targetScrollEl,
-        elTop = 0,
-        headerOffset = $header.outerHeight(),
-        targetScrollY = headerOffset;
+      // var $targetScrollEl,
+      //   elTop = 0,
+      //   headerOffset = $header.outerHeight(),
+      //   targetScrollY = headerOffset;
 
-      switch( true ) 
-      {
-      case apartmentSection === 'floorplans' :
-        $targetScrollEl = $( "section.apartment-type-floorplans");
-        break;
-      case apartmentSection === 'building-amenities' :
-        $targetScrollEl = $( "section.amenities");
-        break;
-      case apartmentSection === null && apartmentType !== null :
-        $targetScrollEl = $( "nav.unit-type-nav");
-        break;
-      default : 
-        $targetScrollEl = $( "section.apartments-header");
-        break;
-      }
+      // switch( true ) 
+      // {
+      // case apartmentSection === 'floorplans' :
+      //   $targetScrollEl = $( "section.apartment-type-floorplans");
+      //   break;
+      // case apartmentSection === 'building-amenities' :
+      //   $targetScrollEl = $( "section.amenities");
+      //   break;
+      // case apartmentSection === null && apartmentType !== null :
+      //   $targetScrollEl = $( "nav.unit-type-nav");
+      //   break;
+      // default : 
+      //   $targetScrollEl = $( "section.apartments-header");
+      //   break;
+      // }
 
-      // console.log( "ApartmentView.endMainTransition()" );
-      // console.log( "\tapartmentSection = " + apartmentSection );
-      // console.log( "\t$targetScrollEl = ", $targetScrollEl );
+      // // console.log( "ApartmentView.endMainTransition()" );
+      // // console.log( "\tapartmentSection = " + apartmentSection );
+      // // console.log( "\t$targetScrollEl = ", $targetScrollEl );
 
-      elTop = $targetScrollEl.offset().top;
-      targetScrollY = elTop - headerOffset;
+      // elTop = $targetScrollEl.offset().top;
+      // targetScrollY = elTop - headerOffset;
 
-      // console.log( "\telTop = " + elTop );
-      // console.log( "\theaderOffset = " + headerOffset );
-      // console.log( "\ttargetScrollY = " + targetScrollY );
+      // // console.log( "\telTop = " + elTop );
+      // // console.log( "\theaderOffset = " + headerOffset );
+      // // console.log( "\ttargetScrollY = " + targetScrollY );
 
 
-      $(window).scrollTop( targetScrollY );
+      // $(window).scrollTop( targetScrollY );
 
     }
 

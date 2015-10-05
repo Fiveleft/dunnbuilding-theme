@@ -1,7 +1,7 @@
 // MainView.js
 define(
-  ['jquery','events','backbone', 'stateModel', 'apartmentView', 'galleryView', 'mapView'],
-  function( $, Events, Backbone, stateModel, ApartmentView, GalleryView, MapView ){
+  ['jquery','jqueryEffects','events','backbone', 'stateModel', 'apartmentView', 'galleryView', 'mapView', 'modalView'],
+  function( $, $effects, Events, Backbone, stateModel, ApartmentView, GalleryView, MapView, ModalView ){
 
     var _instance = null, 
       transitionEndEvents = "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
@@ -31,6 +31,7 @@ define(
 
         $body = $("body");
         $wrapper = $( "body > .wrapper" );
+        $header = $( "body > header" );
         $main = $(".wrapper > main");
         $mainLoader = $("body > .main-loader");
 
@@ -39,10 +40,10 @@ define(
 
         Events.on( Events.navigate, this._routerNavigate, this );
         Events.on( Events.loadRoute, this._loadRoute, this );
-        Events.on( Events.clickChatNow, this._openChat, this );
-        Events.on( Events.clickRentNow, this._openRent, this );
+        Events.on( Events.handleLoadedRoute, this._handleLoadedRoute, this );
 
         // Make sure loaded route has the views instantiated
+        // Events.trigger( Events.handleLoadedRoute );
         this._handleLoadedRoute();
       },
 
@@ -162,9 +163,72 @@ define(
           break;
         }
 
-        console.log( "MainView.handleLoadedRoute() newPageView = ", newPageView );
+        // console.log( "MainView.handleLoadedRoute() newPageView = ", newPageView );
+        this._scrollToTarget();
 
+      },
+
+
+      /**
+       * Scroll To Target
+       */
+      _scrollToTarget : function() {
+
+        var paths = window.location.pathname.replace( /^\/|\/$/g, "" ).split("/"),
+          scrollTo = false,
+          scrollToY = 0;
+
+        console.log( "MainView._scrollToTarget", paths.length, paths );
+
+        switch( true ) {
+          case stateModel.get('uiClick') !== true : 
+            console.log( "   - ui click is false, allow browser to scroll to previous position ");
+            break;
+          case paths.length === 1 && paths[0] === "apartments" :
+            console.log( "   - scroll to Apartment Header ");
+            scrollTo = 0;
+            break;
+          case paths.length === 2 && paths[0] === "apartments" :
+            console.log( "   - scroll to Apartment Type Nav ");
+            scrollTo = $( ".wrapper > main article.apartments .unit-type-nav");
+            break;
+          case paths.length === 3 && paths[0] === "apartments" && paths[2] === "floorplans" :
+            console.log( "   - scroll to Floor Plans ");
+            scrollTo = $( ".wrapper > main section.apartment-type-floorplans");
+            break;
+          case paths.length === 3 && paths[0] === "apartments" && paths[2] === "building-amenities" :
+            console.log( "   - scroll to Building Amenities ");
+            scrollTo = $( ".wrapper > main section.amenities");
+            break;
+          default : 
+            console.log( "   - scroll to Page Top " );
+            scrollTo = 0;
+            break;  
+        }
+
+        stateModel.set( "uiClick", false );
+
+        if( scrollTo === false ) {
+          
+          return;
+
+        } else if ( scrollTo === 0 ) {
+
+          scrollToY = 0;
+          console.log( "    = scrollToY: ", scrollToY );
+          $(window).scrollTop( scrollToY );
+
+        } else {
+
+          scrollToY = scrollTo.offset().top - $header.outerHeight();
+          console.log( "    = scrollToY: ", scrollToY );
+
+          $body.stop().animate({scrollTop:scrollToY}, 500, 'easeInOutCubic', function() { 
+            // alert("Finished animating");
+          });    
+        }  
       }
+
 
     });
 
@@ -222,23 +286,17 @@ define(
         .addClass( 'transition-main ' + targetPageName );
 
       $main = $(".wrapper > main:not(.old)");
-      $main
-        .removeClass("new")
+      $main.removeClass("new")
         .addClass("old")
         .after( $newMain );
-
-console.log( "MainView.startMainTransition() siteLinkClick = ", siteLinkClick );
-      if( siteLinkClick ) {
-        siteLinkClick = false;
-        $(window).scrollTop(0);
-      }
-      
 
       $newMain
         .addClass( "new" );
 
+      $main.remove();
+      $mainLoader.empty();
 
-      _instance._handleLoadedRoute();
+      Events.trigger( Events.handleLoadedRoute );
 
 
       if( Modernizr.csstransitions ) {

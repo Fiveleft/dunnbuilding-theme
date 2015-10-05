@@ -1,6 +1,7 @@
 require.config({
   paths: {
     jquery: "vendor/jquery/jquery",
+    jqueryEffects: "vendor/jquery-ui/ui/effect",
     backbone: "vendor/backbone/backbone",
     underscore: "vendor/underscore/underscore",
     application: "app/Application",
@@ -12,6 +13,7 @@ require.config({
     apartmentView: "app/views/ApartmentView",
     galleryView: "app/views/GalleryView",
     mapView: "app/views/MapView",
+    modalView: "app/views/ModalView",
     raf: "app/utils/RAF"
   },
   shim: {

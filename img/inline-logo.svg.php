@@ -1,4 +1,4 @@
-<svg version="1.2" baseProfile="tiny"
+<svg version="1.2" baseProfile="tiny" title="Dunn Motors"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
 	 x="0px" y="0px" width="170px" height="150px" viewBox="0 0 170 150" overflow="visible" xml:space="preserve">
 <defs>

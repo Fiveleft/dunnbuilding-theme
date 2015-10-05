@@ -3,7 +3,10 @@
   ?>
 <div class='module-rent-application' role='widget' aria-describedby='rent-application-description' >
 
-  <button class='dismiss' role='button'>Close Form</button>
+  <button class='close'>
+    <span class='label'>Close Form</span>
+    <?php get_template_part( "img/inline", "close-icon.svg" ); ?>
+  </button>
 
   <div class='rent-application ui-state' data-ui-state='apply'>
     <h1>Rent Now</h1>

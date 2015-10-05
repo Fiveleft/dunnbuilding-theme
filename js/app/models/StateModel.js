@@ -1,7 +1,7 @@
 // StateModel.js
 define(
-  ['backbone', 'underscore', 'events'],
-  function( Backbone, _, Events ){
+  ['backbone'],
+  function( Backbone ){
 
     var _instance = null;
 
@@ -11,6 +11,7 @@ define(
       initialize: function() {
         var a = this.attributes;
         a.url = window.location.pathname;
+        a.uiClick = false;
       },
 
       isApartment : function() {

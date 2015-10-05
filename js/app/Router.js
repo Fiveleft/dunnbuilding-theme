@@ -13,7 +13,8 @@ define(
         
         Events.on( Events.navigate, function( options ){
           var url = options.url;
-          var opt = _.extend( {trigger:true}, options );          
+          var opt = _.extend( {trigger:true}, options ); 
+          stateModel.set( "uiClick", (options.newClick===true) );
           self.navigate( url, opt );
         });
       },
@@ -46,7 +47,7 @@ define(
       },
 
       _loadRoute : function( route ) {
-        console.log( "Router._loadRoute()", route );
+        // console.log( "Router._loadRoute()", route );
         Events.trigger( Events.loadRoute, route );
       },
 

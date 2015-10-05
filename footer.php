@@ -33,12 +33,16 @@
     </div>
 
     <div class='overlay-container' aria-hidden='true' hidden>
-      <div class='rent-application module-wrapper'>
+      <div class='rent-application modal-wrapper'>
         <?php get_template_part( 'module-rent-application' ); ?>
       </div>
       <progress value="100" max="100">
         <span class="loading-message">Loading</span>
       </progress>
+      <button class='close'>
+        <span class='label'>Close Menu</span>
+        <?php get_template_part( "img/inline", "close-icon.svg" ); ?>
+      </button>
     </div>
 
     <?php wp_footer(); ?>

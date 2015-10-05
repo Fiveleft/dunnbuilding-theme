@@ -14,7 +14,7 @@ define(
 
       initialize : function() {
         var self = this;
-        if( typeof google.maps.Map === 'undefined' ) {
+        if( typeof google === 'undefined' || typeof google.maps.Map === 'undefined' ) {
           window.initMap = function() {
             // console.log( " Google Maps API ready - callback modifed inside MapView.initialize() " );
             if( resetQueued ) {
