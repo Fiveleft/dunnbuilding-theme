@@ -3,12 +3,12 @@ define(
   ['jquery','events','backbone','stateModel'],
   function( $, Events, Backbone, stateModel ){
 
-    var $body, 
+    var _instance = null,
+      $body, 
       $main,
       $mainLoader,
       $apartmentTypeNav,
       $apartmentTypeContainer,
-      apartmentViewActive = false,
       apartmentType,
       apartmentSection = null,
       mainTransitionTimeout,
@@ -32,7 +32,7 @@ define(
         mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
         var paths = window.location.pathname.replace( /^\/|\/$/g, "" ).split("/");
-        console.log( "ApartmentView.initialize()", paths, 'local url: ', localized.homeUrl );
+        // console.log( "ApartmentView.initialize()", paths, 'local url: ', localized.homeUrl );
 
         apartmentType = paths.length > 1 ? paths[1] : null;
         apartmentSection = paths.length > 2 ? paths[2] : null;
@@ -68,13 +68,21 @@ define(
             if( $mainEl ) {
               // console.log( " handle load error ", nodes, $mainEl );
               $mainEl.addClass( "name-error" );
-              $mainLoader.append( $mainEl );
+              $mainLoader.empty().append( $mainEl );
               self._loadApartmentPageComplete();
             }
           }else{
             self._loadApartmentPageComplete(); 
           }
         });
+      },
+
+
+      /**
+       * Reset
+       */
+      reset : function() {
+        endMainTransition();
       },
 
 
@@ -165,6 +173,7 @@ define(
 
       $oldContent.after( $newContent );
       $oldContent.remove();
+      $mainLoader.empty();
 
       if( Modernizr.csstransitions ) {
         clearTimeout( mainTransitionTimeout );
@@ -201,43 +210,43 @@ define(
         headerOffset = $header.outerHeight(),
         targetScrollY = headerOffset;
 
-      switch( apartmentSection ) 
+      switch( true ) 
       {
-      case null : 
-        $targetScrollEl = $( "section.apartments-header");
-        
-        break;
-      case 'floorplans' :
+      case apartmentSection === 'floorplans' :
         $targetScrollEl = $( "section.apartment-type-floorplans");
         break;
-      case 'building-amenities' :
+      case apartmentSection === 'building-amenities' :
         $targetScrollEl = $( "section.amenities");
+        break;
+      case apartmentSection === null && apartmentType !== null :
+        $targetScrollEl = $( "nav.unit-type-nav");
+        break;
+      default : 
+        $targetScrollEl = $( "section.apartments-header");
         break;
       }
 
-      console.log( "ApartmentView.endMainTransition()" );
-      console.log( "\tapartmentSection = " + apartmentSection );
-      console.log( "\t$targetScrollEl = ", $targetScrollEl );
+      // console.log( "ApartmentView.endMainTransition()" );
+      // console.log( "\tapartmentSection = " + apartmentSection );
+      // console.log( "\t$targetScrollEl = ", $targetScrollEl );
 
       elTop = $targetScrollEl.offset().top;
       targetScrollY = elTop - headerOffset;
 
-      console.log( "\telTop = " + elTop );
-      console.log( "\theaderOffset = " + headerOffset );
-      console.log( "\ttargetScrollY = " + targetScrollY );
+      // console.log( "\telTop = " + elTop );
+      // console.log( "\theaderOffset = " + headerOffset );
+      // console.log( "\ttargetScrollY = " + targetScrollY );
 
 
       $(window).scrollTop( targetScrollY );
 
     }
 
+    if( _instance === null ) {
+      _instance = new ApartmentView();
+    }
 
-
-
-
-
-
-    return ApartmentView;
+    return _instance;
   });
 
 

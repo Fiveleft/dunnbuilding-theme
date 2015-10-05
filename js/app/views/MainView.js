@@ -1,7 +1,7 @@
 // MainView.js
 define(
-  ['jquery','events','backbone', 'stateModel', 'galleryView', 'mapView'],
-  function( $, Events, Backbone, stateModel, GalleryView, MapView ){
+  ['jquery','events','backbone', 'stateModel', 'apartmentView', 'galleryView', 'mapView'],
+  function( $, Events, Backbone, stateModel, ApartmentView, GalleryView, MapView ){
 
     var _instance = null, 
       transitionEndEvents = "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
@@ -19,7 +19,6 @@ define(
       targetPageView,
       targetPageName,
       i;
-
 
     var MainView = Backbone.View.extend({
 
@@ -139,7 +138,9 @@ define(
        */
       _handleLoadedRoute : function() {
 
-        var newPageView = null;
+        var paths = window.location.pathname.replace( /^\/|\/$/g, "" ).split("/"),
+          newPageView = null;
+
         switch( true ) 
         {
         case targetPageName === "name-home" : 
@@ -153,9 +154,11 @@ define(
         case targetPageName === "name-building-history" :
           newPageView = '[none]';
           break;
+        case paths[0] === "apartments" :
         case targetPageName === "name-apartments" :
         case $body.hasClass("single-unit_type") : 
           newPageView = 'apartments, gallery';
+          ApartmentView.reset();
           break;
         }
 
@@ -224,7 +227,7 @@ define(
         .addClass("old")
         .after( $newMain );
 
-
+console.log( "MainView.startMainTransition() siteLinkClick = ", siteLinkClick );
       if( siteLinkClick ) {
         siteLinkClick = false;
         $(window).scrollTop(0);

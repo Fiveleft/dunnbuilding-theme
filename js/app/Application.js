@@ -17,9 +17,8 @@ define(
 
         // Views
         MainView;
-        // new MainView({el:$body});
+        ApartmentView;
         new NavView({el:$body});
-        new ApartmentView({el:$body});
       },
 
 

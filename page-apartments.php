@@ -47,10 +47,7 @@ Template Name: Apartments
   if( $settings->is_apartments_page ) {
     // $body_classes .= "name-apartments";
   }
-  if( $settings->is_type_page ) {
-    // $body_classes .= "name-apartment-type";
-  }
-  if( $settings->is_floorplans ) {
+  if( $settings->is_type_page || $settings->is_floorplans ) {
 
     $units = new WP_Query( array( 
       'post_type'   => 'unit', 
@@ -85,11 +82,6 @@ Template Name: Apartments
       ));
     wp_reset_postdata();
   }
-
-  if( $settings->is_amenities ) {
-    
-  }
-
 
   // If loading as an independent page
   if(!$settings->is_home_page) get_header();
