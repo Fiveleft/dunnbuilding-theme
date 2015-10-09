@@ -189,7 +189,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: './', 
-            src: ['*.php', 'templates/*.php', 'img/*.php'],
+            src: ['*.php', 'templates/*.php', 'img/*.php', '*.ico'],
             dest: 'build'
           },
           {

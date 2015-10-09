@@ -79,7 +79,7 @@ Template Name: Neighborhood
           <?php 
               while ( $attractions->have_posts() ) : $attractions->the_post(); 
                 $attraction = create_dunnbuilding_post_item( $post );
-                ep( $attraction );
+                // ep( $attraction );
               ?>
                 
                 <li class='attractions-item'>

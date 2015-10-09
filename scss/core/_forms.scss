@@ -1,0 +1,41 @@
+// _forms.scss
+
+form {
+
+  label {
+    display: block;
+  }
+
+  input[type="text"], 
+  input[type="email"], 
+  textarea {
+    border: 1px solid $color-brand-dark;
+    line-height: 20px;
+    padding: 6px;
+    width: 100%;
+  }
+
+  .btn {
+    display: inline-block;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: auto;
+  }
+
+  input[type="submit"][disabled] {
+    background: $color-brand-medium;
+  }
+
+  button.cancel {
+    background: $color-brand-medium;
+  }
+
+  .form-inner {
+    width: 100%;
+  }
+  .form-control {
+    margin-bottom: 1.25em; 
+  }
+}
+
+

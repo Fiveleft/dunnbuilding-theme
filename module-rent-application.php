@@ -1,7 +1,7 @@
 <?php
   // form-rent.php
   ?>
-<div class='module-rent-application' role='widget' aria-describedby='rent-application-description' >
+<div class='modal-content module-rent-application' role='widget' aria-describedby='rent-application-description' >
 
   <button class='close'>
     <span class='label'>Close Form</span>
@@ -22,11 +22,14 @@
           <input type='email' name='email' placeholder='Email' />
         </div>
         <div class='form-control'>
-          <label for='phone'>Name</label>
+          <label for='phone'>Phone</label>
           <input type='text' name='phone' placeholder='Phone' />
         </div>
       </div>
-      <input class='btn' type='submit' />
+      <div class='btn-row'>
+        <input class='btn btn-block' type='submit' />
+        <button class='btn btn-block cancel'>Cancel</button>
+      </div>
     </form>
   </div>
 

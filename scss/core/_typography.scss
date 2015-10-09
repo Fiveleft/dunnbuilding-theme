@@ -168,7 +168,10 @@ p {
   line-height: (18/14);
   margin: 0 0 1em;
 }
-p.cta, p.caption {
+p.caption {
+  margin: 1em 0 0;
+}
+p.cta {
   font-size: 20px;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
@@ -189,16 +192,23 @@ button, .btn {
   line-height: (21/17);
 }
 
-a.btn-block {  
+input[type="submit"], 
+.btn-block {  
   display: block;
   color: $color-brand-light;
   background: $color-brand-dark;
+  border: none;
   text-align: center;
   font-size: 14px;
   line-height: 20px;
   padding: 10px 0 6px;
   width: 100%;
 }
+
+label {
+  @include button-font-style();
+}
+
 
 
 /* Tablet Portrait */
@@ -219,7 +229,10 @@ a.btn-block {
     font-size: 14px;
     line-height: (19/14);
   }
-  p.cta, p.caption {
+  p.caption {
+    
+  }
+  p.cta {
     font-size: 24px;
   }
   button {
@@ -245,7 +258,10 @@ a.btn-block {
     font-size: 18px;
     line-height: (22/18);
   }
-  p.cta, p.caption {
+  p.caption {
+
+  }
+  p.cta {
     font-size: 36px;
   }
   button {

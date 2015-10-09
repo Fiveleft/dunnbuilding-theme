@@ -1,8 +1,69 @@
 // _rent-application.scss
 
 
-.rent-application-module-wrapper {
+.module-rent-application {
 
-  display: none;
+  // display: none;
+
+  .ui-state {
+    width: 100%;
+  }
+  .btn, .btn.cancel {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+
+}
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  .module-rent-application {
+
+    .ui-state {
+      width: $left-col-width-sm;
+    }
+
+    .btn-row {
+      @include clearfix;
+      margin-bottom: 1em;
+    }
+    .btn, .btn.cancel {
+      width: auto;
+      display: block;
+      float: left;
+      margin-bottom: 0;
+    }
+    .btn ~ .btn {
+      margin-left: 1em;
+    }
+
+  }
+
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  .module-rent-application {
+
+    .ui-state {
+      width: $left-col-width-md;
+    }
+
+  }
+
+}
+
+/* Large Desktop */
+@media only screen and (min-width: $width-lg-min) {
+
+  .module-rent-application {
+
+    .ui-state {
+      width: $left-col-width-lg;
+    }
+
+  }
 
 }

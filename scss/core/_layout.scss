@@ -6,7 +6,11 @@
 }
 
 body, html {
+  width: 100%;
+  max-width: 100%;
   min-height: 100%;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -156,8 +160,10 @@ header.site-header {
 
 .break-container {
   display: block;
+  width: 100%;
   padding-left: $margins-xs;
   padding-right: $margins-xs;
+  overflow-x: hidden;
 }
 
 
@@ -184,7 +190,7 @@ header.site-header {
   }
 
   .break-container {
-    width: $width-sm-min;
+    max-width: $width-sm-min;
     padding-left: $margins-sm;
     padding-right: $margins-sm;
     margin-left: auto;
@@ -208,7 +214,7 @@ header.site-header {
   }
 
   .break-container {
-    width: $width-md-min;
+    max-width: $width-md-min;
     padding-left: $margins-md;
     padding-right: $margins-md;
   }
@@ -228,7 +234,7 @@ header.site-header {
   }
 
   .break-container {
-    width: 1100px;
+    max-width: 1100px;
     padding-left: $margins-lg;
     padding-right: $margins-lg;
   }

@@ -157,10 +157,10 @@ Template Name: Apartments
 
               <?php if(!$settings->is_home_page) : ?>
 
-                  <a class='site-link' href="/apartments/<?php echo $apt->post_name; ?>/building-amenities">
+                  <a class='site-link' href="<?php echo site_url(); ?>/building-amenities">
                     <span class='label'>Building Amenities</span>
                   </a>
-                  <a class='site-link' href="/neighborhood">
+                  <a class='site-link' href="<?php echo site_url(); ?>/neighborhood">
                     <span class='label'>Neighborhood Attractions</span>
                   </a>
 
@@ -260,7 +260,7 @@ Template Name: Apartments
 
 <?php else : ?>
 
-      <?php get_template_part( 'page-amenities' ); ?>
+      <?php //get_template_part( 'page-amenities' ); ?>
       
     </article>
     <!-- /article -->

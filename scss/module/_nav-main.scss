@@ -190,7 +190,11 @@ body.nav-open nav.main-nav.opened {
     
     .nav-inner {
       width: $nav-width;
-      padding: 20px 50px 20px 30px;
+      padding: 90px 50px 20px 30px;
+    }
+
+    .main-nav-header {
+      padding-left: 30px;
     }
 
     &.opened {

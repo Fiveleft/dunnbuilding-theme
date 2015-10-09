@@ -3,8 +3,6 @@
     <!-- /wrapper -->
 
     <footer class="site-footer" role="contentinfo">
-      <div class="footer-fixed">
-      </div>
       <nav class='footer-nav break-container'>
         <div class="nav-inner">
           <p class="copyright">

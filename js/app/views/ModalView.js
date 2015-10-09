@@ -26,8 +26,17 @@ define(
         Events.on( Events.clickRentNow, this._openRent, this );
         Events.on( Events.loadRoute, this._close, this );
 
-        $overlay.on( "click", function(e){ self._clickContainer(e); });
-        $overlay.on( "click", "button.close", function(e){ self._clickClose(e); });
+        this.setElement( $overlay[0] );
+
+        // $overlay.on( "click", function(e){ self._clickContainer(e); });
+        // $overlay.on( "click", "button.close", function(e){ self._clickClose(e); });
+      },
+
+
+      events: {
+        "click" : "_clickContainer",
+        "click button.close" : "_clickClose",
+        "click button.cancel" : "_clickClose",
       },
 
 

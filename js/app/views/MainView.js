@@ -11,6 +11,7 @@ define(
       $mainLoader,
       mapView,
       galleryView,
+      galleries = [],
       siteLinkClick = false,
       oldPageName = "",
       mainTransitionTimeout,
@@ -45,26 +46,6 @@ define(
         // Make sure loaded route has the views instantiated
         // Events.trigger( Events.handleLoadedRoute );
         this._handleLoadedRoute();
-      },
-
-
-      /**
-       * [_openChat description]
-       * @param  {[type]} e [description]
-       * @return {[type]}   [description]
-       */
-      _openChat : function() {
-        // console.log( "MainView._openChat()", e );
-      },
-
-
-      /**
-       * [_openRent description]
-       * @param  {[type]} e [description]
-       * @return {[type]}   [description]
-       */
-      _openRent : function() {
-        // console.log( "MainView._openRent()", e );
       },
 
 
@@ -163,7 +144,17 @@ define(
           break;
         }
 
-        // console.log( "MainView.handleLoadedRoute() newPageView = ", newPageView );
+        for( var i=galleries.length-1; i!==-1; i-- ){
+          var gv = galleries[i];
+          if( gv.el.clientWidth < 1 ) {
+            gv.remove();
+            galleries.splice(i,1);
+          }
+        }
+        $(".gallery").each( function(i,el){
+          galleries.push( new GalleryView({el:el}) );
+        });
+        
         this._scrollToTarget();
 
       },
@@ -180,30 +171,31 @@ define(
 
         console.log( "MainView._scrollToTarget", paths.length, paths );
 
-        switch( true ) {
-          case stateModel.get('uiClick') !== true : 
-            console.log( "   - ui click is false, allow browser to scroll to previous position ");
-            break;
-          case paths.length === 1 && paths[0] === "apartments" :
-            console.log( "   - scroll to Apartment Header ");
-            scrollTo = 0;
-            break;
-          case paths.length === 2 && paths[0] === "apartments" :
-            console.log( "   - scroll to Apartment Type Nav ");
-            scrollTo = $( ".wrapper > main article.apartments .unit-type-nav");
-            break;
-          case paths.length === 3 && paths[0] === "apartments" && paths[2] === "floorplans" :
-            console.log( "   - scroll to Floor Plans ");
-            scrollTo = $( ".wrapper > main section.apartment-type-floorplans");
-            break;
-          case paths.length === 3 && paths[0] === "apartments" && paths[2] === "building-amenities" :
-            console.log( "   - scroll to Building Amenities ");
-            scrollTo = $( ".wrapper > main section.amenities");
-            break;
-          default : 
-            console.log( "   - scroll to Page Top " );
-            scrollTo = 0;
-            break;  
+        switch( true ) 
+        {
+        case stateModel.get('uiClick') !== true : 
+          // console.log( "   - ui click is false, allow browser to scroll to previous position ");
+          break;
+        case paths.length === 1 && paths[0] === "apartments" :
+          // console.log( "   - scroll to Apartment Header ");
+          scrollTo = 0;
+          break;
+        case paths.length === 2 && paths[0] === "apartments" :
+          // console.log( "   - scroll to Apartment Type Nav ");
+          scrollTo = $( ".wrapper > main article.apartments .unit-type-nav");
+          break;
+        case paths.length === 3 && paths[0] === "apartments" && paths[2] === "floorplans" :
+          // console.log( "   - scroll to Floor Plans ");
+          scrollTo = $( ".wrapper > main section.apartment-type-floorplans");
+          break;
+        case paths.length === 3 && paths[0] === "apartments" && paths[2] === "building-amenities" :
+          // console.log( "   - scroll to Building Amenities ");
+          scrollTo = $( ".wrapper > main section.amenities");
+          break;
+        default : 
+          // console.log( "   - scroll to Page Top " );
+          scrollTo = 0;
+          break;  
         }
 
         stateModel.set( "uiClick", false );
@@ -321,11 +313,16 @@ define(
 
       $(".wrapper > main.old" ).remove();
       $(".wrapper > main.new" ).removeClass("new");
+
+
     }
 
     if( !_instance ) {
       _instance = new MainView();
     }
+
+
+
 
     return _instance;
   });

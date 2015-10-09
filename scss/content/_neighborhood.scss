@@ -64,11 +64,8 @@ article.neighborhood {
     }
     a {
       color: $color-brand-medium;
-      text-transform: underline;
-      display: inline-block;
-      &:before {
-        display: block;
-      }
+      text-decoration: underline;
+      // display: inline-block;
     }
   }
 }

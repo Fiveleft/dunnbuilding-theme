@@ -1,10 +1,16 @@
 
-
 .gallery {
+
+  padding-bottom: $margins-xs;
 
   .gallery-slides-wrapper {
     position: relative;
     overflow: hidden;
+    // top: 0;
+  }
+
+  .gallery-slides:not( .touch-event ) {
+    @include transition( transform 0.5s $easeInOutCubic, margin-left 0.5s $easeInOutCubic  );
   }
 
   .gallery-slides {
@@ -75,13 +81,8 @@
     display: block;
     float: left;
     width: 100%;
-    margin: 0; padding: 0;
-  }
-
-  .gallery-item:not([data-index="1"]) {
-    .gallery-image-caption {
-      display:none;
-    }
+    margin: 0; 
+    padding: 0 $margins-xs;
   }
 
   .gallery-image-wrapper {
@@ -97,6 +98,14 @@
 
   .gallery-image-caption {
     margin: 0;
+    opacity: 0;
+    visibility: none;
+    @include transition( opacity 0.2s $easeOutCubic );
+  }
+  .gallery-slides:not( .touch-event ) {
+    .gallery-item.active .gallery-image-caption {
+      opacity: 1;
+    }
   }
 
   .gallery-grid {
@@ -130,41 +139,77 @@
     background: no-repeat; 
     background-size: contain;
   }
-}
+
+  .ui-wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 0;
+    padding-left: inherit;
+    padding-right: inherit;
+    padding-bottom: 52%;
+    @include clearfix;
+    pointer-events: none;
+
+    .advance {
+      display: block;
+      pointer-events: auto;
+      position: absolute;
+      background: transparent;
+      border: none;
+      width: 40px;
+      height: 40px;
+      top: 50%;
+      margin-top: -20px;
+      @include hide-text;
+
+      &:active, &:focus {
+        outline: none;
+      }
+    }
+    .next {
+      right: 0;
+      svg {
+        @include transform( rotate(-90deg) );
+      }
+    }
+    .prev {
+      left: 0;
+      svg {
+        @include transform( rotate(90deg) );
+      }
+    }
+    svg {
+      pointer-events: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
 
 
-.gallery.page-gallery {
-  .gallery-slides-wrapper {
-    padding-left: $margins-sm;
-    padding-right: $margins-sm;
+    }
+  }
+
+  &.first-index .ui-wrapper .prev {
+    display: none;
+  }
+  &.last-index .ui-wrapper .next {
+    display: none;
   }
 }
 
-.floorplan-gallery {
-  .gallery-slides-wrapper {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  .gallery-image-caption p.caption {
-    font-size: 1em;
-  }
-}
 
 
 
 /* Tablet Portrait */
 @media only screen and (min-width: $width-sm-min) {
 
-  .gallery.page-gallery {
-    .gallery-slides-wrapper {
-      max-width: $width-sm-min;
-      padding-left: $margins-sm;
-      padding-right: $margins-sm;
-      margin: 0 auto;
-    }
-  }
 
   .gallery {
+    padding-bottom: $margins-sm;
+
+    .gallery-item {
+      padding: 0 $margins-sm;
+    }
 
 
     .gallery-grid {
@@ -202,9 +247,9 @@
   .gallery.page-gallery {
 
     .gallery-slides-wrapper {
-      max-width: $width-md-min;
-      padding-left: $margins-md;
-      padding-right: $margins-md;
+      // max-width: $width-md-min;
+      // padding-left: $margins-md;
+      // padding-right: $margins-md;
     }
 
   }
@@ -233,9 +278,9 @@
   .gallery.page-gallery {
 
     .gallery-slides-wrapper {
-      max-width: $width-lg-min;
-      padding-left: $margins-lg;
-      padding-right: $margins-lg;
+      // max-width: $width-lg-min;
+      // padding-left: $margins-lg;
+      // padding-right: $margins-lg;
     }
 
   }

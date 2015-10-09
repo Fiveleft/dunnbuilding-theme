@@ -47,7 +47,7 @@ Template Name: Amenities
 
 <?php endif; ?>
 
-      <div class='amenity-gallery'>
+      <div class='amenity-gallery break-container'>
         <?php echo $page->gallery; ?>
       </div>
 

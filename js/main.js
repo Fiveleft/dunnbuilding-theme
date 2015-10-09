@@ -14,7 +14,8 @@ require.config({
     galleryView: "app/views/GalleryView",
     mapView: "app/views/MapView",
     modalView: "app/views/ModalView",
-    raf: "app/utils/RAF"
+    raf: "app/utils/RAF",
+    utils: "app/utils/Utils"
   },
   shim: {
     backbone: {

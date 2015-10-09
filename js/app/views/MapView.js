@@ -14,7 +14,7 @@ define(
 
       initialize : function() {
         var self = this;
-        if( typeof google === 'undefined' || typeof google.maps.Map === 'undefined' ) {
+        if( !validateGoogle() ) {
           window.initMap = function() {
             // console.log( " Google Maps API ready - callback modifed inside MapView.initialize() " );
             if( resetQueued ) {
@@ -27,7 +27,7 @@ define(
 
       reset : function() {
 
-        if( typeof google.maps.Map === 'undefined' ) {
+        if( !validateGoogle() ) {
           resetQueued = true;
           return;
         }
@@ -58,6 +58,12 @@ define(
       }
 
     });
+
+
+    // Helper Function
+    function validateGoogle( ) {
+      return (typeof google !== 'undefined' && typeof google.maps !== 'undefined' && typeof google.maps.Map !== 'undefined');
+    }
 
 
     if( _instance === null ) {
