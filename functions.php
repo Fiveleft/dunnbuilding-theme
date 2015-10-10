@@ -285,17 +285,23 @@ function create_image_html( $image, $use_span=false, $lazy=true, $srcset=true) {
  */
 function feed_dir_rewrite( $wp_rewrite ) {
   $apartment_rules = array(
+    'amenities/' => 'index.php?page_id=2',
     'apartments/([^/]+)/floorplans' => 'index.php?unit_type=$matches[1]&page=$matches[2]',
-    'apartments/([^/]+)/building-amenities' => 'index.php?unit_type=$matches[1]&page=$matches[2]',
+    // 'apartments/([^/]+)/building-amenities' => 'index.php?unit_type=$matches[1]&page=$matches[2]',
   );
   $wp_rewrite->rules = $apartment_rules + $wp_rewrite->rules;
-  // ep( $wp_rewrite->rules );
   return $wp_rewrite->rules;
 }
 
 // Hook in.
 add_filter( 'generate_rewrite_rules', 'feed_dir_rewrite' );
+add_filter('init','flushRules');  
 
+// Remember to flush_rules() when adding rules
+function flushRules(){
+    global $wp_rewrite;
+    $wp_rewrite->flush_rules();
+}
 
 
 
@@ -357,9 +363,9 @@ function enqueue_header_scripts()
      * Add Livereload if we're developing locally
      * @see http://robandlauren.com/2014/02/05/live-reload-grunt-wordpress/
      */
-    if ( $is_local_dev ) {
-      wp_register_script('livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true);
-      wp_enqueue_script('livereload');
+    if ( $is_local_dev && !is_admin() ) {
+      // wp_register_script('livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true);
+      // wp_enqueue_script('livereload');
     }
 
   endif;

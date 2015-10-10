@@ -157,7 +157,7 @@ Template Name: Apartments
 
               <?php if(!$settings->is_home_page) : ?>
 
-                  <a class='site-link' href="<?php echo site_url(); ?>/building-amenities">
+                  <a class='site-link' href="#amenities">
                     <span class='label'>Building Amenities</span>
                   </a>
                   <a class='site-link' href="<?php echo site_url(); ?>/neighborhood">

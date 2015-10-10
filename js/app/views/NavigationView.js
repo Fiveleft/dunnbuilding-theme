@@ -39,10 +39,24 @@ define(
       events : {
         'click button.menu-toggle' : '_toggleNav',
         'click nav.main-nav button.close' : '_toggleNav',
+        'click [href="#amenities"]' : '_clickAmenities',
         'click [href="#rent-now"], button.rent-now' : '_clickRentNow',
         'click [href="#live-chat"], button.live-chat' : '_clickChatNow',
       },
 
+      /**
+       * [_clickNavLink description]
+       * @param  {[type]} e [description]
+       * @return {[type]}   [description]
+       */
+      _clickAmenities : function( e ) {
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        // navClosedCallback = null;
+        // Events.trigger( "router:navigate", {url:"/", newClick:true} );
+      },
+        
 
       /**
        * [_clickNavLink description]
@@ -58,14 +72,14 @@ define(
         var url = href.replace( urlRegex, '').replace( /^\//, "" );
 
         if( target.attr("target" ) ){
-
           return true;
         }
 
         e.preventDefault();
         e.stopImmediatePropagation();
         // Clean up URL
-        // console.log( "url: " + url);
+        
+        console.log( "url: " + url);
 
         if( self.$body.hasClass('nav-open') ) {
           navClosedCallback = function(){

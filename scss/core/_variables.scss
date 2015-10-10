@@ -50,12 +50,12 @@ $width-lg-min: 1100px;
 $header-height-xs : 70px;
 $header-height-sm : 120px;
 $header-height-md : 180px;
-$header-height-lg : 210px;
+$header-height-lg : 180px;
 
 $top-padding-xs : 40px;
 $top-padding-sm : 80px;
-$top-padding-md : 100px;
-$top-padding-lg : 120px;
+$top-padding-md : 80px;
+$top-padding-lg : 80px;
 
 $margins-xs : 15px;
 $margins-sm : 20px;
@@ -66,9 +66,10 @@ $left-col-width-sm : ($width-sm-min - (2*$margins-sm)) * (75/100);
 $left-col-width-md : ($width-md-min - (2*$margins-md)) * (70/100);
 $left-col-width-lg : ($width-lg-min - (2*$margins-lg)) * (66/100);
 
-$right-col-width-sm : 44%;
-$right-col-width-md : 44%;
-$right-col-width-lg : 44%;
+$right-col-width-sm : $width-sm-min - $left-col-width-sm;
+$right-col-width-md : $width-md-min - $left-col-width-md;
+$right-col-width-lg : $width-lg-min - $left-col-width-lg;
+
 
 
 

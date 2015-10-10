@@ -59,18 +59,14 @@ header.site-header {
     width: 70px;
     height: auto;
     padding: 5px 5px 2px;
-    // padding: 0 20px;
-    // background: transparent;
-    // float: left;
   }
 
   button.menu-toggle {
-    top: 0;
-    right: 0;
     border: none;
-    padding: 20px 15px;
+    padding: 24px 15px;
     width: 70px;
     height: 70px;
+    right: 0;
 
     .label {
       display: block;
@@ -102,28 +98,31 @@ header.site-header {
     .extras {
       position: relative;
       float: right;
-      width: 280px; 
+      // width: 280px; 
+      width: auto;
       height: $header-height-sm;
-      padding: 60px 60px 0 40px;
+      padding: 0 40px;
       border-left: 2px solid $color-brand-dark;
       text-align: left;
     }
 
     button.rent-now {
-      position: absolute;
-      top: 0;
+      position: relative;
+      top: auto;
       left: auto;
-      width: 160px;
-      height: auto;
+      width: auto;
+      height: 50px;
       padding: 27px 20px 5px;
       border-top: none;
       font-size: inherit;
+      margin: 0 40px 20px 0;
     }
     button.menu-toggle {
       position: absolute;
-      top: 0;
-      right: 0;
-      padding: 10px;
+      width: 40px;
+      height: 30px;
+      padding: 0;
+      top: 20px;
     }
     a.btn {
       display: inline-block;
@@ -142,6 +141,14 @@ header.site-header {
     }
     .extras {
       height: $header-height-md;
+      // padding: 0 70px 0 40px;
+    }
+    button.rent-now {
+      height: 77px;
+      padding-top: 54px;
+    }
+    button.menu-toggle {
+      top: 47px;
     }
 
   }
@@ -150,23 +157,23 @@ header.site-header {
 /* Large Desktop */
 @media only screen and (min-width: $width-lg-min) {
 
-  header.site-header {
+  // header.site-header {
 
-    .logo {
-      margin: 30px 0;
-      height: $header-height-lg - 60px;
-    }
-    .extras {
-      height: $header-height-lg;
-      padding-top: 80px;
-    }
-    button.rent-now {
-      padding-top: 51px;
-    }
-    button.menu-toggle {
-      top: 23px;
-    }
-  }
+  //   .logo {
+  //     margin: 30px 0;
+  //     height: $header-height-lg - 60px;
+  //   }
+  //   .extras {
+  //     height: $header-height-lg;
+  //     padding-top: 80px;
+  //   }
+  //   button.rent-now {
+  //     padding-top: 51px;
+  //   }
+  //   button.menu-toggle {
+  //     top: 23px;
+  //   }
+  // }
 
 }
 

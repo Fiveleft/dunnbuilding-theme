@@ -3,9 +3,12 @@
 	<main role="main"  <?php body_class() ?>>
 
 <?php 
-  if(is_front_page() && !is_404()) : 
-
-    $page = create_dunnbuilding_page( $post );
+  if(!is_404()) : 
+    if( !is_front_page() ) :
+      $page = create_dunnbuilding_page( get_post( get_option('page_on_front') ) );
+    else :
+      $page = create_dunnbuilding_page( $post );
+    endif; 
 
     ?>
     <article class='landing-page'>
@@ -29,7 +32,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class='btn btn-shadow' href="#amenities">
+                  <a class='btn btn-shadow' data-scrollto='true' href="#amenities">
                     <span class='shadow'></span>
                     <span class='label'>Amenities</span>
                     <span class='sub-label'>Roof Deck &amp; More</span>
