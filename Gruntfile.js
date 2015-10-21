@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 
     // JsHint your javascript
     jshint : {
-      all : ['js/*.js', '!js/modernizr.js', '!js/require.js', '!js/*.min.js', '!js/vendor/**/*.js'],
+      all : ['js/*.js', '!js/modernizr.js', '!js/require.js', '!js/jquery.form.js', '!js/*.min.js', '!js/vendor/**/*.js'],
       options : {
         browser: true,
         curly: false,
@@ -115,6 +115,7 @@ module.exports = function(grunt) {
         files: {
           "js/modernizr.js" : ['js/vendor/modernizr/modernizr.js'],
           "js/require.js" : ['js/vendor/requirejs/require.js'],
+          "js/jquery.form.js" : ['js/vendor/jquery-form/jquery.form.js'],
         }
       }
     },

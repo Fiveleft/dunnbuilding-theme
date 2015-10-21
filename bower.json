@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "jquery-ui": "~1.11.4",
-    "normalize-scss": "~3.0.3"
+    "normalize-scss": "~3.0.3",
+    "jquery-form": "~3.46.0"
   }
 }

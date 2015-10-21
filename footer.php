@@ -46,7 +46,7 @@
     <?php wp_footer(); ?>
 
     <!-- maps api --> 
-    <script> function initMap(){ console.log('initMap'); } </script>
+    <script> function initMap(){ /*console.log('initMap');*/ } </script>
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initMap" async defer></script>
 
     <!-- analytics -->
