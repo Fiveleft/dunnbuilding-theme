@@ -12,7 +12,7 @@ define(
       mapView,
       galleryView,
       galleries = [],
-      siteLinkClick = false,
+      // siteLinkClick = false,
       oldPageName = "",
       mainTransitionTimeout,
       mainTransitionDuration,
@@ -39,7 +39,7 @@ define(
         targetPageName = _.find( $body[0].className.split(" "), findPageNameFromClasses );
         mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
-        Events.on( Events.navigate, this._routerNavigate, this );
+        // Events.on( Events.navigate, this._routerNavigate, this );
         Events.on( Events.loadRoute, this._loadRoute, this );
         Events.on( Events.handleLoadedRoute, this._handleLoadedRoute, this );
 
@@ -49,17 +49,17 @@ define(
       },
 
 
-      /**
-       * [_routerNavigate description]
-       * @param  {[type]} e [description]
-       * @return {[type]}   [description]
-       */
-      _routerNavigate : function( data ) {
+      // /**
+      //  * [_routerNavigate description]
+      //  * @param  {[type]} e [description]
+      //  * @return {[type]}   [description]
+      //  */
+      // _routerNavigate : function( data ) {
 
-        siteLinkClick = data.newClick === true;
-        console.log( "MainView._routerNavigate() siteLinkClick: ", siteLinkClick );
+      //   siteLinkClick = data.newClick === true;
+      //   console.log( "MainView._routerNavigate() siteLinkClick: ", siteLinkClick );
 
-      },
+      // },
 
 
       /**
@@ -166,59 +166,68 @@ define(
       _scrollToTarget : function() {
 
         var paths = window.location.pathname.replace( /^\/|\/$/g, "" ).split("/"),
-          scrollTo = false,
+          scrollTo = -2,
           scrollToY = 0;
 
-        console.log( "MainView._scrollToTarget", paths.length, paths );
+        console.log( "MainView._scrollToTarget | paths:", paths );
 
         switch( true ) 
         {
-        case stateModel.get('uiClick') !== true : 
-          // console.log( "   - ui click is false, allow browser to scroll to previous position ");
+        case stateModel.get("uiClick") === null :
+          scrollTo = -2;
+          break;
+        case stateModel.get('uiClick') === false : 
+          console.log( "\t- ui click is false, allow browser to scroll to previous position ");
+          break;
+        case paths.length === 1 && paths[0] === "amenities" :
+          console.log( "\t- scroll to Amenities ");
+          scrollTo = $( ".wrapper > main section.amenities");
           break;
         case paths.length === 1 && paths[0] === "apartments" :
-          // console.log( "   - scroll to Apartment Header ");
-          scrollTo = 0;
+          console.log( "\t- scroll to Apartment Header ");
+          scrollTo = -1;
           break;
         case paths.length === 2 && paths[0] === "apartments" :
-          // console.log( "   - scroll to Apartment Type Nav ");
+          console.log( "\t- scroll to Apartment Type Nav ");
           scrollTo = $( ".wrapper > main article.apartments .unit-type-nav");
           break;
         case paths.length === 3 && paths[0] === "apartments" && paths[2] === "floorplans" :
-          // console.log( "   - scroll to Floor Plans ");
+          console.log( "\t- scroll to Floor Plans ");
           scrollTo = $( ".wrapper > main section.apartment-type-floorplans");
           break;
-        case paths.length === 3 && paths[0] === "apartments" && paths[2] === "building-amenities" :
-          // console.log( "   - scroll to Building Amenities ");
-          scrollTo = $( ".wrapper > main section.amenities");
-          break;
         default : 
-          // console.log( "   - scroll to Page Top " );
+          console.log( "\t- scroll to Page Top " );
           scrollTo = 0;
           break;  
         }
 
         stateModel.set( "uiClick", false );
 
-        if( scrollTo === false ) {
-          
-          return;
 
-        } else if ( scrollTo === 0 ) {
+        switch( true )
+        {
+        case scrollTo === -2 :
+          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
+          break;
 
+        case scrollTo === -1 :
           scrollToY = 0;
-          console.log( "    = scrollToY: ", scrollToY );
+          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
           $(window).scrollTop( scrollToY );
+          break;
 
-        } else {
+        case scrollTo === 0 :
+          scrollToY = 0;
+          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
+          $body.stop().animate({scrollTop:scrollToY}, 500, 'easeInOutCubic', function(){});   
+          break;
 
+        default :
           scrollToY = scrollTo.offset().top - $header.outerHeight();
-          console.log( "    = scrollToY: ", scrollToY );
-
-          $body.stop().animate({scrollTop:scrollToY}, 500, 'easeInOutCubic', function() { 
-            // alert("Finished animating");
-          });    
-        }  
+          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
+          $body.stop().animate({scrollTop:scrollToY}, 500, 'easeInOutCubic', function(){}); 
+          break;
+        }
       }
 
 

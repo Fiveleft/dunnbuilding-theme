@@ -115,7 +115,7 @@ define(
 
 
       updateActive : function() {
-        console.log( "GalleryView.updateActive() index: " + this.index );
+        // console.log( "GalleryView.updateActive() index: " + this.index );
 
         $(this.$galleryItems[this.index])
           .addClass( "active" )

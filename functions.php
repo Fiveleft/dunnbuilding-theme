@@ -326,13 +326,18 @@ function enqueue_header_scripts()
     // Find our relative JS directory
     $js_dir = get_stylesheet_directory_uri() . '/js';
 
+    // This Script is the only way Contact Form 7 will work :(
+    // wp_deregister_script( 'jquery-form' );
+    // wp_register_script( 'jquery-form', $js_dir . '/jquery.form.js', array( 'require' ), false, true );
+    // wp_enqueue_script( 'jquery-form' );
+
     /**
      * @see https://github.com/jrburke/requirejs/wiki/Patterns-for-separating-config-from-the-main-module
      */
     wp_register_script('require-config', $js_dir . '/require-config.js', null, false, true);
     wp_enqueue_script('require-config');
 
-    wp_register_script('require', $js_dir . '/require.js', array('require-config'), false, true);
+    wp_register_script('require', $js_dir . '/require.js', array('require-config', 'ajaxform'), false, true);
     wp_enqueue_script('require');
 
     wp_register_script('main', $js_dir . '/main.js', array('require', 'require-config'), false, true);
@@ -350,8 +355,7 @@ function enqueue_header_scripts()
     $js_localized = array(
       'homeUrl' => home_url(),
       'baseUrl' => get_stylesheet_directory_uri() . '/js',
-      'url' => get_stylesheet_directory_uri(),
-      'initMap' => ''
+      'url' => get_stylesheet_directory_uri()
      );
     if( get_permalink() ) {
       $js_localized['permalink'] = get_permalink();
@@ -363,10 +367,10 @@ function enqueue_header_scripts()
      * Add Livereload if we're developing locally
      * @see http://robandlauren.com/2014/02/05/live-reload-grunt-wordpress/
      */
-    if ( $is_local_dev && !is_admin() ) {
-      // wp_register_script('livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true);
-      // wp_enqueue_script('livereload');
-    }
+    // if ( $is_local_dev && !is_admin() ) {
+    //   wp_register_script('livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true);
+    //   wp_enqueue_script('livereload');
+    // }
 
   endif;
 

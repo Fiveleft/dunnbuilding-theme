@@ -17,7 +17,6 @@ Template Name: Apartments
   $settings->is_apartments_page = is_page_template( 'page-apartments.php' );
   $settings->is_type_page = is_single() && $post->post_type === 'unit_type';
   $settings->is_floorplans = $paths[2] === 'floorplans';
-  $settings->is_amenities = $paths[2] === 'building-amenities';
 
   // Apartments Page
   $apartments_post = ($settings->is_apartments_page) ? $post : get_page_by_path( '/apartments' );
@@ -157,10 +156,10 @@ Template Name: Apartments
 
               <?php if(!$settings->is_home_page) : ?>
 
-                  <a class='site-link' href="#amenities">
+                  <a class='site-link' href="<?php echo site_url(); ?>/amenities/">
                     <span class='label'>Building Amenities</span>
                   </a>
-                  <a class='site-link' href="<?php echo site_url(); ?>/neighborhood">
+                  <a class='site-link' href="<?php echo site_url(); ?>/neighborhood/">
                     <span class='label'>Neighborhood Attractions</span>
                   </a>
 

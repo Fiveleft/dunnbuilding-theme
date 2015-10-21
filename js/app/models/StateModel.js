@@ -11,7 +11,19 @@ define(
       initialize: function() {
         var a = this.attributes;
         a.url = window.location.pathname;
-        a.uiClick = false;
+        a.uiClick = null;
+      },
+
+      getURL : function() {
+        return this.attributes.url;
+      },
+
+      setURL : function( url ) {
+        this.attributes.url = (url==="" || url==="/") ? "" : url;
+      },
+
+      isHome : function() {
+        return window.location.pathnanme == "/" || (/amenities/).test(this.attributes.url);
       },
 
       isApartment : function() {

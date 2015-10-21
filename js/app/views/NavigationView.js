@@ -26,7 +26,7 @@ define(
         siteLink = "[href^='" + localized.homeUrl + "'],[href^='/']";
 
         // Events
-        this.$body.on( "click", "[href^='" + localized.homeUrl + "'],[href^='/']", function(e){ 
+        this.$body.on( "click", siteLink, function(e){ 
           self._clickNavLink(e); 
         });
       },
@@ -39,24 +39,10 @@ define(
       events : {
         'click button.menu-toggle' : '_toggleNav',
         'click nav.main-nav button.close' : '_toggleNav',
-        'click [href="#amenities"]' : '_clickAmenities',
         'click [href="#rent-now"], button.rent-now' : '_clickRentNow',
         'click [href="#live-chat"], button.live-chat' : '_clickChatNow',
       },
 
-      /**
-       * [_clickNavLink description]
-       * @param  {[type]} e [description]
-       * @return {[type]}   [description]
-       */
-      _clickAmenities : function( e ) {
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        // navClosedCallback = null;
-        // Events.trigger( "router:navigate", {url:"/", newClick:true} );
-      },
-        
 
       /**
        * [_clickNavLink description]
@@ -79,7 +65,7 @@ define(
         e.stopImmediatePropagation();
         // Clean up URL
         
-        console.log( "url: " + url);
+        // console.log( "NavigationView._clickNavLink() url: " + url);
 
         if( self.$body.hasClass('nav-open') ) {
           navClosedCallback = function(){

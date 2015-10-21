@@ -184,8 +184,15 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-
-
+    }
+    svg .circle, 
+    svg .triangle {
+      .border {
+        fill: $color-brand-dark;
+      }
+      .fill {
+        fill: rgba( $color-brand-light, 0.1 );
+      }
     }
   }
 

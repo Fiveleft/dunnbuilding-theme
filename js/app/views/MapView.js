@@ -33,7 +33,7 @@ define(
         }
 
         if( map ) {
-          console.log( map );
+          // console.log( map );
         }
 
 
