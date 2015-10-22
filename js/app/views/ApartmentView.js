@@ -9,6 +9,7 @@ define(
       $mainLoader,
       $apartmentTypeNav,
       $apartmentTypeContainer,
+      $activeApartmentType,
       apartmentType,
       apartmentSection = null,
       mainTransitionTimeout,
@@ -23,29 +24,36 @@ define(
         $body = $("body");
         $main = $("main");
         $mainLoader = $("body > .main-loader");
-        $header = $("header.site-header");
 
-        $apartmentTypeNav = $( "nav.unit-type-nav", $main );
-        $apartmentTypeContainer = $("section.apartment-type-info");
-
-        // 
         mainTransitionDuration = 1000 * parseFloat( $body.css('transition-duration'));
 
-        var paths = window.location.pathname.replace( /^\/|\/$/g, "" ).split("/");
-        // console.log( "ApartmentView.initialize()", paths, 'local url: ', localized.homeUrl );
-
+        var paths = window.location.pathname.replace( /^\/|\/$/g, "" ).split("/");  
         apartmentType = paths.length > 1 ? paths[1] : null;
         apartmentSection = paths.length > 2 ? paths[2] : null;
+        console.log( "ApartmentView.initialize()", paths, 'local url: ', localized.homeUrl );
 
         if( paths[0] === "apartments" ) {
           endMainTransition();
         }
-        
 
-        
         Events.on( Events.loadApartmentType, this._loadApartmentType, this );
         Events.on( Events.loadApartmentSection, this._loadApartmentSection, this );
 
+      },
+
+      
+      render : function() {
+
+        $body = $("body");
+        $main = $("main");
+        $mainLoader = $("body > .main-loader");
+        $header = $("header.site-header");
+        $apartmentTypeNav = $( "nav.unit-type-nav", $main );
+        $apartmentTypeContainer = $(".apartment-types", $main);
+        $activeApartmentType = $(".apartment-type", $apartmentTypeContainer).first();
+
+        console.log( "ApartmentView.render()" );
+        return this;
       },
 
 
@@ -57,7 +65,7 @@ define(
       _loadApartmentPage : function( url ) {
 
         var self = this;
-        // console.log( "ApartmentView._loadApartmentPage()", url );
+        console.log( "ApartmentView._loadApartmentPage()", url );
 
         $mainLoader.load( url + ' .wrapper > main', function(html, response, jqXHR) {
           // If we've received a 404 page, no worries mon!
@@ -82,6 +90,7 @@ define(
        * Reset
        */
       reset : function() {
+        console.log( "ApartmentView.reset()" );
         endMainTransition();
       },
 
@@ -91,7 +100,7 @@ define(
        * @return {[type]} [description]
        */
       _loadApartmentPageComplete : function( ) {
-        // console.log( "ApartmentView._loadApartmentPageComplete", arguments );
+        console.log( "ApartmentView._loadApartmentPageComplete", arguments );
         stateModel.set( "url", window.location.pathname );
         startTransition();
       },
@@ -157,22 +166,40 @@ define(
      */
     function startTransition() {
 
-      var scrollTopDelay = Modernizr.csstransitions ? mainTransitionDuration * 0.5 : 0;
-      var $newMain = $mainLoader.children("main");
+      var $oldContent = $("article.apartment-type", $apartmentTypeContainer ),
+        $loadedMain = $("main", $mainLoader),
+        $loadedContent = $( "article.apartment-type", $loadedMain ),
+        $newContent = null,
+        newClasses = $loadedMain[0].className + " transition";
 
-      var newClasses = $mainLoader.children("main")[0].className + " transition";
+      console.log( "ApartmentView.startTransition()");
+      console.log( "new:", $loadedContent );
+
+
+      // Set New Body Classes
       document.body.className = newClasses;
 
       // Clear existing Transition Classes
       removeTransitionClasses();
 
-      $oldContent = $("article.apartment-type", $main );
+      // Old Content to remove
+      $oldContent.addClass("old");
 
-      $newContent = $( "article.apartment-type", $newMain );
+      // Add Loaded content to Container
+      $apartmentTypeContainer.prepend( $loadedContent );
+        
+      // New Content to Add
+      // $newContent = $loadedContent;
+      $newContent = $apartmentTypeContainer.children().first();
       $newContent.addClass("new");
 
-      $oldContent.after( $newContent );
+      //       
+      console.log( "ApartmentView.startTransition()");
+      console.log( "new:", $loadedContent );
+      console.log( "old:", $oldContent );
+
       $oldContent.remove();
+      $oldContent = [];
       $mainLoader.empty();
 
       Events.trigger( Events.handleLoadedRoute );
@@ -183,12 +210,6 @@ define(
       }else{
         endMainTransition();
       }
-
-      // if( siteLinkClick ) {
-      //   siteLinkClick = false;
-      //   clearTimeout( scrollTopTimeout );
-      //   scrollTopTimeout = setTimeout( function(){ $(window).scrollTop(0); }, scrollTopDelay );
-      // }
     }
 
 
@@ -203,8 +224,8 @@ define(
 
       // Clear existing Transition Classes
       removeTransitionClasses();
-      $("article.apartment-type", $main )
-        .removeClass("new");
+      // $("article.apartment-type", $main )
+      //   .removeClass("new");
       
 
       // var $targetScrollEl,

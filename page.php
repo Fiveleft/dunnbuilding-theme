@@ -7,9 +7,8 @@
     $page = create_dunnbuilding_page( $post );
     ?>
     <article class='landing-page'>
-    	<section class='welcome'>
-        <!-- section-inner.break-container -->
-        <div class='section-inner'>
+    	<section class='welcome' >
+        <div class='section-inner' >
           <div class='break-container'>
             <h1><?php the_title(); ?></h1>
           </div>

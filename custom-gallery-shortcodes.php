@@ -113,6 +113,8 @@ function page_gallery_shortcode( $attr )
   $output .= "  <div class='gallery-slides-wrapper'>\n";
   $output .= "    <div class='gallery-slides' data-count='$gallery_count'>\n";
 
+  $nav_html = "<nav class='gallery-disc-nav'>";
+
   if( $gallery_count ) :
 
     $gallery_index = 1;
@@ -123,21 +125,9 @@ function page_gallery_shortcode( $attr )
       $img_caption = get_post_field( "post_excerpt", $imgID );
       $parsed = parse_url( wp_get_attachment_url( $imgID ) );
       $img_dir = dirname( $parsed [ 'path' ] ) . '/';
+      $img_alt = trim(strip_tags( get_post_meta( $imgID, '_wp_attachment_image_alt', true ) ));
 
       if( $img_data ) :
-
-        // $img_attrs = "data-src='" . $img_dir . $img_data['file'] . "' ";
-
-        // $size_array = get_object_vars( $image["sizes"] );
-        // $srcset = " " . $size_array["small"] . " " . $size_array["small-width"] . "w,";  
-        // $srcset .= " " . $size_array["medium"] . " " . $size_array["medium-width"] . "w,";  
-        // $srcset .= " " . $size_array["large"] . " " . $size_array["large-width"] . "w,";  
-        // $srcset .= " " . $image->url . " " . round($image->width/2) . "w";
-        // $img_srcset = "srcset='"
-        // $srcset = " " . $size_array["small"] . " " . $size_array["small-width"] . "w,";  
-        // $srcset .= " " . $size_array["medium"] . " " . $size_array["medium-width"] . "w,";  
-        // $srcset .= " " . $size_array["large"] . " " . $size_array["large-width"] . "w,";  
-        // $srcset .= " " . $image->url . " " . round($image->width/2) . "w"; 
 
         $srcset = "";
         foreach( $img_data['sizes'] as $size_name => $size_data ) :
@@ -151,19 +141,14 @@ function page_gallery_shortcode( $attr )
 
         $output .= "<dl class='gallery-item' data-id='" . $imgID . "' data-index='" . $gallery_index . "'>\n";
         $output .= "  <dt class='gallery-image-wrapper' style='padding-bottom:$aspect_perc;' >\n";
-
-        $output .= "    <img class='gallery-image image breakpoints' src='" . $img_dir . $img_data['sizes']['small']['file'] . "' srcset='$srcset'/>\n";
-        
-        // if( $gallery_index == 1 ) :
-        //   $output .= "    <img class='gallery-image image has-breakpoints' src='" . $img_dir . $img_data['file'] . "' $img_attrs/>\n";
-        // else :
-        //   $output .= "    <span class='gallery-image image has-breakpoints lazy' $img_attrs></span>\n";
-        // endif;
+        $output .= "    <img class='gallery-image image breakpoints' src='" . $img_dir . $img_data['sizes']['small']['file'] . "' srcset='$srcset' alt='$img_alt' />\n";
         $output .= "  </dt>\n";
         $output .= "  <dd class='gallery-image-caption'>\n";
         $output .= "    <p class='caption'>$img_caption</p>\n";
         $output .= "  </dd>\n";
         $output .= "</dl>\n";
+
+        $nav_html .= "<a href='#index-$gallery_index' data-index='$gallery_index'>View $img_alt</a>";
 
         $gallery_index ++;
       endif;
@@ -173,21 +158,19 @@ function page_gallery_shortcode( $attr )
 
   $btn_html = file_get_contents( dirname( __FILE__ ) . "/img/arrow-icon.svg" );
 
+  $nav_html .= "</nav><!-- .gallery-disc-nav -->";
+
   $output .= "    </div>\n";
   $output .= "    <div class='ui-wrapper'>\n";
   $output .= "      <button class='advance prev' title='Previous'>" . $btn_html . "</button>\n";
   $output .= "      <button class='advance next' title='Next'>" . $btn_html . "</button>\n";
+
+  $output .= $nav_html;
+
   $output .= "    </div>\n";
   $output .= "  </div>\n";
   $output .= "</div>";
   return $output;
 }
-
-// function remove_gallery_shortcode($content) 
-// {
-//   $pattern = get_shortcode_regex(); 
-//   preg_replace("/$pattern/s", "", $content);
-// }
-
 
  ?>

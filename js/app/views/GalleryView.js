@@ -12,6 +12,8 @@ define(
         list : ".gallery-slides",
         listItem : "dl",
         advance : ".advance",
+        discNav : ".gallery-disc-nav a",
+        gridLink : ".gallery-grid-link",
       }
     };
 
@@ -50,6 +52,10 @@ define(
         this.$galleryList = $( this.config.selectors.list, this.$galleryWrapper);
         this.$galleryItems = $( this.config.selectors.listItem, this.$galleryList);
         this.$advanceButton = $( this.config.selectors.advance, this.$galleryWrapper);
+        this.$discNavItems = $( this.config.selectors.discNav, this.$el );
+        this.$gridLinks = $( this.config.selectors.gridLink, this.$el );
+
+        this.$el.data("gallery", this);
 
         // Calculate; 
         this.measurements = _.extend( {}, m );
@@ -61,17 +67,20 @@ define(
         // Touch Events
         this.handlers = {
           galleryEnd : function(e){self.onGalleryAdvanceEnd(e);},
-          resizeCalculate : function(){ self.calculate(); }
+          resizeCalculate : _.throttle( function(){ self.calculate(); }, 500 ),
         };
         this.$galleryList.on( Events.transitionEnd, this.handlers.galleryEnd );
-        $(window).on( "resize", _.throttle( this.handlers.resizeCalculate, 500 ) );
+        $(window).on( "resize", this.handlers.resizeCalculate );
 
       },
 
 
       remove : function() {
+
+        // console.log( "GalleryView[" + this.cid + "].remove()" );
+        // 
         this.$galleryList.off( Events.transitionEnd, this.handlers.galleryEnd );
-        $(window).off( "resize", _.throttle( this.handlers.resizeCalculate, 500 ) );
+        $(window).off( "resize", this.handlers.resizeCalculate );
         this.config = null;
         this.measurements = null;
       },
@@ -81,7 +90,8 @@ define(
         'touchstart .gallery-slides-wrapper' : 'onTouch',
         'touchend .gallery-slides-wrapper' : 'onTouch',
         'touchmove .gallery-slides-wrapper' : 'onMove',
-        'click .advance' : 'onAdvanceClick'
+        'click .advance' : 'onAdvanceClick',
+        'click .gallery-grid-link' : 'onGridClick',
       },
 
 
@@ -93,10 +103,10 @@ define(
 
         var m = this.measurements;
 
-        m.viewportWidth = this.$galleryWrapper.width();
         m.listWidth = this.$galleryList.outerWidth();
         m.itemCount = this.$galleryItems.length;
         m.itemWidth = this.$galleryItems.outerWidth();
+        m.viewportWidth = m.itemCount * m.itemWidth;
 
         // Slide Positions finds out how manu 
         m.slidePositions  = Math.ceil( m.listWidth / m.viewportWidth );
@@ -106,16 +116,35 @@ define(
         // Max Move Positions
         m.xMin = m.viewportWidth - m.listWidth;
         m.xMax = 0;
-        m.x = parseInt( this.$galleryList.css( "margin-left" ), 10 );
+        m.x = this.$galleryList.position().left;
+        // m.x = parseInt( this.$galleryList.css( "margin-left" ), 10 );
         m.x = m.clampX( m.x );
+        m.perc = m.x / m.itemWidth;
 
-        this.$galleryList.css( {"margin-left" : m.x} );
-        // console.log( m );
+        // this.$galleryList.css( {"margin-left" : m.x} );
+        // this.$galleryList.css( {"margin-left" : (m.perc * 100) + "%"} );
+        
+        // console.log( "GalleryView[" + this.cid + "].calculate()\n\tm.x: " + m.x );
+
       },
 
 
+      /**
+       * [updateActive description]
+       * @return {[type]} [description]
+       */
       updateActive : function() {
-        // console.log( "GalleryView.updateActive() index: " + this.index );
+
+        // console.log( "GalleryView[" + this.cid + "].updateActive()\n\tindex: " + this.index + "\n\tparent: " + this.$el.parents("section")[0].className  );
+        // 
+        
+        this.$gridLinks.removeClass( "active" );
+        $(this.$gridLinks[this.index]).addClass( "active" );
+
+        $(this.$discNavItems[this.index])
+          .addClass( "active" )
+          .siblings()
+          .removeClass( "active" );
 
         $(this.$galleryItems[this.index])
           .addClass( "active" )
@@ -132,6 +161,34 @@ define(
 
 
       /**
+       * [onGridClick description]
+       * @param  {[type]} e [description]
+       * @return {[type]}   [description]
+       */
+      onGridClick : function( e ) {
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      
+        var m = this.measurements,
+          newIndex = ( $(e.currentTarget).attr("data-index") - 1),
+          newX = m.getXofIndex( newIndex );
+
+        // console.log( "GalleryView[" + this.cid + "].onGridClick() newIndex: " + newIndex );
+
+        if( m.x !== newX ) {
+          m.x = newX;
+          m.perc = m.x / m.itemWidth;
+          this.index = newIndex;
+          this.$galleryItems.removeClass("active");
+          this.$galleryList
+            .css({ "margin-left" : (m.perc * 100) + "%" });
+        }
+      },
+
+
+
+      /**
        * [onAdvanceClick description]
        * @param  {[type]} e [description]
        * @return {[type]}   [description]
@@ -141,19 +198,26 @@ define(
         e.preventDefault();
         e.stopImmediatePropagation();
       
-        var self = this,
+        var m = this.measurements,
           direction = $(e.target).hasClass('next') ? 1 : -1,
-          newIndex = Utils.clamp( this.index+direction, 0, this.measurements.itemCount-1 ),
-          newX = this.measurements.getXofIndex( newIndex );
+          newIndex = Utils.clamp( this.index+direction, 0, m.itemCount-1 ),
+          newX = m.getXofIndex( newIndex );
 
-        console.log( "direction: " + direction + ", newIndex: " + newIndex + ", newX: " + newX );
+        this.index = newIndex;
 
-        if( this.measurements.x !== newX ) {
-          this.measurements.x = newX;
+        // console.log( "GalleryView[" + this.cid + "].onAdvanceClick() ");
+        // console.log( "\n\tx: " + m.x + "\n\tnewIndex: " + newIndex + "\n\tnewX: " + newX );
+
+        if( m.x !== newX ) {
+          m.x = newX;
           this.$galleryItems.removeClass("active");
         }
 
-        this.$galleryList.css({ "margin-left" : this.measurements.x });
+        m.perc = m.x / m.itemWidth;
+
+        this.$galleryList
+          .css({ "margin-left" : (m.perc * 100) + "%" });
+          // .css({ "margin-left" : m.x });
       },
 
 
@@ -166,9 +230,14 @@ define(
 
         if( e && !$(e.originalEvent.target).is( '.gallery-slides' ) ) return;
 
-        // e.stopImmediatePropagation();
-        this.measurements.x = parseInt( this.$galleryList.css( "margin-left" ), 10 );
-        this.index = this.measurements.getIndexOfX( this.measurements.x );
+        var m = this.measurements;
+
+        m.x = m.getXofIndex( this.index );// parseInt( this.$galleryList.css( "margin-left" ), 10 );
+        m.perc = m.x / m.itemWidth;
+
+        // console.log( "GalleryView[" + this.cid + "].onGalleryAdvanceEnd()" );
+        // console.log( "\n\tindex: " + this.index + "\n\tx: " + m.x );
+        
         this.updateActive();
       },
 
@@ -213,7 +282,9 @@ define(
 
           if( newLeft <= m.xMax && newLeft >= m.xMin ) {
             m.x = m.clampX( newLeft );
-            this.$galleryList.css({ "margin-left" : m.x });
+            m.perc = m.x / m.itemWidth;
+            this.$galleryList.css({ "margin-left" : (m.perc * 100) + "%" });
+            // this.$galleryList.css({ "margin-left" : m.x });
           }
         }
       },
@@ -269,9 +340,11 @@ define(
           }
 
           m.x = endTouchTarget;
+          m.perc = m.x / m.itemWidth;
           this.$galleryList
             .removeClass('touch-event')
-            .css({ "margin-left" : m.x });
+            .css({ "margin-left" : (m.perc * 100) + "%" });
+            // .css({ "margin-left" : m.x });
           break;
 
         default :
@@ -285,12 +358,15 @@ define(
        * @return {[type]} [description]
        */
       doFlick : function() {
-        var self = this;
+        var self = this,
+          m = this.measurements;
         if( Math.abs(this.flickDist) > 0 ) {
           requestAnimFrame(function(){self.doFlick();});
         }else{
+          m.perc = m.x / m.itemWidth;
           this.$galleryList
-            .css({ "margin-left" : this.measurements.x + "px" })
+            .css({ "margin-left" : (m.perc * 100) + "%" })
+            // .css({ "margin-left" : m.x + "px" })
             .removeClass('touch-event');
           this.updateActive();
         }
@@ -303,15 +379,19 @@ define(
        * @return {[type]} [description]
        */
       renderFlick : function() {
-        this.flickDist = (this.flickTarget - this.measurements.x) * 0.18;
+        var m = this.measurements;
+        this.flickDist = (this.flickTarget - m.x) * 0.18;
         if( Math.abs(this.flickDist) < 0.5 ) {
-          this.measurements.x = this.flickTarget;
+          m.x = this.flickTarget;
           this.flickDist = 0;
         }else {
-          var nextX = this.measurements.x + this.flickDist;
-          this.measurements.x = Utils.clamp( nextX, this.measurements.xMin, this.measurements.xMax );
+          var nextX = m.x + this.flickDist;
+          m.x = Utils.clamp( nextX, m.xMin, m.xMax );
+          m.perc = m.x / m.itemWidth;
         }
-        this.$galleryList.css({ "margin-left" : Math.round( this.measurements.x ) + "px" });
+        this.$galleryList
+          .css({ "margin-left" : (m.perc * 100) + "%" });
+          // .css({ "margin-left" : Math.round( m.x ) + "px" });
       }
 
     });

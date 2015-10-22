@@ -129,15 +129,31 @@ function create_dunnbuilding_page( $page )
  */
 function create_dunnbuilding_floorplan( $post ) 
 {
-  $fp = create_dunnbuilding_page( $post );
+  $fp = $post;
+  $fp->meta = get_post_meta( $fp->ID );
+
+  $acf = (function_exists('get_fields')) ? get_fields($fp->ID) : false;
+  $fp->acf = $acf ? json_decode(json_encode($acf), FALSE) : false;
   $fp->image = $fp->acf->floor_plan_image;
   $fp->pdf = $fp->acf->floor_plan_pdf;
-
   $fp->layout_class = "portrait";
 
   if( $fp->image->width > $fp->image->height ) :
     $fp->layout_class = "landscape";
   endif;
+
+  // Check for gallery shortcode
+  $sc_pattern = '\[(\[?)(gallery)(?![\w-])([^\]\/]*(?:\/(?!\])[^\]\/]*)*?)(?:(\/)\]|\](?:([^\[]*+(?:\[(?!\/\2\])[^\[]*+)*+)\[\/\2\])?)(\]?)';
+  preg_match_all( '/' . $sc_pattern . '/', $fp->post_content, $matches );
+
+  if( $matches[0] ) {
+
+    $gallery = preg_replace( '/gallery/', 'apartment_gallery', $matches[0] );
+    $gallery = preg_replace( '/\&#8221;|\&#8243;/', '', $gallery[0] );
+    // Create the apartment_gallery shortcode
+    $fp->gallery = apply_filters( 'the_content', $gallery );
+    $fp->post_content = preg_replace( '/' . $sc_pattern . '/', '', $fp->post_content );
+  }
 
   return $fp;
 }
@@ -157,8 +173,8 @@ function create_dunnbuilding_post_item( $post )
 
     $attachment = get_post( $item->featured_image_id );
   
-    ep( "create_dunnbuilding_post_item\n\nattachment:::{$item->featured_image_id}::\n\n" );
-    ep( $item->featured_image_id );
+    // ep( "create_dunnbuilding_post_item\n\nattachment:::{$item->featured_image_id}::\n\n" );
+    // ep( $item->featured_image_id );
 
     /**
      * Pulled from plugins/advanced-custom-fields/core/fields/image :: function format_value_for_api( $value, $post_id, $field );
@@ -234,7 +250,7 @@ function create_image_html( $image, $use_span=false, $lazy=true, $srcset=true) {
 
   if( !is_null($image->sizes) ){
     // If the image has additional sizes
-    ep( $image );
+    // ep( $image );
     
     $size_array = get_object_vars( $image->sizes );
     $srcset = " " . $size_array["small"] . " " . $size_array["small-width"] . "w,";  

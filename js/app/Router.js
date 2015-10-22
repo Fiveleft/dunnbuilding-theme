@@ -70,6 +70,7 @@ define(
        * @return {[type]}      [description]
        */
       apartmentType : function( type ) {
+        console.log( 'Router.apartmentType()', type )
         if( stateModel.isApartment() ) {
           Events.trigger( Events.loadApartmentType, { type:type } );
         }else{
@@ -85,6 +86,7 @@ define(
        * @return {[type]}         [description]
        */
       apartmentSection : function( type, section ) {
+        console.log( 'Router.apartmentSection()', type, section )
         if( stateModel.isApartment() ) {
           Events.trigger( Events.loadApartmentSection, { type:type, section:section } );
         }else{

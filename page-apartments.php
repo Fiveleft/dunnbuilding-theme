@@ -135,7 +135,7 @@ Template Name: Apartments
         </div>
       </section><!-- /section.apartments.header-->
 
-      <section class='apartment-types type-<?php echo $apt->post_name; ?>'>
+      <section class='apartment-types'>
 
         <article class='apartment-type <?php echo $apt->post_name; ?>' data-type='<?php echo $apt->post_name; ?>'>
           

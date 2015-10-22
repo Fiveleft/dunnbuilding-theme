@@ -2,20 +2,40 @@
 
 form {
 
+  margin-bottom: 3em;
+
   label {
     display: block;
+    margin-bottom: 0.25em;
+  }
+
+  input:not([type="submit"]),
+  textarea, 
+  select {
+    @include paragraph-font-style;
+    border: 1px solid $color-brand-dark;
+    font-size: 18px;
+    line-height: 1.1;
+    padding: 6px;
   }
 
   input[type="text"], 
-  input[type="email"], 
+  input[type="email"],
+  input[type="tel"],
   textarea {
-    border: 1px solid $color-brand-dark;
-    line-height: 20px;
-    padding: 6px;
     width: 100%;
+    // -webkit-appearance: none;
   }
 
-  .btn {
+  select {
+    -webkit-appearance: menulist-button;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border-color: $color-brand-dark;
+  }
+
+  .btn, input[type="submit"] {
+    @include button-font-style();
     display: inline-block;
     padding-left: 30px;
     padding-right: 30px;
@@ -34,8 +54,101 @@ form {
     width: 100%;
   }
   .form-control {
-    margin-bottom: 1.25em; 
+    margin-bottom: 1.5em; 
+  }
+  .form-control br {
+    display: none;
+  }
+
+  .wpcf7-not-valid {
+    border-color: $color-brand-medium !important;
+  }
+
+  img.ajax-loader {
+    display: inline-block;
+    max-width: 100%;
+    width: 16px;
+  }
+
+  span[class*="not-valid"] {
+    display: inline-block;
+    padding: 0.25em 0;
+    @include button-font-style;
+    font-size: 0.75em;
   }
 }
 
+form.demo {
 
+  @include clearfix;
+
+  margin-left: -$margins-xs;
+  margin-right: -$margins-xs;
+
+  .form-control,
+  .wpcf7-response-output {
+    display: block; 
+    float: left;
+    width: 100%;
+    padding-left: $margins-xs;
+    padding-right: $margins-xs;
+  }
+  select.lease-length,
+  input.move-date {
+    width: 100%;
+    height: 36px;
+  }
+
+  .form-control.bedrooms, .form-control.bathrooms {
+    span.wpcf7-list-item {
+      display: block;
+      margin-right: 0.5em;
+      margin-left: 0;
+    }
+  }
+  
+  .form-control.how-informed > label,
+  .form-control.bedrooms > label {
+    padding-top: 1.5em;
+    border-top: 1px solid $color-brand-medium;
+  }
+
+  .wpcf7-response-output {
+    margin: 0;
+  }
+  .wpcf7-validation-errors {
+    border: none;
+  }
+}
+
+/* Tablet Portrait */
+@media only screen and (min-width: $width-sm-min) {
+
+  form.demo {
+    .form-control.lease-length,
+    .form-control.move-date,
+    .form-control.email,
+    .form-control.tel {
+      width: 50%;
+    }
+
+    .form-control.bedrooms, .form-control.bathrooms {
+      span.wpcf7-list-item {
+        display: inline-block;
+        margin-right: 1.5em;
+      }
+    }
+  }
+}
+
+/* Tablet Landscape */
+@media only screen and (min-width: $width-md-min) {
+
+  form.demo {
+    .form-control.firstname,
+    .form-control.lastname {
+      width: 50%;
+    }
+  }
+
+}

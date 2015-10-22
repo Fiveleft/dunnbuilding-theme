@@ -140,19 +140,24 @@ define(
         case targetPageName === "name-apartments" :
         case $body.hasClass("single-unit_type") : 
           newPageView = 'apartments, gallery';
-          ApartmentView.reset();
+          ApartmentView.render();
           break;
         }
 
         for( var i=galleries.length-1; i!==-1; i-- ){
           var gv = galleries[i];
+          // console.log( "Gallery[" + gv.cid + "]", gv.$el.parent() );
           if( gv.el.clientWidth < 1 ) {
             gv.remove();
             galleries.splice(i,1);
           }
         }
         $(".gallery").each( function(i,el){
-          galleries.push( new GalleryView({el:el}) );
+          if( ! $(el).data("gallery") ) {
+            galleries.push( new GalleryView({el:el}) );
+          }else{
+            // console.log( "Gallery[" + $(el).data("gallery").cid + "] already exists" );
+          }
         });
         
         this._scrollToTarget();
@@ -169,7 +174,7 @@ define(
           scrollTo = -2,
           scrollToY = 0;
 
-        console.log( "MainView._scrollToTarget | paths:", paths );
+        // console.log( "MainView._scrollToTarget | paths:", paths );
 
         switch( true ) 
         {
@@ -177,26 +182,26 @@ define(
           scrollTo = -2;
           break;
         case stateModel.get('uiClick') === false : 
-          console.log( "\t- ui click is false, allow browser to scroll to previous position ");
+          // console.log( "\t- ui click is false, allow browser to scroll to previous position ");
           break;
         case paths.length === 1 && paths[0] === "amenities" :
-          console.log( "\t- scroll to Amenities ");
+          // console.log( "\t- scroll to Amenities ");
           scrollTo = $( ".wrapper > main section.amenities");
           break;
         case paths.length === 1 && paths[0] === "apartments" :
-          console.log( "\t- scroll to Apartment Header ");
+          // console.log( "\t- scroll to Apartment Header ");
           scrollTo = -1;
           break;
         case paths.length === 2 && paths[0] === "apartments" :
-          console.log( "\t- scroll to Apartment Type Nav ");
+          // console.log( "\t- scroll to Apartment Type Nav ");
           scrollTo = $( ".wrapper > main article.apartments .unit-type-nav");
           break;
         case paths.length === 3 && paths[0] === "apartments" && paths[2] === "floorplans" :
-          console.log( "\t- scroll to Floor Plans ");
+          // console.log( "\t- scroll to Floor Plans ");
           scrollTo = $( ".wrapper > main section.apartment-type-floorplans");
           break;
         default : 
-          console.log( "\t- scroll to Page Top " );
+          // console.log( "\t- scroll to Page Top " );
           scrollTo = 0;
           break;  
         }
@@ -207,24 +212,24 @@ define(
         switch( true )
         {
         case scrollTo === -2 :
-          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
+          // console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
           break;
 
         case scrollTo === -1 :
           scrollToY = 0;
-          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
+          // console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
           $(window).scrollTop( scrollToY );
           break;
 
         case scrollTo === 0 :
           scrollToY = 0;
-          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
+          // console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
           $body.stop().animate({scrollTop:scrollToY}, 500, 'easeInOutCubic', function(){});   
           break;
 
         default :
           scrollToY = scrollTo.offset().top - $header.outerHeight();
-          console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
+          // console.log( "\t- scrollTo:", scrollTo, ", scrollToY:", scrollToY );
           $body.stop().animate({scrollTop:scrollToY}, 500, 'easeInOutCubic', function(){}); 
           break;
         }

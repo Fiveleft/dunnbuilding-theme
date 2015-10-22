@@ -20,7 +20,7 @@ Template Name: Amenities
         <h1>Building Amenities</h1>
       </div>
 
-      <div class='amenity-gallery break-container'>
+      <div class='gallery-wrapper'>
         <?php echo $page->gallery; ?>
       </div>
 

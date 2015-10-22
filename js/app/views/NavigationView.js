@@ -69,6 +69,7 @@ define(
 
         if( self.$body.hasClass('nav-open') ) {
           navClosedCallback = function(){
+            console.log( " here - calling closedcallback " );
             Events.trigger( "router:navigate", {url:url, newClick:true} );
           };
           self._toggleNav();
@@ -108,8 +109,12 @@ define(
        * [_toggleNavComplete description]
        * @return {[type]} [description]
        */
-      _toggleNavComplete : function() {
-        // console.log( "NavigationView._toggleNavComplete");
+      _toggleNavComplete : function(e) {
+
+        if( e.originalEvent.propertyName !== "margin-right" ) {
+          return;
+        }
+        // console.log( "NavigationView._toggleNavComplete", e );
 
         if( this.$body.hasClass('nav-open') ) {
           this.$nav
